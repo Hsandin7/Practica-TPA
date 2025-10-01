@@ -10,10 +10,11 @@ clock = pygame.time.Clock()                     # Para el manejo del framerate
 # Variables
 pagina_actual = 0       # 0) Pagina principal   1) 
 
+#Carga de fuentes y graficos
+#font_test = pygame.font.Font("Testing.ttf", 100)
+fondo=pygame.image.load("Menu_Inicio.png")
 
-font_test = pygame.font.Font("Testing.ttf", 100)
-
-texto = font_test.render("ABCDEFGH", True, (255,255,255))
+#texto = font_test.render("ABCDEFGH", True, (255,255,255))
 
 def boton():
     pass
@@ -40,7 +41,18 @@ while True:
     screen.fill((100,100,100))
 
     # RENDER YOUR GAME HERE
-    screen.blit(texto, (10, 100))       # El .blit permite superponer cualquier cosa por encima de otra
+
+    screen.blit(fondo,(1,1))
+    #screen.blit(texto, (10, 100))       # El .blit permite superponer cualquier cosa por encima de otra
+
+
+
+    match pagina_actual:
+        case 0: # Pagina principal
+            pass
+        case 1:
+            pass
+
 
     # flip() the display to put your work on screen
     pygame.display.flip()
