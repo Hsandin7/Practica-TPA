@@ -20,7 +20,7 @@ class comodin(carta):
         super().__init__(tipo)
 
 
-class jugador:
+class juego:
     def __init__(self, puntos, mano, comodines):
         self._puntos = puntos
         self._mano = mano
@@ -35,9 +35,6 @@ class jugador:
     def nueva_mano():
         pass
 
-class juego:
-    def __init__(self, jugador: jugador):
-        pass
 
 
 
