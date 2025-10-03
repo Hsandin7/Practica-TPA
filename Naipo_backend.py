@@ -67,6 +67,20 @@ class jugador:
 
     def jugar_cartas(self):
         # Codigo para sumar puntuaciones usando "self._cartas_seleccionadas"
+        
+        
+        num = [c.strip("♠♥♦♣") for c in self._cartas_seleccionadas]
+        palo = [c.strip("0123456789") for c in self._cartas_seleccionadas]
+
+        # --- HAY UNA PAREJA (mismo num) ---
+        for i in range(len(num)):
+           for j in range(i + 1, len(num)): 
+               if num[i] == num[j]:
+                   self._puntos = self._puntos + 2
+                   return
+               
+        # --- HAY UN TRIO (mismo num) ---
+        
         self._cartas_seleccionadas.clear()
     
     def nueva_mano(self, mazo: Mazo):
@@ -127,6 +141,8 @@ print(hola.cartas)
 print("\nMano jugador actualizada:")
 print(jug1._mano)
 
+print("\nTus puntos son: ")
+print(jug1._puntos)
 
 
 
