@@ -5,7 +5,7 @@ import sys
 pygame.init()
 
 # Configuración de la ventana
-screen = pygame.display.set_mode((900, 660))
+screen = pygame.display.set_mode((1280, 720))
 pygame.display.set_caption("Naipo")
 clock = pygame.time.Clock()
 
@@ -13,22 +13,22 @@ clock = pygame.time.Clock()
 pagina_actual = 0   
 
 # Imagen de fondo del menú
-menu_principal = pygame.image.load("Menu_Inicio.PNG")
+menu_principal = pygame.image.load("Graficos/Menu_principal.png")
 
 # Imagen de fondo del juego
-menu_juego = pygame.image.load("Menú.PNG")
+menu_juego = pygame.image.load("Graficos/Menú_Juego.jpg")
 
 # Imagen de salida
-menu_salir = pygame.image.load("Esc.PNG")
+menu_salir = pygame.image.load("Graficos/Control_Salida.PNG")
 
-# Imagen del botón (hover)
-boton2 = pygame.image.load("Boton_play2.PNG")
+# Imagen del botón play
+boton2 = pygame.image.load("Graficos/play.jpg")
 
 # Imagen del botón continuar
-boton_continuar = pygame.image.load("Continuar.PNG")
+boton_continuar = pygame.image.load("Graficos/Boton_Cont.PNG")
 
 # Crear rectángulos del botón con el tamaño de la imagen
-boton_pos = boton2.get_rect(topleft=(368, 557))
+boton_pos = boton2.get_rect(topleft=(559, 595))
 boton_continuar_pos = boton_continuar.get_rect(topleft=(266, 52))
 
 while True:
@@ -63,7 +63,7 @@ while True:
 
     # --- Página de salida ---
     elif pagina_actual == 2:
-        screen.blit(menu_salir, (0,0))
+        screen.blit(menu_salir, (550,0))
         
         mouse = pygame.mouse.get_pos()
         click = pygame.mouse.get_pressed()
@@ -74,18 +74,5 @@ while True:
             if click[0] == 1:
                 pagina_actual = 0
 
-        # Rectángulos de ejemplo (ajusta según tu imagen Esc.PNG)
-        # boton_si = pygame.Rect(250, 400, 100, 50)          Botones del menú de salida
-        # boton_no = pygame.Rect(500, 400, 100, 50)
-    """
-            if boton_si.collidepoint(mouse) and click[0]:
-            print("Saliendo del juego...")
-            pygame.quit()
-            sys.exit()
-
-        if boton_no.collidepoint(mouse) and click[0]:
-            print("Volviendo al menú principal")
-            pagina_actual = 0
-    """
     pygame.display.flip()
     clock.tick(60)
