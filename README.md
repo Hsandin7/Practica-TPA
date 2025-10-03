@@ -1,6 +1,6 @@
 # Naipo
 
-![Menu Principal](Graficos/Menu_principal.jpg)
+![Menu Principal](Graficos/Menu_principal.png)
 
 ##
 
