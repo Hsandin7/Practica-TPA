@@ -22,10 +22,10 @@ menu_juego = pygame.image.load("Graficos/Menú_Juego.jpg")
 menu_salir = pygame.image.load("Graficos/Control_Salida.PNG")
 
 # Imagen del botón play
-boton2 = pygame.image.load("Graficos/play.jpg")
+boton2 = pygame.image.load("Graficos/play.png")
 
 # Imagen del botón continuar
-boton_continuar = pygame.image.load("Graficos/Boton_Cont.PNG")
+boton_continuar = pygame.image.load("Graficos/Boton_Cont.png")
 
 # Crear rectángulos del botón con el tamaño de la imagen
 boton_pos = boton2.get_rect(topleft=(559, 595))
