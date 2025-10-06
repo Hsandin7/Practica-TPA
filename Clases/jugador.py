@@ -1,3 +1,5 @@
+## MODIFICAR PARA QUE FUNCIONE CON LA CLASE CARTA
+
 from mazo import Mazo
 
 class Jugador:
@@ -43,3 +45,10 @@ class Jugador:
     def nueva_mano(self, mazo: Mazo):
         for i in range(8):
             self._mano.append(mazo.robar())
+
+
+
+
+
+def comprobaciones():
+    pass

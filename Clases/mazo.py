@@ -3,7 +3,7 @@ from carta import Carta
 
 class Mazo:
     def __init__(self):
-        self.cartas = [Carta(palo, valor) for palo in Carta.PALOS for valor in Carta.VALORES]
+        self.cartas = [Carta(valor, palo) for palo in Carta.PALOS for valor in Carta.VALORES]
         self.barajar()
 
     def barajar(self):
