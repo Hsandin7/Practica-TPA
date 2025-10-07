@@ -10,8 +10,8 @@ ventana = pygame.display.set_mode((ANCHO, ALTO))
 pygame.display.set_caption("Demo de transparencia")
 
 # Cargar imágenes
-fondo = pygame.image.load("Graficos/Menú_Juego.jpg") #.convert()  # Fondo sin transparencia
-superior = pygame.image.load("Graficos/Control_Salida.PNG").convert_alpha()  # Con canal alpha
+fondo = pygame.image.load("Graficos/Menú_Juego.png") #.convert()  # Fondo sin transparencia
+superior = pygame.image.load("Graficos/Control_Salida.png").convert_alpha()  # Con canal alpha
 
 # Escalar imágenes al tamaño de la ventana (opcional)
 # fondo = pygame.transform.scale(fondo, (0,0))
