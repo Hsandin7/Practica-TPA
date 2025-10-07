@@ -13,7 +13,6 @@ clock = pygame.time.Clock()
 
 # Creación del Juego
 juego = Juego(screen)
-juego._cargar_imagenes()
 
 while True:
     eventos = pygame.event.get()
@@ -28,9 +27,11 @@ while True:
 
     match juego.pagina_actual:
         case 0:
-            juego.mostrar_pagina_principal(eventos)
+            juego.mostrar_pagina_principal()
+            juego.actualizar_pagina_principal(eventos)
         case 1:
-            juego.mostrar_pagina_juego(eventos)
+            juego.mostrar_pagina_juego()
+            juego.actualizar_pagina_juego(eventos)
         case 2:
             juego.mostrar_menu_salida(eventos)
         case 3:

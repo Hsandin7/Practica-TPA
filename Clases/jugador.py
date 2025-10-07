@@ -6,16 +6,20 @@ class Jugador:
     def __init__(self, mazo: Mazo):
         self.puntos = int()
         self._mano = [mazo.robar() for i in range(0,8)]
-        self._cartas_seleccionadas = []     # lista con las posiciones de las cartas seleccionadas
+        self._cartas_seleccionadas = [0, 2, 4, 6]     # lista con las posiciones de las cartas seleccionadas
 
         print(self._mano)
 
-    def mostrar_mano(self, screen):
+    def mostrar_cartas(self, screen):      
         pos_inicial_x = 535
         indice = 0
         for carta in self._mano:
-            carta.asignar_posicion(pos_inicial_x + indice*75, 500)
-            carta.mostrar(screen)
+            if indice in self._cartas_seleccionadas:
+                carta.asignar_posicion(pos_inicial_x + indice*75, 410)
+            else:
+                carta.asignar_posicion(pos_inicial_x + indice*75, 500)
+            carta.dibujar(screen)
+            
             indice += 1
 
 
