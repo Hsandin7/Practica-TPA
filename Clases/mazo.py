@@ -1,5 +1,5 @@
 import random
-from carta import Carta
+from Clases.carta import Carta
 
 class Mazo:
     def __init__(self):
@@ -13,13 +13,13 @@ class Mazo:
         if self.cartas:
             carta = self.cartas[-1]   # obtiene la última carta sin borrarla
             self.cartas.pop()         # la elimina del mazo
-            return carta              # devuelve el valor
+            return carta              # devuelve el valor (clase Carta)
         return None
     
     def __str__(self):      # Cabia como se muestra el mazo cuando se hace un print (Solo para debugging)
         return ", ".join(str(carta) for carta in self.cartas)
 
 
-# Testing
-sep = Mazo()
-print(sep)
+# # Testing
+# sep = Mazo()
+# print(sep)

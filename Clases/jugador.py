@@ -1,13 +1,32 @@
 ## MODIFICAR PARA QUE FUNCIONE CON LA CLASE CARTA
 
-from mazo import Mazo
+from Clases.mazo import Mazo
 
 class Jugador:
-    def __init__(self, puntos, comodines):
-        self._puntos = puntos
+    def __init__(self, mazo: Mazo):
+        self.puntos = int()
+        self._mano = [mazo.robar() for i in range(0,8)]
+        self._cartas_seleccionadas = []     # lista con las posiciones de las cartas seleccionadas
+
+        print(self._mano)
+
+    def mostrar_mano(self, screen):
+        pos_inicial_x = 535
+        indice = 0
+        for carta in self._mano:
+            carta.asignar_posicion(pos_inicial_x + indice*75, 500)
+            carta.mostrar(screen)
+            indice += 1
+
+
+
+
+class Jugadorr:
+    def __init__(self):
+        self._puntos = int()
         self._mano = []
         self._cartas_seleccionadas = [] # No puede tener mas de 5
-        self._comodines = comodines
+        self._comodines = []
     
     def seleccionar_carta(self):
         if len(self._cartas_seleccionadas) <= 5:
