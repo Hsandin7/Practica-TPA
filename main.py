@@ -23,9 +23,14 @@ menu_juego = pygame.image.load("Graficos/Menú_Juego.png")
 menu_salir = pygame.image.load("Graficos/Control_Salida.png").convert_alpha()
 
 # Clases Boton
-boton_play = Boton("Graficos/play.png", (560, 595))
-boton_continuar = Boton("Graficos/Boton_Cont.png", (screen_width/2 - 350/2, 25))
+boton_play = Boton("Graficos/Botones/Boton_Play.png", (560, 595))
+boton_continuar = Boton("Graficos/Botones/Boton_Continuar.png", (screen_width/2 - 350/2, 25))
+boton_controles = Boton("Graficos/Botones/Boton_Controles.png", (screen_width/2 - 350/2, 165))
+boton_salir = Boton("Graficos/Botones/Boton_Salir.png", (screen_width/2 - 350/2, 305))
 
+boton_shop = Boton("Graficos/Botones/Boton_Shop.png", (95, 305))
+boton_jugar = Boton("Graficos/Botones/Boton_Jugar.png", (665, 645))
+boton_descartar = Boton("Graficos/Botones/Boton_Descartar.png", (825, 645))
 
 ##### TESTING CLASE CARTAS
 cartas = []
@@ -60,7 +65,11 @@ while True:
     # --- Página del juego ---
     elif pagina_actual == 1:
         screen.blit(menu_juego, (0,0))
-        
+        boton_shop.dibujar(screen)
+        boton_jugar.dibujar(screen)
+        boton_descartar.dibujar(screen)
+
+
         ##### TESTING
         for carta in cartas:
             carta.mostrar(screen)
@@ -70,10 +79,19 @@ while True:
     # --- Página de salida ---
     elif pagina_actual == 2:
         screen.blit(menu_salir, (0,0))
-        # boton_continuar.dibujar(screen)
+        boton_continuar.dibujar(screen)
+        boton_controles.dibujar(screen)
+        boton_salir.dibujar(screen)
 
-        # if boton_continuar.detectar_click(eventos):
-        #     pagina_actual = 0
+        if boton_continuar.detectar_click(eventos):
+            pagina_actual = 1
+        
+        if boton_controles.detectar_click(eventos):
+            pass
+
+        if boton_salir.detectar_click(eventos):
+            pygame.quit()
+            sys.exit()
 
     pygame.display.flip()
     clock.tick(60)

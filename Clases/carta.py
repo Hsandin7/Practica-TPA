@@ -7,7 +7,7 @@ class Carta:
     def __init__(self, valor, palo):
         self._valor = valor
         self._palo = palo
-        self._imagen = pygame.image.load(f"Graficos/Cartas/{self.valor}{self.palo}.png")    # Imagen correspondiente cargada
+        self._imagen = pygame.image.load(f"Graficos/cartas/{self.valor}{self.palo}.png")    # Imagen correspondiente cargada
         self._x = int()      # Pos de la imagen
         self._y = int()
 
