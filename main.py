@@ -19,7 +19,7 @@ clock = pygame.time.Clock()
 
 # Imágenes de fondo
 menu_principal = pygame.image.load("Graficos/Menu_principal.png")
-menu_juego = pygame.image.load("Graficos/Menú_Juego.jpg")
+menu_juego = pygame.image.load("Graficos/Menú_Juego.png")
 menu_salir = pygame.image.load("Graficos/Control_Salida.png").convert_alpha()
 
 # Clases Boton
@@ -69,7 +69,7 @@ while True:
 
     # --- Página de salida ---
     elif pagina_actual == 2:
-        screen.blit(menu_salir, (screen_width/2 - menu_salir.get_width()/2,0))
+        screen.blit(menu_salir, (0,0))
         boton_continuar.dibujar(screen)
 
         if boton_continuar.detectar_click(eventos):
