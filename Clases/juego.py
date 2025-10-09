@@ -1,4 +1,3 @@
-from Clases.mazo import Mazo
 from Clases.jugador import Jugador
 from Clases.boton import Boton
 import pygame
@@ -13,8 +12,7 @@ class Juego:
         self.cargar_imagenes()
         self.botones = self.cargar_botones()
 
-        self.mazo = Mazo()
-        self.jugador = Jugador(self.mazo)
+        self.jugador = Jugador()
         
 
     def cargar_imagenes(self):
@@ -54,25 +52,30 @@ class Juego:
         self.botones["jugar"].dibujar(self._screen)
         self.botones["descartar"].dibujar(self._screen)
 
-        self.jugador.mostrar_cartas(self._screen)
+        self.jugador.mostrar_mano(self._screen)
 
     def actualizar_pagina_juego(self, eventos):
+        self.jugador.actualizar(eventos)
+
         if self.botones["shop"].detectar_click(eventos):
             pass    ## Por hacer
+        
         elif self.botones["jugar"].detectar_click(eventos):
-            pass    ## Por hacer
+            self.jugador.jugar_cartas()     ## Por hacer
+        
         elif self.botones["descartar"].detectar_click(eventos):
-            pass    ## Por hacer
+            self.jugador.descartar_cartas()
 
 
     # Menú de salida
-    def mostrar_menu_salida(self, eventos):
+    def mostrar_menu_salida(self):
         self._screen.blit(self.menu_salir, (0,0))
         
         self.botones["continuar"].dibujar(self._screen)
         self.botones["controles"].dibujar(self._screen)
         self.botones["salir"].dibujar(self._screen)
 
+    def actualizar_menu_salida(self, eventos):
         if self.botones["continuar"].detectar_click(eventos):
             self.pagina_actual = 1
         elif self.botones["controles"].detectar_click(eventos):
@@ -81,6 +84,3 @@ class Juego:
             self.pagina_actual = 0
 
 
-   
-    def mostrar_cartas(self):
-        self.jugador.mostrar_mano()

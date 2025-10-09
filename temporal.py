@@ -33,7 +33,8 @@ while True:
             juego.mostrar_pagina_juego()
             juego.actualizar_pagina_juego(eventos)
         case 2:
-            juego.mostrar_menu_salida(eventos)
+            juego.mostrar_menu_salida()
+            juego.actualizar_menu_salida(eventos)
         case 3:
             pass # Nueva ventana
 

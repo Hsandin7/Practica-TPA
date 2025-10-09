@@ -16,10 +16,10 @@ class Mazo:
             return carta              # devuelve el valor (clase Carta)
         return None
     
-    def __str__(self):      # Cabia como se muestra el mazo cuando se hace un print (Solo para debugging)
-        return ", ".join(str(carta) for carta in self.cartas)
+#     def __str__(self):      # Cabia como se muestra el mazo cuando se hace un print (Solo para debugging)
+#         return ", ".join(str(carta) for carta in self.cartas)
 
 
-# # Testing
-# sep = Mazo()
-# print(sep)
+# # # Testing
+# # sep = Mazo()
+# # print(sep)

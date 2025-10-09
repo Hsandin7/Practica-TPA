@@ -1,31 +1,58 @@
-## MODIFICAR PARA QUE FUNCIONE CON LA CLASE CARTA
+# Encapsula todo lo relacionado con la mano, el mazo y las acciones del jugador
 
 from Clases.mazo import Mazo
 
 class Jugador:
-    def __init__(self, mazo: Mazo):
+    def __init__(self):
         self.puntos = int()
-        self._mano = [mazo.robar() for i in range(0,8)]
-        self._cartas_seleccionadas = [0, 2, 4, 6]     # lista con las posiciones de las cartas seleccionadas
+        self.mazo = Mazo()
+        self._mano = [self.mazo.robar() for i in range(0,8)]
 
-        print(self._mano)
+        
 
-    def mostrar_cartas(self, screen):      
+    def mostrar_mano(self, screen):      
         pos_inicial_x = 535
         indice = 0
         for carta in self._mano:
-            if indice in self._cartas_seleccionadas:
-                carta.asignar_posicion(pos_inicial_x + indice*75, 410)
+            if carta.seleccionada:
+                carta.asignar_posicion(pos_inicial_x + indice*75, 450)
             else:
                 carta.asignar_posicion(pos_inicial_x + indice*75, 500)
             carta.dibujar(screen)
             
             indice += 1
+    
+    def actualizar(self, eventos):
+        for carta in self._mano:
+            carta.detectar_seleccion(eventos)
+    
+    def actualizar2(self, eventos): # Con límite de selección de cartas
+        contador = 0
+        for carta in self._mano:
+            if carta.seleccionada:
+                contador += 1
+        
+        for carta in self._mano:
+            carta.detectar_seleccion(eventos, contador)
+
+    def jugar_cartas(self):
+        cartas_jugadas = [carta for carta in self._mano if carta.seleccionada]
+
+    def descartar_cartas(self):
+        seleccionadas = []
+        for carta in self._mano:
+            if carta.seleccionada:
+                seleccionadas.append(carta)
+        for carta in seleccionadas:
+            self._mano.remove(carta)
+        while len(self._mano) is not 8:
+            self._mano.append(self.mazo.robar())
+                
 
 
 
 
-class Jugadorr:
+class Jugadorrrrr:
     def __init__(self):
         self._puntos = int()
         self._mano = []
