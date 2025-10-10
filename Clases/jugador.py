@@ -1,6 +1,7 @@
 # Encapsula todo lo relacionado con la mano, el mazo y las acciones del jugador
 
 from Clases.mazo import Mazo
+from Clases.evaluador_cartas import Evaluador_Cartas
 
 class Jugador:
     def __init__(self):
@@ -8,7 +9,9 @@ class Jugador:
         self.mazo = Mazo()
         self._mano = [self.mazo.robar() for i in range(0,8)]
 
-        
+    
+    def mostrar_puntos(self, screen):
+        pass
 
     def mostrar_mano(self, screen):      
         pos_inicial_x = 535
@@ -37,6 +40,10 @@ class Jugador:
 
     def jugar_cartas(self):
         cartas_jugadas = [carta for carta in self._mano if carta.seleccionada]
+        if cartas_jugadas is not []:        # Comprueba que haya cartas seleccionadas
+            evaluador = Evaluador_Cartas(cartas_jugadas)
+            print(evaluador.evaluar())      # Para debugging pero se tendrá que reemplazar con algo que use el resultado
+            self.descartar_cartas()         # Una vez jugadas se descartan
 
     def descartar_cartas(self):
         seleccionadas = []

@@ -13,9 +13,11 @@ from Clases.boton import Boton
 
 # Ahora mismo está igual que la clase carta
 class Comodin(Boton):
-    def __init__(self, ruta_imagen, posicion, descripcion):
+    def __init__(self, ruta_imagen, posicion):
         super().__init__(ruta_imagen, posicion)
-        self.descripcion = descripcion
+        self.descripcion = str()
+        self.rareza = int() # "Común", "Raro", "Épico"
+        self.precio = int() # Precio de la carta
     
     def dibujar(self):
         pass
