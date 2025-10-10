@@ -14,16 +14,18 @@ class Jugador:
         pass
 
     def mostrar_mano(self, screen):      
-        pos_inicial_x = 535
-        indice = 0
+        pos_x = 535
         for carta in self._mano:
+            carta.x_final = pos_x
             if carta.seleccionada:
-                carta.asignar_posicion(pos_inicial_x + indice*75, 450)
+                carta.y_final = 450
+                #carta.asignar_posicion(pos_x, 450)
             else:
-                carta.asignar_posicion(pos_inicial_x + indice*75, 500)
+                carta.y_final = 500
+                #carta.asignar_posicion(pos_x, 500)
             carta.dibujar(screen)
             
-            indice += 1
+            pos_x += 75
     
     def actualizar(self, eventos):
         for carta in self._mano:

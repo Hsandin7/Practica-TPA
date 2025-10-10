@@ -23,15 +23,15 @@ class Juego:
 
     def cargar_botones(self):
         return {
-            "play": Boton("Graficos/Botones/Boton_Play.png", (560, 595)),
+            "play": Boton("Graficos/Botones/Boton_Play.png", 560, 595),
 
-            "continuar": Boton("Graficos/Botones/Boton_Continuar.png", (self.screen_width/2 - 350/2, 25)),
-            "controles": Boton("Graficos/Botones/Boton_Controles.png", (self.screen_width/2 - 350/2, 165)),
-            "salir": Boton("Graficos/Botones/Boton_Salir.png", (self.screen_width/2 - 350/2, 305)),
+            "continuar": Boton("Graficos/Botones/Boton_Continuar.png", self.screen_width/2 - 350/2, 25),
+            "controles": Boton("Graficos/Botones/Boton_Controles.png", self.screen_width/2 - 350/2, 165),
+            "salir": Boton("Graficos/Botones/Boton_Salir.png", self.screen_width/2 - 350/2, 305),
 
-            "shop": Boton("Graficos/Botones/Boton_Shop.png", (95, 305)),
-            "jugar": Boton("Graficos/Botones/Boton_Jugar.png", (665, 645)),
-            "descartar": Boton("Graficos/Botones/Boton_Descartar.png", (825, 645))
+            "shop": Boton("Graficos/Botones/Boton_Shop.png", 95, 305),
+            "jugar": Boton("Graficos/Botones/Boton_Jugar.png", 665, 645),
+            "descartar": Boton("Graficos/Botones/Boton_Descartar.png", 825, 645)
         }
 
 
