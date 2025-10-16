@@ -53,6 +53,7 @@ class Juego:
         self.botones["descartar"].dibujar(self._screen)
 
         self.jugador.mostrar_mano(self._screen)
+        self.jugador.mostrar_puntos(self._screen)
 
     def actualizar_pagina_juego(self, eventos):
         self.jugador.actualizar(eventos)

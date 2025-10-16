@@ -1,3 +1,4 @@
+from Clases._utilidades import reproducir_sonido
 import pygame
 
 class Boton:
@@ -6,7 +7,7 @@ class Boton:
         self.y = posy
         self.imagen_original = pygame.image.load(ruta_imagen).convert_alpha()   # Carga la imagen
         self.rect = self.imagen_original.get_rect(topleft=(self.x,self.y))             # Crea el rect correspondiente
-        self._sonido_click = pygame.mixer.Sound(sonido)
+        self._sonido_click = sonido
 
         # Crea una versión oscurecida de la imagen, usando multiplicación RGBA
         self.imagen_hover = self.imagen_original.copy()
@@ -34,6 +35,6 @@ class Boton:
         if self.rect.collidepoint(mouse_pos):
             for event in eventos:
                 if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
-                    self._sonido_click.play()   # Reproducir sonido
+                    reproducir_sonido(self._sonido_click)       # Reproducir sonido
                     return True
         return False

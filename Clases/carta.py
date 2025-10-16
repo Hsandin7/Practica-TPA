@@ -35,10 +35,3 @@ class Carta(Boton):
     def detectar_seleccion(self, eventos):
         if self.detectar_click(eventos):
             self.seleccionada = not self.seleccionada
-
-    def detectar_seleccion2(self, eventos, contador): # Límite de selección de cartas
-        if self.detectar_click(eventos):
-            if self.seleccionada and contador >= 5:
-                self.seleccionada = not self.seleccionada
-            elif contador < 5:
-                self.seleccionada = not self.seleccionada
