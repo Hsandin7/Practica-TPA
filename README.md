@@ -1,10 +1,12 @@
 # Naipo
 
-![Menu Principal](Graficos/Menu_principal.png)
+![Pagina Principal](Graficos/pagina_principal.png)
 
 ##
 
 ### Como usar:
+Ejecutar desde el main.py
+
 Este juego utiliza la versión 3.13 de python junto con la biblioteca pygame 2.6.1
 
 Esta se puede instalar desde "requirements.txt" de la siguiente forma:
@@ -21,15 +23,34 @@ pip install -r requirements.txt
 classDiagram
 direction TB
 
+    class boton {
+	    + int posx
+	    + int posy
+	    + imagen
+	    + sonido
+	    + imagen oscurecida
+	    + asignarPosicion()
+	    + Dibujar()
+	    + detectar_click()
+    }
     class Carta {
-	    +String nombre
-	    +void Funcionamiento()
+	    +int valor 
+	    +string palo
+	    +int posicion_final_x
+	    +int posicion_final_y
+	    +float velocidad
+	    +bool seleccionada
+	    +mover_hacia_destino()
+	    +dibujar()
+	    +detectar_seleccion()
     }
     class Comodin {
+	    +String descripcion
 	    +String nombre
-	    +String tipo
+	    +int raraza
 	    +int precio
-	    +void Funcionamiento()
+	    +dibujar()
+	    +Funcionamiento()
     }
     class ComodinNormal {
 	    +String nombre
@@ -49,31 +70,40 @@ direction TB
 	    +int precio
 	    +void Funcionamiento()
     }
-    class CartaNormal {
-	    +int numero
-	    +String color
-	    +void Funcionamiento()
-    }
-    Carta --|> Comodin
-    Carta --|> CartaNormal
+    boton --|> Carta
+    boton--|> Comodin
     Comodin --|> ComodinNormal
     Comodin --|> ComodinRaro
     Comodin --|> ComodinEpico
-    class Niveles{
-        +int puntuación 
-        +String NombreNivel
-        +void Recompensas()
-    }
-    class Nivel1{
-        +int puntuación 
-        +String NombreNivel = nivel1
-        +void Recompensas()
-    }
-    class Nivel2{
-        +int puntuación 
-        +String NombreNivel = nivel2
-        +void Recompensas()
-    }
-    Niveles --|> Nivel1
-    Niveles --|> Nivel2
+    
+    class evaluador_cartas{
+	    + lista cartas_seleccionadas
+	    + diccionario resultado
+	    + evaluar()
+	    + comprobaciones()
+	  }
+	  
+	  class Mazo{
+		  + lista baraja
+		  + barajar()
+		  + robar()
+	  }
+	  
+	  class jugador{
+		  + puntos
+		  + puntos_cartas
+		  + multiplicador
+		  + mazo
+		  + mano
+		  + cartas_jugadas
+		  + limite_seleccion
+		  + mostrar_puntos()
+		  + mostrar_mano()
+		  + detectar_seleccion_carta()
+		  + jugar_cartas()
+		  + descartar_cartas()
+	  }
+	  
+	  class transicion{
+	  }
 ```
