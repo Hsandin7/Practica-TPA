@@ -13,56 +13,59 @@ class Evaluador_Cartas:
         self.resultado = {"Cartas": list(), "Valor": int(), "Multiplicador": int()}
 
     def evaluar(self):
-        if len(self.cartas) == 5 and (cartas := self._Escalera_Color()) is not None:
+        self.cartas.sort(key=lambda carta: carta.valor)
+        num_seleccionadas = len(self.cartas)
+        
+        if num_seleccionadas == 5 and (cartas := self._Escalera_Color()) is not None:
             self.resultado["Cartas"] = cartas
             self.resultado["Valor"] = 100 + sum([c.valor for c in cartas])
             self.resultado["Multiplicador"] = 8
             print("Escalera Color")
             return self.resultado
         
-        if len(self.cartas) >= 4 and (cartas := self._Poker()) is not None:
+        if num_seleccionadas >= 4 and (cartas := self._Poker()) is not None:
             self.resultado["Cartas"] = cartas
             self.resultado["Valor"] = 60 + sum([c.valor for c in cartas])
             self.resultado["Multiplicador"] = 7
             print("Poker")
             return self.resultado
         
-        if len(self.cartas) == 5 and (cartas := self._Trio_y_Pareja()) is not None:
+        if num_seleccionadas == 5 and (cartas := self._Trio_y_Pareja()) is not None:
             self.resultado["Cartas"] = cartas
             self.resultado["Valor"] = 40 + sum([c.valor for c in cartas])
             self.resultado["Multiplicador"] = 4
             print("Trio y Pareja")
             return self.resultado
         
-        if len(self.cartas) == 5 and (cartas := self._Color(self.cartas)) is not None:
+        if num_seleccionadas == 5 and (cartas := self._Color(self.cartas)) is not None:
             self.resultado["Cartas"] = cartas
             self.resultado["Valor"] = 50 + sum([c.valor for c in cartas])
             self.resultado["Multiplicador"] = 6
             print("Color")
             return self.resultado
         
-        if len(self.cartas) == 5 and (cartas := self._Escalera()) is not None:
+        if num_seleccionadas == 5 and (cartas := self._Escalera()) is not None:
             self.resultado["Cartas"] = cartas
             self.resultado["Valor"] = 30 + sum([c.valor for c in cartas])
             self.resultado["Multiplicador"] = 4
             print("Escalera")
             return self.resultado
         
-        if len(self.cartas) >= 3 and (cartas := self._Trio()) is not None:
+        if num_seleccionadas >= 3 and (cartas := self._Trio()) is not None:
             self.resultado["Cartas"] = cartas
             self.resultado["Valor"] = 30 + sum([c.valor for c in cartas])
             self.resultado["Multiplicador"] = 3
             print("Trio")
             return self.resultado
         
-        if len(self.cartas) >= 4 and (cartas := self._Doble_Pareja()) is not None:
+        if num_seleccionadas >= 4 and (cartas := self._Doble_Pareja()) is not None:
             self.resultado["Cartas"] = cartas
             self.resultado["Valor"] = 20 + sum([c.valor for c in cartas])
             self.resultado["Multiplicador"] = 2
             print("Doble Pareja")
             return self.resultado
         
-        if len(self.cartas) >= 2 and (cartas := self._Parejas(self.cartas)) is not None:
+        if num_seleccionadas >= 2 and (cartas := self._Parejas(self.cartas)) is not None:
             self.resultado["Cartas"] = cartas
             self.resultado["Valor"] = 10 + sum([c.valor for c in cartas])
             self.resultado["Multiplicador"] = 2

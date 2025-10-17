@@ -6,7 +6,7 @@
 Como usar:
     dentro de la clase que se quiera importar se hace:
         from Clases._utilidades import funcion_que_se_quiera_usar
-    o:
+    o, si se quieren importar todas las funciones:
         from Clases._utilidades import *
 """
 
@@ -38,4 +38,3 @@ def reproducir_sonido(ruta):
     if ruta not in _sonidos:
         _sonidos[ruta] = pygame.mixer.Sound(ruta)
     _sonidos[ruta].play()
-
