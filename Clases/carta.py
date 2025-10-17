@@ -5,7 +5,7 @@ class Carta(Boton):
     VALORES = list(range(1,13))
 
     def __init__(self, valor, palo):
-        super().__init__(f"Graficos/cartas/{valor}{palo}.png", 1200, 600, "Sonidos/Sonido_Seleccionar_Cartas.mp3")
+        super().__init__(f"Graficos/cartas/{valor}{palo}.png", 1200, 600, "Sonidos/sonido_seleccionar_cartas.mp3")
         self._valor = valor
         self._palo = palo
         self.x_final = self.x

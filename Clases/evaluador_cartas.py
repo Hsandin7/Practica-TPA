@@ -1,11 +1,11 @@
 from Clases.carta import Carta
 
-# Cada comprobación devuelve una lista con las cartas que cumplen las condiciones
-# (Menos la de carta más alta que devuelve una solo y después se convierte en lista para un manejo más sencillo)
+# Cada comprobacion devuelve una lista con las cartas que cumplen las condiciones
+# (Menos la de carta mas alta que devuelve una solo y despues se convierte en lista para un manejo mas sencillo)
 
-# Toda la parte de evaluar ya está acabada
+# Toda la parte de evaluar ya esta acabada
 # Cuando se usa evaluar() se obtiene un diccionario (self.resultado) con las "Cartas", "Valor" y "Multiplicador"
-# correspondientes con la comprobación que sea verdadera
+# correspondientes con la comprobacion que sea verdadera
 
 class Evaluador_Cartas:
     def __init__(self, cartas_seleccionadas):
@@ -76,7 +76,7 @@ class Evaluador_Cartas:
             self.resultado["Cartas"] = [carta]
             self.resultado["Valor"] = 5 + carta.valor
             self.resultado["Multiplicador"] = 1
-            print("Carta más alta")
+            print("Carta mas alta")
             return self.resultado
         
 
@@ -84,7 +84,6 @@ class Evaluador_Cartas:
     def _Escalera_Color(self):
         if self._Escalera() is not None and self._Color(self.cartas) is not None:
             return self.cartas
-        return None
 
     def _Poker(self):
         for c1 in self.cartas:
@@ -94,7 +93,6 @@ class Evaluador_Cartas:
                         if c1 != c2 and c1 != c3 and c1 != c4 and c2 != c3 and c2 != c4 and c3 != c4:
                             if c1.valor == c2.valor == c3.valor == c4.valor:
                                 return [c1, c2, c3, c4]
-        return None
 
     def _Trio_y_Pareja(self):
         lista_cartas = self.cartas.copy()
@@ -105,10 +103,6 @@ class Evaluador_Cartas:
             lista_cartas.remove(trio[2])
             if len(lista_cartas) == 2  and lista_cartas[0].valor == lista_cartas[0].valor:
                 return self.cartas
-            else:
-                return None
-        else:
-            return None
 
     def _Color(self, cartas):
         color = cartas[0].palo
@@ -136,7 +130,6 @@ class Evaluador_Cartas:
                     if c1 != c2 and c1 != c3 and c2 != c3:
                         if c1.valor == c2.valor == c3.valor:
                             return [c1, c2, c3]
-        return None
 
     def _Doble_Pareja(self):
         lista_cartas = self.cartas.copy()
@@ -147,17 +140,12 @@ class Evaluador_Cartas:
             pareja2 = self._Parejas(lista_cartas)
             if pareja2 is not None:
                 return pareja2 + pareja1
-            else:
-                return None
-        else:
-            return None
 
     def _Parejas(self, cartas):
         for c1 in cartas:
             for c2 in cartas:
                 if c1 is not c2 and c1.valor == c2.valor:
                     return [c1, c2]
-        return None
 
     def _Carta_mas_alta(self):
         resultado = None

@@ -44,7 +44,9 @@ while True:
                 juego.mostrar_menu_salida(screen)
                 juego.actualizar_menu_salida(eventos)
             case 3:
-                pass # Nueva ventana
+                juego.mostrar_Tienda(screen)
+                juego.actualizar_Tienda(eventos)
+
         if Juego.transicion:
             transicion.iniciar(Juego.paginas_transicion[0],
                                Juego.paginas_transicion[1],

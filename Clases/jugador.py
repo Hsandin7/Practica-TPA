@@ -66,7 +66,7 @@ class Jugador:
                 self.puntos_cartas = evaluacion["Valor"]
                 self.multiplicador = evaluacion["Multiplicador"]
                 self.puntos += self.puntos_cartas * self.multiplicador
-                print(evaluacion)      # Para debugging pero se tendrá que reemplazar con algo que use el resultado
+                print(evaluacion)      # Para debugging pero se tendra que reemplazar con algo que use el resultado
                 print(self._cartas_jugadas)
                 self.descartar_cartas()         # Una vez jugadas se descartan
 

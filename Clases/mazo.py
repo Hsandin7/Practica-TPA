@@ -11,7 +11,7 @@ class Mazo:
 
     def robar(self):
         if self.cartas:
-            carta = self.cartas[-1]   # obtiene la última carta sin borrarla
+            carta = self.cartas[-1]   # obtiene la ultima carta sin borrarla
             self.cartas.pop()         # la elimina del mazo
             return carta              # devuelve el valor (clase Carta)
         return None
