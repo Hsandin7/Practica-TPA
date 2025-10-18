@@ -1,6 +1,6 @@
 # from Clases.jugador import Jugador
 from Clases.juego import Juego
-from Clases.transicion import Transicion
+from Clases.animaciones import Transicion
 import pygame
 import sys
 
@@ -46,6 +46,8 @@ while True:
             case 3:
                 juego.mostrar_Tienda(screen)
                 juego.actualizar_Tienda(eventos)
+            case _:
+                pass
 
         if Juego.transicion:
             transicion.iniciar(Juego.paginas_transicion[0],
