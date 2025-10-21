@@ -37,6 +37,8 @@ class Juego:
             "shop":         Boton("Graficos/Botones/boton_shop.png", 95, 305),
             "jugar":        Boton("Graficos/Botones/boton_jugar.png", 665, 645),
             "descartar":    Boton("Graficos/Botones/boton_descartar.png", 825, 645),
+            "guardar":      Boton("Graficos/Botones/boton_guardar.png", 540, 450),
+            "cargar":       Boton("Graficos/Botones/boton_cargar.png", 680, 450),
 
             "boton_SR":     Boton("Graficos/Botones/boton_siguiente_ronda.png", 345, 250),
             "cambiar":      Boton("Graficos/Botones/boton_cambiar.png", 345, 380),
@@ -96,6 +98,8 @@ class Juego:
         self.botones["continuar"].dibujar(screen)
         self.botones["controles"].dibujar(screen)
         self.botones["salir"].dibujar(screen)
+        self.botones["guardar"].dibujar(screen)
+        self.botones["cargar"].dibujar(screen)
 
     def actualizar_menu_salida(self, eventos):
         if self.botones["continuar"].detectar_click(eventos):
@@ -107,6 +111,10 @@ class Juego:
             Juego.transicion = True
             Juego.paginas_transicion = [self.paginas[2],self.paginas[0], 0]
             self.reiniciar()
+        elif self.botones["guardar"].detectar_click(eventos):
+            self.jugador.guardar_partida()
+        elif self.botones["cargar"].detectar_click(eventos):
+            self.jugador.cargar_partida()
 
 
     # Tienda
