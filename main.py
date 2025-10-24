@@ -23,9 +23,20 @@ while True:
             pygame.quit()
             sys.exit()
 
-        # --- Detectar tecla ESC solo en la página de juego ---
-        if juego.pagina_actual == 1 and event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE:
-            juego.pagina_actual = 2  # Ir al menú de salida
+        # --- Detectar tecla ESC ---
+        if event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE:
+            juego.mostrar_fondo = True
+            match juego.pagina_actual:
+                case 0:                         # P Principal
+                    pygame.quit()                   # -> Cerrar el juego
+                    sys.exit()
+                case 1 | 4:                     # P Juego / M Guardado
+                    juego.pagina_actual = 2         # -> M Salida
+                case 2 | 3:                     # M Salida / M Tienda
+                    juego.pagina_actual = 1         # -> P Juego
+                case _:
+                    pass
+
 
     if Juego.transicion:
         num = transicion.actualizar(screen)
@@ -44,8 +55,11 @@ while True:
                 juego.mostrar_menu_salida(screen)
                 juego.actualizar_menu_salida(eventos)
             case 3:
-                juego.mostrar_Tienda(screen)
-                juego.actualizar_Tienda(eventos)
+                juego.mostrar_menu_tienda(screen)
+                juego.actualizar_menu_tienda(eventos)
+            case 4:
+                juego.mostrar_menu_guardado(screen)
+                juego.actualizar_menu_guardado(eventos)
             case _:
                 pass
 

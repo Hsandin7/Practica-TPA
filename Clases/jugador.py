@@ -15,6 +15,7 @@ class Jugador:
         self.puntos = 0
         self.puntos_cartas = 0
         self.multiplicador = 0
+        self.slot_seleccionado = 0
         
         self.evaluador =        Evaluador_Cartas()
         self.animador_texto =   Animador_Texto()
@@ -98,8 +99,8 @@ class Jugador:
             self.multiplicador = evaluacion["Multiplicador"]
             self.puntos += self.puntos_cartas * self.multiplicador
             
-            print(evaluacion)      # Para debugging
-            print(self._cartas_jugadas)
+            # print(evaluacion)      # Para debugging
+            # print(self._cartas_jugadas)
             
             for carta in self._cartas_jugadas:      # Quita las cartas que se hayan jugado para que el resto se descarte correctamente
                 self.mano.remove(carta)
@@ -118,6 +119,7 @@ class Jugador:
             self.mano.append(self.mazo.robar())
 
 
+    # Manjo de partidas guardadas
     def guardar_partida(self):
         # mazo y mano se guardan como listas de strings con el valor y el palo concatenados
         datos = {
@@ -128,13 +130,16 @@ class Jugador:
             "mano":             [[c._valor, c._palo] for c in self.mano],
             "cartas_jugadas":   [[c._valor, c._palo] for c in self._cartas_jugadas]
         }
-        guardar_partida(datos)
+        guardar_partida(self.slot_seleccionado, datos)
     
     def cargar_partida(self):
-        datos = cargar_partida()
+        datos = cargar_partida(self.slot_seleccionado)
         self.puntos =           datos["puntos"]
         self.puntos_cartas =    datos["puntos_cartas"]
         self.multiplicador =    datos["multiplicador"]
         self.mazo.cartas =      [Carta(c[0], c[1]) for c in datos["mazo"]]
         self.mano =             [Carta(c[0], c[1]) for c in datos["mano"]]
         self._cartas_jugadas =  [Carta(c[0], c[1]) for c in datos["cartas_jugadas"]]
+    
+    def borrar_partida(self):
+        borrar_partida(self.slot_seleccionado)
