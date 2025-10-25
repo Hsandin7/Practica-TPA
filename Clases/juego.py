@@ -161,6 +161,9 @@ class Juego:
         self.botones["slot2"].dibujar(screen)
         self.botones["slot3"].dibujar(screen)
 
+        # Mostrar informacion de cada slot
+        self.jugador.mostrar_info_slots(screen)
+
         # Overlay oscurecido del slot seleccionado
         if 1 <= self.jugador.slot_seleccionado <= 3:
             slot_seleccionado = self.botones[f"slot{self.jugador.slot_seleccionado}"]
@@ -171,6 +174,7 @@ class Juego:
             self.jugador.guardar_partida()
         elif self.botones["cargar"].detectar_click(eventos):
             self.jugador.cargar_partida()
+            self.pagina_actual = 1
         elif self.botones["papelera"].detectar_click(eventos):
             self.jugador.borrar_partida()
         elif self.botones["slot1"].detectar_click(eventos):

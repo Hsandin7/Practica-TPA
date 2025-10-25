@@ -24,7 +24,7 @@ while True:
             sys.exit()
 
         # --- Detectar tecla ESC ---
-        if event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE:
+        if Juego.transicion is False and event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE:
             juego.mostrar_fondo = True
             match juego.pagina_actual:
                 case 0:                         # P Principal

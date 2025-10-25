@@ -28,6 +28,7 @@ class Jugador:
         self._cartas_descartadas =      list()
         
         self.limite_seleccion = 5
+        inicializar_archivo_guardado()
 
     
     def mostrar_puntos(self, screen):
@@ -143,3 +144,15 @@ class Jugador:
     
     def borrar_partida(self):
         borrar_partida(self.slot_seleccionado)
+    
+    def mostrar_info_slots(self, screen):
+        x = 300
+        for slot in range(1, 4):
+            datos = cargar_partida(slot)
+            mostrar_texto(screen, f"Puntos: {datos["puntos"]}", x, 170, 20)
+            # Cambiar por informacion diferente
+            mostrar_texto(screen, f"Puntos: {datos["puntos"]}", x, 200, 20)
+            mostrar_texto(screen, f"Puntos: {datos["puntos"]}", x, 230, 20)
+            mostrar_texto(screen, f"Puntos: {datos["puntos"]}", x, 260, 20)
+            mostrar_texto(screen, f"Puntos: {datos["puntos"]}", x, 290, 20)
+            x += 250
