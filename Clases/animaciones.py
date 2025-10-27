@@ -1,4 +1,5 @@
 import pygame
+from Clases._utilidades import mostrar_texto_transparente
 
 class Transicion:
     def __init__(self):
@@ -77,3 +78,48 @@ class Transicion:
     #     cuadrado_pos = cuadrado_rotado.get_rect(center=(ancho/2, alto/2))
     #     screen.blit(cuadrado_rotado, cuadrado_pos)
     #     return None
+
+
+class Animador_Texto:
+    def __init__(self):
+        # Estado actual del texto animado
+        self.texto = str()
+        self.x = 0
+        self.y = 0
+        self.x_final = 0
+        self.y_final = 0
+        self.opacidad = 255
+        self.color = (255, 255, 255)
+        self.tamano = 30
+        self.vel_movimiento = 0.1
+        self.vel_opacidad = 3
+        self.activo = False
+
+    def iniciar(self, texto, x, y, x_final = None, y_final = None, color=(255,255,255), tamano=40):
+        self.texto = texto
+        self.x = x
+        self.y = y
+        self.x_final = x_final if x_final is not None else x
+        self.y_final = y_final if y_final is not None else y
+        self.color = color
+        self.tamano = tamano
+        self.opacidad = 255
+        self.activo = True
+
+    def actualizar(self):
+        if not self.activo:
+            return
+
+        # El texto sube ligeramente
+        self.y -= (self.y - self.y_final) * self.vel_movimiento
+
+        # Se desvanece progresivamente
+        self.opacidad -= self.vel_opacidad
+        if self.opacidad <= 0:
+            self.opacidad = 0
+            self.activo = False  # La animación termina
+
+    def dibujar(self, screen):
+        self.actualizar()
+        if self.activo and self.opacidad > 0:
+            mostrar_texto_transparente(screen, f"+{self.texto}", self.x, self.y, self.opacidad, self.tamano, self.color)

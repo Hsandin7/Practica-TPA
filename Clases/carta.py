@@ -35,3 +35,7 @@ class Carta(Boton):
     def detectar_seleccion(self, eventos):
         if self.detectar_click(eventos):
             self.seleccionada = not self.seleccionada
+            if self.seleccionada:
+                return True
+            else:
+                return False

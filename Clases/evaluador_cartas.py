@@ -8,11 +8,12 @@ from Clases.carta import Carta
 # correspondientes con la comprobacion que sea verdadera
 
 class Evaluador_Cartas:
-    def __init__(self, cartas_seleccionadas):
-        self.cartas = cartas_seleccionadas
+    def __init__(self):
+        self.cartas = list()
         self.resultado = {"Cartas": list(), "Valor": int(), "Multiplicador": int()}
 
-    def evaluar(self):
+    def evaluar(self, cartas_seleccionadas):
+        self.cartas = cartas_seleccionadas
         self.cartas.sort(key=lambda carta: carta.valor)
         num_seleccionadas = len(self.cartas)
         
@@ -37,7 +38,7 @@ class Evaluador_Cartas:
             print("Trio y Pareja")
             return self.resultado
         
-        if num_seleccionadas == 5 and (cartas := self._Color(self.cartas)) is not None:
+        if num_seleccionadas == 5 and (cartas := self._Color(self.cartas.copy())) is not None:
             self.resultado["Cartas"] = cartas
             self.resultado["Valor"] = 50 + sum([c.valor for c in cartas])
             self.resultado["Multiplicador"] = 6
@@ -65,7 +66,7 @@ class Evaluador_Cartas:
             print("Doble Pareja")
             return self.resultado
         
-        if num_seleccionadas >= 2 and (cartas := self._Parejas(self.cartas)) is not None:
+        if num_seleccionadas >= 2 and (cartas := self._Parejas(self.cartas.copy())) is not None:
             self.resultado["Cartas"] = cartas
             self.resultado["Valor"] = 10 + sum([c.valor for c in cartas])
             self.resultado["Multiplicador"] = 2
@@ -82,7 +83,7 @@ class Evaluador_Cartas:
 
 
     def _Escalera_Color(self):
-        if self._Escalera() is not None and self._Color(self.cartas) is not None:
+        if self._Escalera() and self._Color(self.cartas.copy()):
             return self.cartas
 
     def _Poker(self):
