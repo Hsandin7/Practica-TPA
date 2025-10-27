@@ -14,25 +14,25 @@ _datos = {
 
 def inicializar_archivo_guardado():
     if not os.path.exists("partidas_guardadas.json"):
-        data = {"slot_1": _datos, "slot_2": _datos, "slot_3": _datos}
-        with open("partidas_guardadas.json", "w") as archivo:
-                json.dump(data, archivo)
+        data = {"slot_1": _datos.copy(), "slot_2": _datos.copy(), "slot_3": _datos.copy()}
+        with open("partidas_guardadas.json", "w", encoding="utf-8") as archivo:
+                json.dump(data, archivo, indent=4)
 
 
 def guardar_partida(slot: int, data):
     if data:
-        with open("partidas_guardadas.json", "r") as archivo:
+        with open("partidas_guardadas.json", "r", encoding="utf-8") as archivo:
             partidas_guardadas = json.load(archivo)
         
         partidas_guardadas[f"slot_{slot}"] = data
         # Posibilidad de guardar la fecha con "datetime"
 
-        with open("partidas_guardadas.json", "w") as archivo:
-            json.dump(partidas_guardadas, archivo)
+        with open("partidas_guardadas.json", "w", encoding="utf-8") as archivo:
+            json.dump(partidas_guardadas, archivo, indent=4)
 
 
 def cargar_partida(slot: int):
-    with open("partidas_guardadas.json", "r") as archivo:
+    with open("partidas_guardadas.json", "r", encoding="utf-8") as archivo:
         partidas_jugadas = json.load(archivo)
     
     data = partidas_jugadas[f"slot_{slot}"]
@@ -41,10 +41,10 @@ def cargar_partida(slot: int):
 
 
 def borrar_partida(slot: int):
-    with open("partidas_guardadas.json", "r") as archivo:
+    with open("partidas_guardadas.json", "r", encoding="utf-8") as archivo:
         partidas_guardadas = json.load(archivo)
     
     partidas_guardadas[f"slot_{slot}"] = _datos
 
-    with open("partidas_guardadas.json", "w") as archivo:
-        json.dump(partidas_guardadas, archivo)
+    with open("partidas_guardadas.json", "w", encoding="utf-8") as archivo:
+        json.dump(partidas_guardadas, archivo, indent=4)
