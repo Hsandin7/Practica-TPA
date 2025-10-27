@@ -83,5 +83,17 @@ class Comodin(Boton):
             else:
                 fichas,multi,dinero=resultado
         return fichas,multi,dinero   
-    def dibujar(self):
+    
+    def registrar_precio(self):
+        match self.rareza:
+            case "Comun":
+                self.precio=3
+            case "Raro":
+                self.precio=5
+            case "Epico":
+                self.precio=8
         pass
+
+    def dibujar(self):
+        for i,comodin in enumerate(efectos_comodin):
+            pass
