@@ -7,12 +7,12 @@ from Clases.evaluador_cartas import Evaluador_Cartas
 from Clases._utilidades import *
 from Clases.animaciones import Animador_Texto
 from Clases.guardado import *
-
-from Clases.carta import Carta
+from Clases.niveles import Niveles
 
 class Jugador:
     def __init__(self):
         self.puntos = 0
+        self.puntos_nivel = 100
         self.puntos_cartas = 0
         self.multiplicador = 0
         self.slot_seleccionado = 0
@@ -20,6 +20,7 @@ class Jugador:
         self.evaluador =        Evaluador_Cartas()
         self.animador_texto =   Animador_Texto()
         self.mazo =             Mazo()
+        self.niveles =          Niveles()
         
         self.mano = [self.mazo.robar() for _ in range(0,8)]
         
@@ -38,7 +39,7 @@ class Jugador:
         mostrar_texto_centrado(screen, f"{self.puntos_cartas}", 845, 190)
         
         # Cambiar por el objetivo de puntos del nivel
-        puntos_formateados = f"{self.puntos:,}".replace(",", ".")
+        puntos_formateados = f"{self.puntos_nivel:,}".replace(",", ".")
         mostrar_texto_centrado(screen, puntos_formateados, 400, 125, 50)
 
         # Muestra los puntos obtenidos que se suman al total
@@ -109,6 +110,11 @@ class Jugador:
             self.descartar_cartas()                 # Las cartas que no se hayan jugado se descartan
             self.animador_texto.iniciar(f"{self.puntos_cartas * self.multiplicador}", 1100, 150,y_final=90)
 
+            if self.niveles.verificar_nivel(self.puntos):
+                self.puntos = 0
+                self.puntos_nivel = self.niveles.puntos_nivel
+            
+
     def descartar_cartas(self):
         self._cartas_descartadas.clear()
         if len(self._cartas_seleccionadas) <= self.limite_seleccion and self._cartas_seleccionadas:
@@ -156,3 +162,7 @@ class Jugador:
             mostrar_texto(screen, f"Puntos: {datos["puntos"]}", x, 275, 20)
             mostrar_texto(screen, f"Puntos: {datos["puntos"]}", x, 305, 20)
             x += 250
+
+    def siguente_ronda (self):
+        self.mazo = Mazo()
+        

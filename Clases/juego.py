@@ -141,6 +141,7 @@ class Juego:
     def actualizar_menu_tienda(self, eventos):
         if self.botones["boton_SR"].detectar_click(eventos):
             self.pagina_actual = 1
+            self.jugador.siguente_ronda()
             self.mostrar_fondo = True
         elif self.botones["cambiar"].detectar_click(eventos):
             pass
