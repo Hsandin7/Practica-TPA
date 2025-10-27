@@ -3,18 +3,18 @@
 import json
 import os
 
-_datos = {
-    "puntos":           None,
-    "puntos_cartas":    None,
-    "multiplicador":    None,
-    "mazo":             None,
-    "mano":             None,
-    "cartas_jugadas":   None
-}
+# _datos = {
+#     "puntos":           None,
+#     "puntos_cartas":    None,
+#     "multiplicador":    None,
+#     "mazo":             None,
+#     "mano":             None,
+#     "cartas_jugadas":   None
+# }
 
 def inicializar_archivo_guardado():
     if not os.path.exists("partidas_guardadas.json"):
-        data = {"slot_1": _datos.copy(), "slot_2": _datos.copy(), "slot_3": _datos.copy()}
+        data = {"slot_1": None, "slot_2": None, "slot_3": None}
         with open("partidas_guardadas.json", "w", encoding="utf-8") as archivo:
                 json.dump(data, archivo, indent=4)
 
@@ -44,7 +44,7 @@ def borrar_partida(slot: int):
     with open("partidas_guardadas.json", "r", encoding="utf-8") as archivo:
         partidas_guardadas = json.load(archivo)
     
-    partidas_guardadas[f"slot_{slot}"] = _datos
+    partidas_guardadas[f"slot_{slot}"] = None
 
     with open("partidas_guardadas.json", "w", encoding="utf-8") as archivo:
         json.dump(partidas_guardadas, archivo, indent=4)

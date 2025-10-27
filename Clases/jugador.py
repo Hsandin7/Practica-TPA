@@ -150,9 +150,12 @@ class Jugador:
         for slot in range(1, 4):
             datos = cargar_partida(slot)
             mostrar_texto(screen, f"Guardado {slot}", x, 170, 30)
-            mostrar_texto(screen, f"Puntos: {datos["puntos"]}", x, 215, 20)
-            # Cambiar por informacion diferente
-            mostrar_texto(screen, f"Puntos: {datos["puntos"]}", x, 245, 20)
-            mostrar_texto(screen, f"Puntos: {datos["puntos"]}", x, 275, 20)
-            mostrar_texto(screen, f"Puntos: {datos["puntos"]}", x, 305, 20)
+            if datos:
+                mostrar_texto(screen, f"Puntos: {datos["puntos"]}", x, 215, 20)
+                # Cambiar por informacion diferente
+                mostrar_texto(screen, f"Puntos: {datos["puntos"]}", x, 245, 20)
+                mostrar_texto(screen, f"Puntos: {datos["puntos"]}", x, 275, 20)
+                mostrar_texto(screen, f"Puntos: {datos["puntos"]}", x, 305, 20)
+            else:
+                mostrar_texto(screen, f"Puntos: {datos["puntos"]}", x, 215, 20)
             x += 250
