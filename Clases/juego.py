@@ -23,25 +23,39 @@ class Juego:
             pygame.image.load("Graficos/pagina_principal.png"),     # 0: P Principal
             pygame.image.load("Graficos/pagina_juego.png"),         # 1: P Juego
             pygame.image.load("Graficos/menu_salida.png"),          # 2: M Salida
-            pygame.image.load("Graficos/menu_tienda.png")           # 3: M Tienda
+            pygame.image.load("Graficos/menu_tienda.png"),          # 3: M Tienda
+            pygame.image.load("Graficos/menu_guardado.png")         # 4: M Guardado
         ]
     
     def cargar_botones(self):
         return {
+            # P Principal
             "play":         Boton("Graficos/Botones/boton_play.png", 560, 595),
 
-            "continuar":    Boton("Graficos/Botones/boton_continuar.png", 465, 25),
-            "controles":    Boton("Graficos/Botones/boton_controles.png", 465, 165),
-            "salir":        Boton("Graficos/Botones/boton_salir.png", 465, 305),
-
+            # P Juego
             "shop":         Boton("Graficos/Botones/boton_shop.png", 95, 305),
             "jugar":        Boton("Graficos/Botones/boton_jugar.png", 665, 645),
             "descartar":    Boton("Graficos/Botones/boton_descartar.png", 825, 645),
 
+            # M Salida
+            "continuar":    Boton("Graficos/Botones/boton_continuar.png", 465, 25),
+            "controles":    Boton("Graficos/Botones/boton_controles.png", 465, 165),
+            "salir":        Boton("Graficos/Botones/boton_salir.png", 465, 305),
+            "save":         Boton("Graficos/Botones/boton_save.png", 595, 425),
+
+            # M Tienda
             "boton_SR":     Boton("Graficos/Botones/boton_siguiente_ronda.png", 345, 250),
             "cambiar":      Boton("Graficos/Botones/boton_cambiar.png", 345, 380),
-            "comprar":      Boton("Graficos/Botones/boton_comprar.png", 345, 485)
-        }
+            "comprar":      Boton("Graficos/Botones/boton_comprar.png", 345, 485),
+        
+            # M Guardado
+            "guardar":      Boton("Graficos/Botones/boton_guardar.png", 435, 515),
+            "cargar":       Boton("Graficos/Botones/boton_cargar.png", 655, 515),
+            "papelera":     Boton("Graficos/Botones/boton_papelera.png", 960, 525),
+            "slot1":        Boton("Graficos/Botones/boton_partida_guardada.png", 285, 155),
+            "slot2":        Boton("Graficos/Botones/boton_partida_guardada.png", 535, 155),
+            "slot3":        Boton("Graficos/Botones/boton_partida_guardada.png", 785, 155),
+}
     
     def reiniciar(self):
         self.__init__()
@@ -70,7 +84,7 @@ class Juego:
         self.botones["jugar"].dibujar(screen)
         self.botones["descartar"].dibujar(screen)
 
-        self.jugador.mostrar_mano(screen)
+        self.jugador.mostrar_cartas(screen)
         self.jugador.mostrar_puntos(screen)
 
     def actualizar_pagina_juego(self, eventos):
@@ -90,12 +104,14 @@ class Juego:
     # Menu de salida
     def mostrar_menu_salida(self, screen):
         if self.mostrar_fondo:                      # Muestra el fondo una sola vez (Para que funcione bien la transparencia)
+            self.mostrar_pagina_juego(screen)
             screen.blit(self.paginas[2], (0,0))
             self.mostrar_fondo = False
             
         self.botones["continuar"].dibujar(screen)
         self.botones["controles"].dibujar(screen)
         self.botones["salir"].dibujar(screen)
+        self.botones["save"].dibujar(screen)
 
     def actualizar_menu_salida(self, eventos):
         if self.botones["continuar"].detectar_click(eventos):
@@ -107,10 +123,13 @@ class Juego:
             Juego.transicion = True
             Juego.paginas_transicion = [self.paginas[2],self.paginas[0], 0]
             self.reiniciar()
+        elif self.botones["save"].detectar_click(eventos):
+            self.mostrar_fondo = True
+            self.pagina_actual = 4
 
 
     # Tienda
-    def mostrar_Tienda(self, screen):
+    def mostrar_menu_tienda(self, screen):
         if self.mostrar_fondo:                      # Muestra el fondo una sola vez (Para que funcione bien la transparencia)
             screen.blit(self.paginas[3], (0,0))
             self.mostrar_fondo = False
@@ -119,7 +138,7 @@ class Juego:
         self.botones["cambiar"].dibujar(screen)
         self.botones["comprar"].dibujar(screen)
 
-    def actualizar_Tienda(self, eventos):
+    def actualizar_menu_tienda(self, eventos):
         if self.botones["boton_SR"].detectar_click(eventos):
             self.pagina_actual = 1
             self.mostrar_fondo = True
@@ -127,3 +146,40 @@ class Juego:
             pass
         elif self.botones["comprar"].detectar_click(eventos):
             pass
+    
+
+    # Menu Guardado
+    def mostrar_menu_guardado(self, screen):
+        if self.mostrar_fondo:                      # Muestra el fondo una sola vez (Para que funcione bien la transparencia)
+            screen.blit(self.paginas[4], (0,0))
+            self.mostrar_fondo = False
+
+        self.botones["guardar"].dibujar(screen)
+        self.botones["cargar"].dibujar(screen)
+        self.botones["papelera"].dibujar(screen)
+        self.botones["slot1"].dibujar(screen)
+        self.botones["slot2"].dibujar(screen)
+        self.botones["slot3"].dibujar(screen)
+
+        # Mostrar informacion de cada slot
+        self.jugador.mostrar_info_slots(screen)
+
+        # Overlay oscurecido del slot seleccionado
+        if 1 <= self.jugador.slot_seleccionado <= 3:
+            slot_seleccionado = self.botones[f"slot{self.jugador.slot_seleccionado}"]
+            screen.blit(slot_seleccionado.imagen_hover, (slot_seleccionado.x, slot_seleccionado.y))
+
+    def actualizar_menu_guardado(self, eventos):
+        if self.botones["guardar"].detectar_click(eventos):
+            self.jugador.guardar_partida()
+        elif self.botones["cargar"].detectar_click(eventos):
+            self.jugador.cargar_partida()
+            self.pagina_actual = 1
+        elif self.botones["papelera"].detectar_click(eventos):
+            self.jugador.borrar_partida()
+        elif self.botones["slot1"].detectar_click(eventos):
+            self.jugador.slot_seleccionado = 1
+        elif self.botones["slot2"].detectar_click(eventos):
+            self.jugador.slot_seleccionado = 2
+        elif self.botones["slot3"].detectar_click(eventos):
+            self.jugador.slot_seleccionado = 3
