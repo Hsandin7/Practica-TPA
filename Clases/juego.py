@@ -58,7 +58,7 @@ class Juego:
 }
     
     def reiniciar(self):
-        self.__init__()
+        self.jugador = Jugador()
 
 
     # Pagina principal
@@ -173,8 +173,8 @@ class Juego:
         if self.botones["guardar"].detectar_click(eventos):
             self.jugador.guardar_partida()
         elif self.botones["cargar"].detectar_click(eventos):
-            self.jugador.cargar_partida()
-            self.pagina_actual = 1
+            if self.jugador.cargar_partida():
+                self.pagina_actual = 1
         elif self.botones["papelera"].detectar_click(eventos):
             self.jugador.borrar_partida()
         elif self.botones["slot1"].detectar_click(eventos):

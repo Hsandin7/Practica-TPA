@@ -8,8 +8,6 @@ from Clases._utilidades import *
 from Clases.animaciones import Animador_Texto
 from Clases.guardado import *
 
-from Clases.carta import Carta
-
 class Jugador:
     def __init__(self):
         self.puntos = 0
@@ -28,6 +26,8 @@ class Jugador:
         self._cartas_descartadas =      list()
         
         self.limite_seleccion = 5
+        self.limite_jugar = 4
+        self.limite_descartar = 3
         inicializar_archivo_guardado()
 
     
@@ -94,6 +94,7 @@ class Jugador:
 
     def jugar_cartas(self):
         if len(self._cartas_seleccionadas) <= self.limite_seleccion and self._cartas_seleccionadas:    # Comprueba que haya cartas seleccionadas
+            self.limite_jugar -= 1
             evaluacion = self.evaluador.evaluar(self._cartas_seleccionadas)
             self._cartas_jugadas = evaluacion["Cartas"]
             self.puntos_cartas = evaluacion["Valor"]
@@ -135,12 +136,16 @@ class Jugador:
     
     def cargar_partida(self):
         datos = cargar_partida(self.slot_seleccionado)
-        self.puntos =           datos["puntos"]
-        self.puntos_cartas =    datos["puntos_cartas"]
-        self.multiplicador =    datos["multiplicador"]
-        self.mazo.cartas =      [Carta(c[0], c[1]) for c in datos["mazo"]]
-        self.mano =             [Carta(c[0], c[1]) for c in datos["mano"]]
-        self._cartas_jugadas =  [Carta(c[0], c[1]) for c in datos["cartas_jugadas"]]
+        if datos:
+            self.puntos =           datos["puntos"]
+            self.puntos_cartas =    datos["puntos_cartas"]
+            self.multiplicador =    datos["multiplicador"]
+            self.mazo.cartas =      [Carta(c[0], c[1]) for c in datos["mazo"]]
+            self.mano =             [Carta(c[0], c[1]) for c in datos["mano"]]
+            self._cartas_jugadas =  [Carta(c[0], c[1]) for c in datos["cartas_jugadas"]]
+            return True
+        else:
+            return None
     
     def borrar_partida(self):
         borrar_partida(self.slot_seleccionado)
@@ -157,5 +162,5 @@ class Jugador:
                 mostrar_texto(screen, f"Puntos: {datos["puntos"]}", x, 275, 20)
                 mostrar_texto(screen, f"Puntos: {datos["puntos"]}", x, 305, 20)
             else:
-                mostrar_texto(screen, f"Puntos: {datos["puntos"]}", x, 215, 20)
+                mostrar_texto(screen, "Vacio", x, 215, 20)
             x += 250
