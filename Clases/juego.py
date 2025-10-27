@@ -24,7 +24,8 @@ class Juego:
             pygame.image.load("Graficos/pagina_juego.png"),         # 1: P Juego
             pygame.image.load("Graficos/menu_salida.png"),          # 2: M Salida
             pygame.image.load("Graficos/menu_tienda.png"),          # 3: M Tienda
-            pygame.image.load("Graficos/menu_guardado.png")         # 4: M Guardado
+            pygame.image.load("Graficos/menu_guardado.png"),        # 4: M Guardado
+            # pygame.image.load("Graficos/pagina_game_over.png")      # 5: P GAME OVER
         ]
     
     def cargar_botones(self):
@@ -58,7 +59,11 @@ class Juego:
 }
     
     def reiniciar(self):
-        self.__init__()
+        self.jugador = Jugador()
+    
+    def game_over(self):
+        self.reiniciar()
+        print("HAS PERDIDO")        # Debugging
 
 
     # Pagina principal
@@ -88,6 +93,10 @@ class Juego:
         self.jugador.mostrar_puntos(screen)
 
     def actualizar_pagina_juego(self, eventos):
+        if self.jugador.sig_nivel:
+            self.jugador.sig_nivel = False
+            self.pagina_actual = 3
+
         self.jugador.actualizar(eventos)
 
         if self.botones["shop"].detectar_click(eventos):
@@ -95,10 +104,13 @@ class Juego:
             self.mostrar_fondo = True
         
         elif self.botones["jugar"].detectar_click(eventos):
-            self.jugador.jugar_cartas()     ## Por hacer
+            if self.jugador.limite_jugar > 0:
+                self.jugador.jugar_cartas()
+            else:
+                self.pagina_actual = 5      # P GAME OVER
         
         elif self.botones["descartar"].detectar_click(eventos):
-            self.jugador.descartar_cartas()
+            self.jugador.descartar_cartas("boton")
 
 
     # Menu de salida
@@ -141,7 +153,6 @@ class Juego:
     def actualizar_menu_tienda(self, eventos):
         if self.botones["boton_SR"].detectar_click(eventos):
             self.pagina_actual = 1
-            self.jugador.siguente_ronda()
             self.mostrar_fondo = True
         elif self.botones["cambiar"].detectar_click(eventos):
             pass
@@ -151,7 +162,7 @@ class Juego:
 
     # Menu Guardado
     def mostrar_menu_guardado(self, screen):
-        if self.mostrar_fondo:                      # Muestra el fondo una sola vez (Para que funcione bien la transparencia)
+        if self.mostrar_fondo:                      # Muestra el fondo una sola vez
             screen.blit(self.paginas[4], (0,0))
             self.mostrar_fondo = False
 
@@ -184,3 +195,14 @@ class Juego:
             self.jugador.slot_seleccionado = 2
         elif self.botones["slot3"].detectar_click(eventos):
             self.jugador.slot_seleccionado = 3
+
+
+    # Pagina GAME OVER                  # Implemetación de graficos por hacer
+    def mostrar_pagina_game_over(self, screen):
+        if self.mostrar_fondo:                      # Muestra el fondo una sola vez
+            screen.blit(self.paginas[5], (0,0))
+            self.mostrar_fondo = False
+        
+
+    def actualizar_pagina_game_over(self, eventos):
+        pass

@@ -11,7 +11,7 @@ class Niveles:
     def siguente_nivel(self):
         self.nivel_actual += 1
         self.puntos = 0
-        self.puntos_nivel = self.puntos_nivel * self.multiplicador
+        self.puntos_nivel = int(self.puntos_nivel * self.multiplicador)
     
     def nivel_perdido(self):
         self.nivel_actual = 1

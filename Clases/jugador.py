@@ -16,6 +16,7 @@ class Jugador:
         self.puntos_cartas = 0
         self.multiplicador = 0
         self.slot_seleccionado = 0
+        self.sig_nivel = False
         
         self.evaluador =        Evaluador_Cartas()
         self.animador_texto =   Animador_Texto()
@@ -29,6 +30,8 @@ class Jugador:
         self._cartas_descartadas =      list()
         
         self.limite_seleccion = 5
+        self.limite_jugar = 4
+        self.limite_descartar = 3
         inicializar_archivo_guardado()
 
     
@@ -95,6 +98,7 @@ class Jugador:
 
     def jugar_cartas(self):
         if len(self._cartas_seleccionadas) <= self.limite_seleccion and self._cartas_seleccionadas:    # Comprueba que haya cartas seleccionadas
+            self.limite_jugar -= 1
             evaluacion = self.evaluador.evaluar(self._cartas_seleccionadas)
             self._cartas_jugadas = evaluacion["Cartas"]
             self.puntos_cartas = evaluacion["Valor"]
@@ -107,15 +111,19 @@ class Jugador:
             for carta in self._cartas_jugadas:      # Quita las cartas que se hayan jugado para que el resto se descarte correctamente
                 self.mano.remove(carta)
                 self._cartas_seleccionadas.remove(carta)
-            self.descartar_cartas()                 # Las cartas que no se hayan jugado se descartan
+            self.descartar_cartas("jugar_cartas")                 # Las cartas que no se hayan jugado se descartan
             self.animador_texto.iniciar(f"{self.puntos_cartas * self.multiplicador}", 1100, 150,y_final=90)
 
             if self.niveles.verificar_nivel(self.puntos):
-                self.puntos = 0
-                self.puntos_nivel = self.niveles.puntos_nivel
+                self.siguente_ronda()
             
 
-    def descartar_cartas(self):
+    def descartar_cartas(self, origen):
+        if (origen == "boton" and self.limite_descartar > 0):
+            self.limite_descartar -= 1
+        elif not origen == "jugar_cartas":
+            return None
+        
         self._cartas_descartadas.clear()
         if len(self._cartas_seleccionadas) <= self.limite_seleccion and self._cartas_seleccionadas:
             for carta in self._cartas_seleccionadas:
@@ -164,5 +172,13 @@ class Jugador:
             x += 250
 
     def siguente_ronda (self):
+        self.puntos = 0
+        self.puntos_nivel = self.niveles.puntos_nivel
         self.mazo = Mazo()
+        self.sig_nivel = True
+        self._cartas_jugadas = None
+        self._cartas_seleccionadas = None
+        self.limite_jugar = 4
+        self.limite_descartar = 3
+
         
