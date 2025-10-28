@@ -106,6 +106,11 @@ class Juego:
                 self.jugador.game_over = False
         elif self.botones["descartar"].detectar_click(eventos):
             self.jugador.descartar_cartas("boton")
+        
+        # if self.botones["info"].detectar_click(eventos):
+        #     self.pagina_actual = 6
+
+
 
 
     # Menu de salida
@@ -201,4 +206,7 @@ class Juego:
         self.botones["game_over"].dibujar(screen)
 
     def actualizar_pagina_game_over(self, eventos):
-        pass
+        if self.botones["game_over"].detectar_click(eventos):
+            self.pagina_actual = 0
+            self.mostrar_fondo =  True
+            self.reiniciar()

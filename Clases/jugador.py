@@ -18,6 +18,7 @@ class Jugador:
         self.slot_seleccionado = 0
         self.sig_nivel = False
         self.game_over = False
+        self.numero_nivel = 1
         
         self.evaluador =        Evaluador_Cartas()
         self.animador_texto =   Animador_Texto()
@@ -48,6 +49,12 @@ class Jugador:
 
         # Muestra los puntos obtenidos que se suman al total
         self.animador_texto.dibujar(screen)
+
+        mostrar_texto_centrado(screen, str(self.numero_nivel), 213, 328, 30, color= (0, 0, 0))
+        mostrar_texto_centrado(screen, str(self.limite_descartar), 298, 382, 30, color= (0, 0, 0))
+        mostrar_texto_centrado(screen, str(self.limite_jugar), 264, 437, 30, color = (0, 0, 0))
+
+
 
 
     def mostrar_cartas(self, screen):
@@ -182,5 +189,6 @@ class Jugador:
         self._cartas_jugadas = None
         self.limite_jugar = 4
         self.limite_descartar = 3
+        self.numero_nivel += 1
 
         
