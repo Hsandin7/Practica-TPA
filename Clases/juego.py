@@ -56,14 +56,10 @@ class Juego:
             "slot1":        Boton("Graficos/Botones/boton_partida_guardada.png", 285, 155),
             "slot2":        Boton("Graficos/Botones/boton_partida_guardada.png", 535, 155),
             "slot3":        Boton("Graficos/Botones/boton_partida_guardada.png", 785, 155),
-}
+        }
     
     def reiniciar(self):
         self.jugador = Jugador()
-    
-    def game_over(self):
-        self.reiniciar()
-        print("HAS PERDIDO")        # Debugging
 
 
     # Pagina principal
@@ -95,20 +91,19 @@ class Juego:
     def actualizar_pagina_juego(self, eventos):
         if self.jugador.sig_nivel:
             self.jugador.sig_nivel = False
-            self.pagina_actual = 3
+            self.pagina_actual = 3      # M Tienda
 
         self.jugador.actualizar(eventos)
 
         if self.botones["shop"].detectar_click(eventos):
-            self.pagina_actual = 3
+            self.pagina_actual = 3      # M Tienda
             self.mostrar_fondo = True
         
         elif self.botones["jugar"].detectar_click(eventos):
-            if self.jugador.limite_jugar > 0:
-                self.jugador.jugar_cartas()
-            else:
+            self.jugador.jugar_cartas()
+            if self.jugador.game_over:          # Transicion game over
                 self.pagina_actual = 5      # P GAME OVER
-        
+                self.jugador.game_over = False
         elif self.botones["descartar"].detectar_click(eventos):
             self.jugador.descartar_cartas("boton")
 

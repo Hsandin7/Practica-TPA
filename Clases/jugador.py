@@ -17,6 +17,7 @@ class Jugador:
         self.multiplicador = 0
         self.slot_seleccionado = 0
         self.sig_nivel = False
+        self.game_over = False
         
         self.evaluador =        Evaluador_Cartas()
         self.animador_texto =   Animador_Texto()
@@ -98,7 +99,6 @@ class Jugador:
 
     def jugar_cartas(self):
         if len(self._cartas_seleccionadas) <= self.limite_seleccion and self._cartas_seleccionadas:    # Comprueba que haya cartas seleccionadas
-            self.limite_jugar -= 1
             evaluacion = self.evaluador.evaluar(self._cartas_seleccionadas)
             self._cartas_jugadas = evaluacion["Cartas"]
             self.puntos_cartas = evaluacion["Valor"]
@@ -114,8 +114,11 @@ class Jugador:
             self.descartar_cartas("jugar_cartas")                 # Las cartas que no se hayan jugado se descartan
             self.animador_texto.iniciar(f"{self.puntos_cartas * self.multiplicador}", 1100, 150,y_final=90)
 
+            self.limite_jugar -= 1
             if self.niveles.verificar_nivel(self.puntos):
                 self.siguente_ronda()
+            elif self.limite_jugar <= 0:
+                self.game_over = True
             
 
     def descartar_cartas(self, origen):
@@ -134,7 +137,7 @@ class Jugador:
             self.mano.append(self.mazo.robar())
 
 
-    # Manjo de partidas guardadas
+    # Manejo de partidas guardadas
     def guardar_partida(self):
         # mazo y mano se guardan como listas de strings con el valor y el palo concatenados
         datos = {
@@ -166,8 +169,8 @@ class Jugador:
             mostrar_texto(screen, f"Guardado {slot}", x, 170, 30)
             mostrar_texto(screen, f"Puntos: {datos["puntos"]}", x, 215, 20)
             # Cambiar por informacion diferente
-            mostrar_texto(screen, f"Puntos: {datos["puntos"]}", x, 245, 20)
-            mostrar_texto(screen, f"Puntos: {datos["puntos"]}", x, 275, 20)
+            mostrar_texto(screen, f"Nivel: {datos["puntos"]}", x, 245, 20)
+            mostrar_texto(screen, f"Comodines: {datos["puntos"]}", x, 275, 20)
             mostrar_texto(screen, f"Puntos: {datos["puntos"]}", x, 305, 20)
             x += 250
 
@@ -177,7 +180,6 @@ class Jugador:
         self.mazo = Mazo()
         self.sig_nivel = True
         self._cartas_jugadas = None
-        self._cartas_seleccionadas = None
         self.limite_jugar = 4
         self.limite_descartar = 3
 
