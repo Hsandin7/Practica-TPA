@@ -25,7 +25,7 @@ class Juego:
             pygame.image.load("Graficos/menu_salida.png"),          # 2: M Salida
             pygame.image.load("Graficos/menu_tienda.png"),          # 3: M Tienda
             pygame.image.load("Graficos/menu_guardado.png"),        # 4: M Guardado
-            # pygame.image.load("Graficos/pagina_game_over.png")      # 5: P GAME OVER
+            pygame.image.load("Graficos/game_over.png")             # 5: P GAME OVER
         ]
     
     def cargar_botones(self):
@@ -34,9 +34,9 @@ class Juego:
             "play":         Boton("Graficos/Botones/boton_play.png", 560, 595),
 
             # P Juego
-            "shop":         Boton("Graficos/Botones/boton_shop.png", 95, 305),
             "jugar":        Boton("Graficos/Botones/boton_jugar.png", 665, 645),
             "descartar":    Boton("Graficos/Botones/boton_descartar.png", 825, 645),
+            "info":         Boton("Graficos/Botones/boton_info.png", 360, 335),
 
             # M Salida
             "continuar":    Boton("Graficos/Botones/boton_continuar.png", 465, 25),
@@ -56,6 +56,9 @@ class Juego:
             "slot1":        Boton("Graficos/Botones/boton_partida_guardada.png", 285, 155),
             "slot2":        Boton("Graficos/Botones/boton_partida_guardada.png", 535, 155),
             "slot3":        Boton("Graficos/Botones/boton_partida_guardada.png", 785, 155),
+
+            # P Game Over
+            "game_over":    Boton("Graficos/Botones/boton_game_over.png", 565, 605)
         }
     
     def reiniciar(self):
@@ -81,9 +84,10 @@ class Juego:
     def mostrar_pagina_juego(self, screen):
         screen.blit(self.paginas[1], (0,0))
 
-        self.botones["shop"].dibujar(screen)
         self.botones["jugar"].dibujar(screen)
         self.botones["descartar"].dibujar(screen)
+        self.botones["info"].dibujar(screen)
+
 
         self.jugador.mostrar_cartas(screen)
         self.jugador.mostrar_puntos(screen)
@@ -94,12 +98,8 @@ class Juego:
             self.pagina_actual = 3      # M Tienda
 
         self.jugador.actualizar(eventos)
-
-        if self.botones["shop"].detectar_click(eventos):
-            self.pagina_actual = 3      # M Tienda
-            self.mostrar_fondo = True
         
-        elif self.botones["jugar"].detectar_click(eventos):
+        if self.botones["jugar"].detectar_click(eventos):
             self.jugador.jugar_cartas()
             if self.jugador.game_over:          # Transicion game over
                 self.pagina_actual = 5      # P GAME OVER
@@ -198,6 +198,7 @@ class Juego:
             screen.blit(self.paginas[5], (0,0))
             self.mostrar_fondo = False
         
+        self.botones["game_over"].dibujar(screen)
 
     def actualizar_pagina_game_over(self, eventos):
         pass
