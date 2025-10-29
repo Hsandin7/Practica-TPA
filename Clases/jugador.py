@@ -24,7 +24,7 @@ class Jugador:
         
         self.mano = [self.mazo.robar() for _ in range(0,8)]
         self.comodines=[
-            Comodin("Pereira",65,550)
+            Comodin("matematico",65,550)
         ]
         
         self._cartas_seleccionadas =    list()
@@ -84,9 +84,9 @@ class Jugador:
         # Temporal?
         mostrar_texto_centrado(screen, f"{len(self.mazo.cartas)}", 1230, 600, 50)
 
-        def mostrar_comodines(self,screen):
-            for c in self.comodines:
-                c.dibujar(screen)
+    def mostrar_comodines(self,screen):
+        for c in self.comodines:
+            c.dibujar(screen)
 
 
     def actualizar(self, eventos):      # Comprueba si alguna carta es seleccionada, si esto se cumple, se anade a self._cartas_seleccionadas

@@ -25,26 +25,26 @@ def efecto_calculadora(mano,fichas, multi):
     carta_mayor=max(key=lambda c:c.valor)
     return fichas,multi+carta_mayor.valor
 
-@registrar_efecto("El loco")
+@registrar_efecto("loco")
 def efecto_el_loco(mano, fichas, multi):
     multi_extra=random.choice([0,1,5,10,25,50])
     return fichas,multi+multi_extra
 
-@registrar_efecto("Doblete")
+@registrar_efecto("doblete")
 def efecto_doblete(mano, fichas,multi):
     fichas=0
     for m in mano:
         fichas+=m.valor*2
     return fichas,multi
 
-@registrar_efecto("Esteroides")
+@registrar_efecto("esteroides")
 def efecto_esteroides(mano,fichas,multi):
     fichas=0
     for m in mano:
         fichas+=20
     return fichas,multi
 
-@registrar_efecto("Gloton")
+@registrar_efecto("gloton")
 def efecto_gloton(mano,fichas,multi):
     fichas=0
     for m in mano:
@@ -52,7 +52,7 @@ def efecto_gloton(mano,fichas,multi):
         multi+=10
     return fichas,multi
 
-@registrar_efecto("Programador")
+@registrar_efecto("programador")
 def efecto_programador(mano,fichas,multi,cartas_jugadas):
     bonus=cartas_jugadas//10
     return fichas,multi*(1+bonus)
@@ -93,5 +93,5 @@ class Comodin(Boton):
                 self.precio=8
         pass
 
-    def dibujar(self):
-        pass
+    def dibujar(self,screen):
+        super().dibujar(screen)

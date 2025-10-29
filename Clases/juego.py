@@ -86,6 +86,7 @@ class Juego:
 
         self.jugador.mostrar_cartas(screen)
         self.jugador.mostrar_puntos(screen)
+        self.jugador.mostrar_comodines(screen)
 
     def actualizar_pagina_juego(self, eventos):
         self.jugador.actualizar(eventos)
