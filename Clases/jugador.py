@@ -20,6 +20,7 @@ class Jugador:
         self.sig_nivel = False
         self.game_over = False
         self.numero_nivel = 1
+        self.dinero=0
         
         self.evaluador =        Evaluador_Cartas()
         self.animador_texto =   Animador_Texto()
@@ -28,7 +29,11 @@ class Jugador:
         
         self.mano = [self.mazo.robar() for _ in range(0,8)]
         self.comodines=[
-            Comodin("matematico",65,550)
+            Comodin("esteroides"),
+            #Comodin("matematico"),
+            #Comodin("doblete"),
+            #Comodin("gloton"),
+            #Comodin("programador")
         ]
         
         self._cartas_seleccionadas =    list()
@@ -46,7 +51,6 @@ class Jugador:
         mostrar_texto_centrado(screen, puntos_formateados, 900, 125, 50)
         mostrar_texto_centrado(screen, f"{self.multiplicador}", 950, 190)
         mostrar_texto_centrado(screen, f"{self.puntos_cartas}", 845, 190)
-        
         # Cambiar por el objetivo de puntos del nivel
         puntos_formateados = f"{self.puntos_nivel:,}".replace(",", ".")
         mostrar_texto_centrado(screen, puntos_formateados, 400, 125, 50)
@@ -57,9 +61,6 @@ class Jugador:
         mostrar_texto_centrado(screen, str(self.numero_nivel), 213, 328, 30, color= (0, 0, 0))
         mostrar_texto_centrado(screen, str(self.limite_descartar), 298, 382, 30, color= (0, 0, 0))
         mostrar_texto_centrado(screen, str(self.limite_jugar), 264, 437, 30, color = (0, 0, 0))
-
-
-
 
     def mostrar_cartas(self, screen):
         # Mostrar cartas de la mano / Animacion de seleccion de carta
@@ -89,6 +90,14 @@ class Jugador:
                 carta.x_final = screen.get_width()+1
                 carta.y_final = 350
                 carta.dibujar(screen)
+
+        if self.comodines:
+            pos_x = 257 - float( (len(self.comodines)-1) / 2 ) * 100
+            for comodin in self.comodines:
+                comodin.x = pos_x
+                comodin.y = 530
+                comodin.dibujar(screen)
+                pos_x += 80
         
         # Mostrar num de cartas seleccionadas
         mostrar_texto(screen, f"{len(self._cartas_seleccionadas)}/5", 1170, 500, 20)
@@ -122,6 +131,14 @@ class Jugador:
             
             # print(evaluacion)      # Para debugging
             # print(self._cartas_jugadas)
+            if self.comodines:
+                for c in self.comodines:
+                    fichas,multi,dinero=c.aplicar(self.mano,self.puntos_cartas,self.multiplicador,self.dinero,len(self._cartas_jugadas),self.comodines)
+            
+                self.puntos_cartas=fichas
+                #self.multiplicador=multi
+                #self.dinero=dinero
+                #self.puntos+=fichas*multi
             
             for carta in self._cartas_jugadas:      # Quita las cartas que se hayan jugado para que el resto se descarte correctamente
                 self.mano.remove(carta)

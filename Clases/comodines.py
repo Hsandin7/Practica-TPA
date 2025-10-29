@@ -13,15 +13,16 @@ def registrar_efecto(nombre):
 #Definicion de efectos para cada comodin
 
 @registrar_efecto("matematico")
-def efecto_matematico(mano,fichas,multi):
-    return fichas,multi*2
+def efecto_matematico(multi):
+    print("matematico")
+    return multi*2
 
 @registrar_efecto("stonks")
-def efecto_stonks(mano,dinero):
+def efecto_stonks(dinero):
     return dinero*2
 
 @registrar_efecto("calculadora")
-def efecto_calculadora(mano,fichas, multi):
+def efecto_calculadora(fichas, multi):
     carta_mayor=max(key=lambda c:c.valor)
     return fichas,multi+carta_mayor.valor
 
@@ -35,6 +36,7 @@ def efecto_doblete(mano, fichas,multi):
     fichas=0
     for m in mano:
         fichas+=m.valor*2
+    print(fichas,multi)
     return fichas,multi
 
 @registrar_efecto("esteroides")
@@ -59,14 +61,14 @@ def efecto_programador(mano,fichas,multi,cartas_jugadas):
 
 # Ahora mismo esta igual que la clase carta
 class Comodin(Boton):
-    def __init__(self, nombre, x,y):
-        super().__init__(f"Graficos/Comodines/{nombre}.png", x,y)
+    def __init__(self, nombre):
+        super().__init__(f"Graficos/Comodines/{nombre}.png", 0,0)
         self.nombre = str()
         self.descripcion = str()
         self.rareza = int() # "Comun", "Raro", "Epico"
         self.precio = int() # Precio de la carta
     
-    def aplicar(self, mano, fichas, multi=1, dinero=0, cartas_jugadas=0,comodines=None):
+    def aplicar(self, mano, suma, sumCartas, multi=1, dinero=0, cartas_jugadas=0,comodines=None):
         if self.nombre=="Clon" and comodines:
             i=comodines.i(self)
             if i>0:
