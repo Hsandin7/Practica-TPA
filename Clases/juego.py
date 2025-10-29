@@ -4,7 +4,7 @@ import pygame
 
 class Juego:
     # Atributos de clase
-    transicion = False                      # Necesita la imagen cargada de ambas paginas,
+    num_transicion = None                   # Necesita la imagen cargada de ambas paginas,
     paginas_transicion = [None, None, 0]    # y el numero de la 2 [pag1, pag2, num_pag2]
     
     def __init__(self):
@@ -78,8 +78,8 @@ class Juego:
     def actualizar_pagina_principal(self, eventos):
         if self.botones["play"].detectar_click(eventos):
             self.mostrar_fondo = True
-            Juego.transicion = True
-            Juego.paginas_transicion = [self.paginas[0],self.paginas[1], 1]
+            Juego.num_transicion = 1        # Transicion 1
+            Juego.paginas_transicion = [self.paginas[0], self.paginas[1], 1]    # De la pagina 0 a la 1
 
 
     # Pagina de juego
@@ -104,8 +104,10 @@ class Juego:
         if self.botones["jugar"].detectar_click(eventos):
             self.jugador.jugar_cartas()
             if self.jugador.game_over:          # Transicion game over
-                self.pagina_actual = 5      # P GAME OVER
                 self.jugador.game_over = False
+                self.mostrar_fondo = True
+                Juego.num_transicion = 2        # Transicion 2
+                Juego.paginas_transicion = [self.paginas[1], self.paginas[5], 5]    # De la pagina 1 a la 5
         elif self.botones["descartar"].detectar_click(eventos):
             self.jugador.descartar_cartas("boton")
         
@@ -134,8 +136,8 @@ class Juego:
         elif self.botones["controles"].detectar_click(eventos):
             pass
         elif self.botones["salir"].detectar_click(eventos):
-            Juego.transicion = True
-            Juego.paginas_transicion = [self.paginas[2],self.paginas[0], 0]
+            Juego.num_transicion = 1        # Transicion 1
+            Juego.paginas_transicion = [self.paginas[2],self.paginas[0], 0]     # De la pagina 2 a la 0
             self.reiniciar()
         elif self.botones["save"].detectar_click(eventos):
             self.mostrar_fondo = True
