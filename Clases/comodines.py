@@ -12,15 +12,15 @@ def registrar_efecto(nombre):
 
 #Definicion de efectos para cada comodin
 
-@registrar_efecto("Pereira")
+@registrar_efecto("matematico")
 def efecto_matematico(mano,fichas,multi):
     return fichas,multi*2
 
-@registrar_efecto("Stonks")
+@registrar_efecto("stonks")
 def efecto_stonks(mano,dinero):
     return dinero*2
 
-@registrar_efecto("Calculadora")
+@registrar_efecto("calculadora")
 def efecto_calculadora(mano,fichas, multi):
     carta_mayor=max(key=lambda c:c.valor)
     return fichas,multi+carta_mayor.valor
@@ -59,8 +59,8 @@ def efecto_programador(mano,fichas,multi,cartas_jugadas):
 
 # Ahora mismo esta igual que la clase carta
 class Comodin(Boton):
-    def __init__(self, nombre, posicion):
-        super().__init__(f"Graficos/Comodines/{nombre}.png", posicion)
+    def __init__(self, nombre, x,y):
+        super().__init__(f"Graficos/Comodines/{nombre}.png", x,y)
         self.nombre = str()
         self.descripcion = str()
         self.rareza = int() # "Comun", "Raro", "Epico"
@@ -94,5 +94,4 @@ class Comodin(Boton):
         pass
 
     def dibujar(self):
-        for i,comodin in enumerate(efectos_comodin):
-            pass
+        pass
