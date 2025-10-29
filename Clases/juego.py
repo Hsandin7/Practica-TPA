@@ -25,7 +25,9 @@ class Juego:
             pygame.image.load("Graficos/menu_salida.png"),          # 2: M Salida
             pygame.image.load("Graficos/menu_tienda.png"),          # 3: M Tienda
             pygame.image.load("Graficos/menu_guardado.png"),        # 4: M Guardado
-            pygame.image.load("Graficos/game_over.png")             # 5: P GAME OVER
+            pygame.image.load("Graficos/game_over.png"),            # 5: P GAME OVER
+            pygame.image.load("Graficos/pantalla_info.png")         # 6: P Info
+
         ]
     
     def cargar_botones(self):
@@ -107,8 +109,8 @@ class Juego:
         elif self.botones["descartar"].detectar_click(eventos):
             self.jugador.descartar_cartas("boton")
         
-        # if self.botones["info"].detectar_click(eventos):
-        #     self.pagina_actual = 6
+        elif self.botones["info"].detectar_click(eventos):
+            self.pagina_actual = 6
 
 
 
@@ -210,3 +212,11 @@ class Juego:
             self.pagina_actual = 0
             self.mostrar_fondo =  True
             self.reiniciar()
+
+    # Pagina Info
+    def mostrar_pantalla_info(self, screen):
+        if self.mostrar_fondo:                      # Muestra el fondo una sola vez
+            screen.blit(self.paginas[6], (0,0))
+            self.mostrar_fondo = False
+
+            
