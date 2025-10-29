@@ -7,17 +7,23 @@ from Clases.evaluador_cartas import Evaluador_Cartas
 from Clases._utilidades import *
 from Clases.animaciones import Animador_Texto
 from Clases.guardado import *
+from Clases.niveles import Niveles
 
 class Jugador:
     def __init__(self):
         self.puntos = 0
+        self.puntos_nivel = 100
         self.puntos_cartas = 0
         self.multiplicador = 0
         self.slot_seleccionado = 0
+        self.sig_nivel = False
+        self.game_over = False
+        self.numero_nivel = 1
         
         self.evaluador =        Evaluador_Cartas()
         self.animador_texto =   Animador_Texto()
         self.mazo =             Mazo()
+        self.niveles =          Niveles()
         
         self.mano = [self.mazo.robar() for _ in range(0,8)]
         
@@ -38,11 +44,17 @@ class Jugador:
         mostrar_texto_centrado(screen, f"{self.puntos_cartas}", 845, 190)
         
         # Cambiar por el objetivo de puntos del nivel
-        puntos_formateados = f"{self.puntos:,}".replace(",", ".")
+        puntos_formateados = f"{self.puntos_nivel:,}".replace(",", ".")
         mostrar_texto_centrado(screen, puntos_formateados, 400, 125, 50)
 
         # Muestra los puntos obtenidos que se suman al total
         self.animador_texto.dibujar(screen)
+
+        mostrar_texto_centrado(screen, str(self.numero_nivel), 213, 328, 30, color= (0, 0, 0))
+        mostrar_texto_centrado(screen, str(self.limite_descartar), 298, 382, 30, color= (0, 0, 0))
+        mostrar_texto_centrado(screen, str(self.limite_jugar), 264, 437, 30, color = (0, 0, 0))
+
+
 
 
     def mostrar_cartas(self, screen):
@@ -107,10 +119,22 @@ class Jugador:
             for carta in self._cartas_jugadas:      # Quita las cartas que se hayan jugado para que el resto se descarte correctamente
                 self.mano.remove(carta)
                 self._cartas_seleccionadas.remove(carta)
-            self.descartar_cartas()                 # Las cartas que no se hayan jugado se descartan
+            self.descartar_cartas("jugar_cartas")                 # Las cartas que no se hayan jugado se descartan
             self.animador_texto.iniciar(f"{self.puntos_cartas * self.multiplicador}", 1100, 150,y_final=90)
 
-    def descartar_cartas(self):
+            self.limite_jugar -= 1
+            if self.niveles.verificar_nivel(self.puntos):
+                self.siguente_ronda()
+            elif self.limite_jugar <= 0:
+                self.game_over = True
+            
+
+    def descartar_cartas(self, origen):
+        if (origen == "boton" and self.limite_descartar > 0):
+            self.limite_descartar -= 1
+        elif not origen == "jugar_cartas":
+            return None
+        
         self._cartas_descartadas.clear()
         if len(self._cartas_seleccionadas) <= self.limite_seleccion and self._cartas_seleccionadas:
             for carta in self._cartas_seleccionadas:
@@ -121,7 +145,7 @@ class Jugador:
             self.mano.append(self.mazo.robar())
 
 
-    # Manjo de partidas guardadas
+    # Manejo de partidas guardadas
     def guardar_partida(self):
         # mazo y mano se guardan como listas de strings con el valor y el palo concatenados
         datos = {
@@ -164,3 +188,17 @@ class Jugador:
             else:
                 mostrar_texto(screen, "Vacio", x, 215, 20)
             x += 250
+            mostrar_texto(screen, f"Puntos: {datos["puntos"]}", x, 215, 20)
+
+
+    def siguente_ronda (self):
+        self.puntos = 0
+        self.puntos_nivel = self.niveles.puntos_nivel
+        self.mazo = Mazo()
+        self.sig_nivel = True
+        self._cartas_jugadas = None
+        self.limite_jugar = 4
+        self.limite_descartar = 3
+        self.numero_nivel += 1
+
+        

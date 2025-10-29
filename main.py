@@ -32,7 +32,7 @@ while True:
                     sys.exit()
                 case 1 | 4:                     # P Juego / M Guardado
                     juego.pagina_actual = 2         # -> M Salida
-                case 2 | 3:                     # M Salida / M Tienda
+                case 2 | 3 | 6:                     # M Salida / M Tienda
                     juego.pagina_actual = 1         # -> P Juego
                 case _:
                     pass
@@ -60,8 +60,12 @@ while True:
             case 4:
                 juego.mostrar_menu_guardado(screen)
                 juego.actualizar_menu_guardado(eventos)
-            case _:
-                pass
+            case 5:
+                juego.mostrar_pagina_game_over(screen)
+                juego.actualizar_pagina_game_over(eventos)
+            case 6: 
+                juego.mostrar_pantalla_info(screen)
+
 
         if Juego.transicion:
             transicion.iniciar(Juego.paginas_transicion[0],
