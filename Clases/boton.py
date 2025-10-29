@@ -2,6 +2,16 @@ from Clases._utilidades import reproducir_sonido
 import pygame
 
 class Boton:
+    """Clase Boton: crea, asigna las posiciones del boton y detecta si estan conectados.
+        
+        Inicializa los atributos: 
+        - x pone la posicion en x
+        - y pone la posicion en y
+        - imagen_original asigna la ruta de la imagen al boton
+        - _sonido_click le asigna un sonido al boton.
+        - imagen_hover crea una version oscurecida de la imagen
+        
+    """
     def __init__(self, ruta_imagen, posx, posy, sonido = "Sonidos/sonido_boton.mp3"):
         self.x = posx
         self.y = posy
@@ -16,11 +26,16 @@ class Boton:
         self.imagen_hover.blit(oscuridad, (0, 0), special_flags=pygame.BLEND_RGBA_MULT)
 
     def asignar_posicion(self, posx, posy):     # Asigna la posicion de la imagen
+        """Funcion asignar_posicion: pone la posicion x, y en el boton."""
+
         self.x = posx
         self.y = posy
         self.rect.topleft = (self.x,self.y)
 
     def dibujar(self, screen):
+        """Funcion dibujar: muestra el boton y lo oscurece 
+            en caso de que el raton este encima."""
+        
         mouse_pos = pygame.mouse.get_pos()
 
         if self.rect.collidepoint(mouse_pos):           # Detectar si el raton esta encima
@@ -30,6 +45,8 @@ class Boton:
             screen.blit(self.imagen_original, (self.x, self.y))
 
     def detectar_click(self, eventos):
+        """Funcion detectar_click: comprueba si se ha dado click en el boton para 
+            hacer la funcion correspondiente del boton."""
         mouse_pos = pygame.mouse.get_pos()
 
         if self.rect.collidepoint(mouse_pos):

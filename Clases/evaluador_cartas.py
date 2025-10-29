@@ -8,11 +8,24 @@ from Clases.carta import Carta
 # correspondientes con la comprobacion que sea verdadera
 
 class Evaluador_Cartas:
+    """Clase Evaluador_Cartas: Comprueba si las cartas jugadas tienen alguna puntuación
+    
+        Inicializa los atributos:
+        - cartas es la lista de las cartas jugadas
+        - resultado lo que se devulve al acabar la evaluacion.
+        
+    """
+
     def __init__(self):
         self.cartas = list()
         self.resultado = {"Cartas": list(), "Valor": int(), "Multiplicador": int()}
 
     def evaluar(self, cartas_seleccionadas):
+        """Funcion evaluar: Comprueba todas las posibles jugadas con un un orden de prioridad
+            comprobando si las cartas jugadas corresponden a alguna jugada para sumar la puntucaion
+            y devolver el resultado.
+        """
+        
         self.cartas = cartas_seleccionadas
         self.cartas.sort(key=lambda carta: carta.valor)
         num_seleccionadas = len(self.cartas)

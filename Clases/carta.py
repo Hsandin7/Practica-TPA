@@ -1,6 +1,17 @@
 from Clases.boton import Boton
 
 class Carta(Boton):
+    """Clase Carta: Guarda la informacion de cada carta y hereda de la clase Boton.
+        
+        Inicializa los atributos: 
+        - _valor el cual es el numero de la carta 
+        - _palo es la figura de la carta
+        - x_final sirven para las animaciones
+        - y_final sirven para las animaciones
+        - velodidad sirve para la velocidad de las animaciones
+        - seleccionada devuelve si esta seleccionada la carta.
+        
+    """
     PALOS = ["o", "c", "e", "b"]    # Oros(o), Copas(c), Espadas(e), Bastos(b)
     VALORES = list(range(1,13))
 
@@ -22,6 +33,8 @@ class Carta(Boton):
         return self._palo
     
     def mover_hacia_destino(self):
+        """Funcion mover_hacia_destino: cambia la posicion actual de la carta hasta 
+            llegar a la posicion final, para la animacion."""
         x = self.x
         y = self.y
         x += (self.x_final - self.x) * self.velocidad
@@ -29,10 +42,13 @@ class Carta(Boton):
         super().asignar_posicion(x, y)
 
     def dibujar(self, screen):
+        """Funcion dibujar: accede a la funcion mover_hacia_destino y muestra la carta."""
         self.mover_hacia_destino()
         super().dibujar(screen)
     
     def detectar_seleccion(self, eventos):
+        """Funcion deterctar_seleccion: detecta si se le ha dado click a la carta y 
+            devuelve true o false"""
         if self.detectar_click(eventos):
             self.seleccionada = not self.seleccionada
             if self.seleccionada:
