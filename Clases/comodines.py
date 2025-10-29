@@ -59,23 +59,22 @@ def efecto_programador(mano,fichas,multi,cartas_jugadas):
 
 # Ahora mismo esta igual que la clase carta
 class Comodin(Boton):
-    def __init__(self, ruta_imagen, posicion,efecto):
-        super().__init__(ruta_imagen, posicion)
+    def __init__(self, nombre, posicion):
+        super().__init__(f"Graficos/Comodines/{nombre}.png", posicion)
         self.nombre = str()
         self.descripcion = str()
         self.rareza = int() # "Comun", "Raro", "Epico"
         self.precio = int() # Precio de la carta
-        self.efecto=efecto
     
     def aplicar(self, mano, fichas, multi=1, dinero=0, cartas_jugadas=0,comodines=None):
-        if self.efecto=="Clon" and comodines:
+        if self.nombre=="Clon" and comodines:
             i=comodines.i(self)
             if i>0:
                 comodin_drch=comodines[i-1]
                 return comodin_drch.aplicar(mano,fichas,multi,dinero,cartas_jugadas,comodines)
             else:
                 return fichas, multi,dinero
-        efecto=efectos_comodin.get(self.efecto)
+        efecto=efectos_comodin.get(self.nombre)
         if efecto:
             resultado=efecto(mano,fichas,multi,dinero=dinero,cartas_jugadas=cartas_jugadas)
             if len(resultado)==2:
