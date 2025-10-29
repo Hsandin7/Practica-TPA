@@ -1,3 +1,5 @@
+import random
+
 class Niveles:
     """Clase Niveles: Hace toda la funcionalidad de los niveles y los niveles que son un boss.
     
@@ -13,9 +15,8 @@ class Niveles:
         self.puntos = 0
         self.puntos_nivel = 100
         self.multiplicador = 1.5
-        # self.boss = {
-            
-        # }
+        self.valores = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12"]
+        self.colores = ["verde", "rojo", "morado", "azul", "rosa", "naranja"]
 
     def siguente_nivel(self):
         """Funcion siguente_nivel: pasa de nivel sumando 1 al nivel_actual, 
@@ -24,6 +25,14 @@ class Niveles:
         self.nivel_actual += 1
         self.puntos = 0
         self.puntos_nivel = int(self.puntos_nivel * self.multiplicador)
+
+        if self.verificar_boss():
+            valor  = random.choice(self.valores)
+            color = random.choice(self.colores)
+
+            self.cartas_anuladas = valor
+            self.color_pantalla = color
+
     
     def nivel_perdido(self):
         """Funcion nivel_perdido: cuando no logras llegar a los puntos 
@@ -39,4 +48,9 @@ class Niveles:
             self.siguente_nivel()
             print("siguente nivel")
             return True
-            
+    
+    def verificar_boss (self):
+        return (self.nivel_actual -1)%3 == 0
+    
+    def verificar_carta_valida (self, carta):
+        pass
