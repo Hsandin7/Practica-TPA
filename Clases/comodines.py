@@ -12,78 +12,120 @@ def registrar_efecto(nombre):
 
 #Definicion de efectos para cada comodin
 
-@registrar_efecto("matematico")
-def efecto_matematico(multi):
-    print("matematico")
-    return multi*2
-
-@registrar_efecto("stonks")
-def efecto_stonks(dinero):
-    return dinero*2
-
-@registrar_efecto("calculadora")
-def efecto_calculadora(fichas, multi):
-    carta_mayor=max(key=lambda c:c.valor)
-    return fichas,multi+carta_mayor.valor
-
-@registrar_efecto("loco")
-def efecto_el_loco(mano, fichas, multi):
-    multi_extra=random.choice([0,1,5,10,25,50])
-    return fichas,multi+multi_extra
-
-@registrar_efecto("doblete")
-def efecto_doblete(mano, fichas,multi):
-    fichas=0
-    for m in mano:
-        fichas+=m.valor*2
-    print(fichas,multi)
-    return fichas,multi
-
-@registrar_efecto("esteroides")
-def efecto_esteroides(mano,fichas,multi):
-    fichas=0
-    for m in mano:
-        fichas+=20
-    return fichas,multi
 
 @registrar_efecto("gloton")
-def efecto_gloton(mano,fichas,multi):
-    fichas=0
-    for m in mano:
-        fichas+=m.valor+20
-        multi+=10
-    return fichas,multi
+def efecto_gloton(mano, fichas, multi, dinero, cartas_jugadas):
+
+    for m in cartas_jugadas:
+        fichas += m.valor + 50
+    for m in cartas_jugadas:
+        fichas = fichas - m.valor
+    multi += 10
+    
+    return fichas, multi, dinero
+
+@registrar_efecto("stonks")
+def efecto_stonks(mano, fichas, multi, dinero, cartas_jugadas):
+
+    dinero = dinero*2
+
+    return fichas, multi, dinero
+
+@registrar_efecto("matematico")
+def efecto_matematico(mano, fichas, multi, dinero, cartas_jugadas):
+
+    multi =  multi*2
+
+    return fichas, multi, dinero
+
+@registrar_efecto("calculadora")
+def efecto_calculadora(mano, fichas, multi, dinero, cartas_jugadas):
+
+    carta_mayor=max(cartas_jugadas, key=lambda c:c.valor)
+    multi = multi+carta_mayor.valor
+
+    return fichas, multi, dinero
+
+
+@registrar_efecto("loco")
+def efecto_el_loco(mano, fichas, multi, dinero, cartas_jugadas):
+
+    multi_extra=random.choice([0,1,5,10,25,50])
+    multi = multi+multi_extra
+
+    return fichas, multi, dinero
+
+@registrar_efecto("doblete")
+def efecto_doblete(mano, fichas, multi, dinero, cartas_jugadas):
+
+    for m in cartas_jugadas:
+        fichas+=m.valor*2
+    for m in cartas_jugadas:
+        fichas = fichas - m.valor
+
+    return fichas, multi, dinero
+
+@registrar_efecto("esteroides")
+def efecto_esteroides(mano, fichas, multi, dinero, cartas_jugadas):
+    
+    for m in cartas_jugadas:
+        fichas+=20
+    for m in cartas_jugadas:
+        fichas = fichas - m.valor
+
+    return fichas,multi, dinero
 
 @registrar_efecto("programador")
-def efecto_programador(mano,fichas,multi,cartas_jugadas):
-    bonus=cartas_jugadas//10
-    return fichas,multi*(1+bonus)
+def efecto_programador(mano, fichas, multi, dinero, cartas_jugadas):
+    
+    multi_extra = 0
+    for m in mano:
+        if m.valor == 1:
+            multi_extra += 1
+    
+    multi = multi + multi_extra
+
+    return fichas,multi, dinero
+    
 
 # Ahora mismo esta igual que la clase carta
 class Comodin(Boton):
     def __init__(self, nombre):
         super().__init__(f"Graficos/Comodines/{nombre}.png", 0,0)
-        self.nombre = str()
+        self.nombre = nombre
         self.descripcion = str()
         self.rareza = int() # "Comun", "Raro", "Epico"
         self.precio = int() # Precio de la carta
     
-    def aplicar(self, mano, suma, sumCartas, multi=1, dinero=0, cartas_jugadas=0,comodines=None):
-        if self.nombre=="Clon" and comodines:
-            i=comodines.i(self)
-            if i>0:
-                comodin_drch=comodines[i-1]
-                return comodin_drch.aplicar(mano,fichas,multi,dinero,cartas_jugadas,comodines)
-            else:
-                return fichas, multi,dinero
-        efecto=efectos_comodin.get(self.nombre)
-        if efecto:
-            resultado=efecto(mano,fichas,multi,dinero=dinero,cartas_jugadas=cartas_jugadas)
-            if len(resultado)==2:
-                fichas,multi=resultado
-            else:
-                fichas,multi,dinero=resultado
-        return fichas,multi,dinero   
+    def aplicar(self, mano, fichas, multi, dinero, cartas_jugadas, comodines):
+        print(self.nombre)
+        print(f"Operacion antes: {fichas} + {multi}")
+        if cartas_jugadas is None:
+            cartas_jugadas = []
+        
+        if self.nombre == "clon":
+            if comodines: 
+                i = comodines.index(self)
+                if i>=0 and i < len(comodines)-1:
+                    comodin_clonado = comodines[i+1]
+
+                    return comodin_clonado.aplicar(mano, fichas, multi, dinero, cartas_jugadas, comodines)
+                
+                else:
+                    return fichas, multi, dinero 
+            
+            else: 
+                return fichas, multi, dinero 
+
+
+
+        efecto = efectos_comodin.get(self.nombre)
+
+        if efecto is None:
+            return fichas, multi, dinero
+        
+        resultado = efecto(mano=mano, fichas=+fichas, multi=multi, dinero=dinero, cartas_jugadas=cartas_jugadas)
+        return resultado
     
     def registrar_precio(self):
         match self.rareza:

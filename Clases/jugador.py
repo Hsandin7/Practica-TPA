@@ -28,12 +28,12 @@ class Jugador:
         self.niveles =          Niveles()
         
         self.mano = [self.mazo.robar() for _ in range(0,8)]
-        self.comodines=[
-            Comodin("esteroides"),
-            #Comodin("matematico"),
-            #Comodin("doblete"),
-            #Comodin("gloton"),
-            #Comodin("programador")
+        self.comodines_mano=[
+            Comodin("clon"),
+            Comodin("matematico"),
+            Comodin("doblete"),
+            Comodin("calculadora"),
+            Comodin("programador")
         ]
         
         self._cartas_seleccionadas =    list()
@@ -91,9 +91,9 @@ class Jugador:
                 carta.y_final = 350
                 carta.dibujar(screen)
 
-        if self.comodines:
-            pos_x = 257 - float( (len(self.comodines)-1) / 2 ) * 100
-            for comodin in self.comodines:
+        if self.comodines_mano:
+            pos_x = 257 - float( (len(self.comodines_mano)-1) / 2 ) * 100
+            for comodin in self.comodines_mano:
                 comodin.x = pos_x
                 comodin.y = 530
                 comodin.dibujar(screen)
@@ -105,8 +105,8 @@ class Jugador:
         # Temporal?
         mostrar_texto_centrado(screen, f"{len(self.mazo.cartas)}", 1230, 600, 50)
 
-    def mostrar_comodines(self,screen):
-        for c in self.comodines:
+    def mostrar_comodines_mano(self,screen):
+        for c in self.comodines_mano:
             c.dibujar(screen)
 
 
@@ -129,16 +129,20 @@ class Jugador:
             self.multiplicador = evaluacion["Multiplicador"]
             self.puntos += self.puntos_cartas * self.multiplicador
             
-            # print(evaluacion)      # Para debugging
-            # print(self._cartas_jugadas)
-            if self.comodines:
-                for c in self.comodines:
-                    fichas,multi,dinero=c.aplicar(self.mano,self.puntos_cartas,self.multiplicador,self.dinero,len(self._cartas_jugadas),self.comodines)
+
+            if self.comodines_mano:
+                fichas = self.puntos_cartas
+                multi = self.multiplicador
+                dinero = self.dinero
+
+                for c in self.comodines_mano:
+                    fichas,multi,dinero=c.aplicar(self.mano,fichas,multi,dinero,self._cartas_jugadas, self.comodines_mano)
             
                 self.puntos_cartas=fichas
-                #self.multiplicador=multi
-                #self.dinero=dinero
-                #self.puntos+=fichas*multi
+                self.multiplicador=multi
+                self.dinero=dinero
+                self.puntos=fichas*multi
+                print(f"Operacion despues: {fichas} * {multi} = {self.puntos}")
             
             for carta in self._cartas_jugadas:      # Quita las cartas que se hayan jugado para que el resto se descarte correctamente
                 self.mano.remove(carta)
@@ -202,7 +206,7 @@ class Jugador:
             mostrar_texto(screen, f"Puntos: {datos["puntos"]}", x, 215, 20)
             # Cambiar por informacion diferente
             mostrar_texto(screen, f"Nivel: {datos["puntos"]}", x, 245, 20)
-            mostrar_texto(screen, f"Comodines: {datos["puntos"]}", x, 275, 20)
+            mostrar_texto(screen, f"comodines_mano: {datos["puntos"]}", x, 275, 20)
             mostrar_texto(screen, f"Puntos: {datos["puntos"]}", x, 305, 20)
             x += 250
 

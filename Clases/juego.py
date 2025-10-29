@@ -93,7 +93,7 @@ class Juego:
 
         self.jugador.mostrar_cartas(screen)
         self.jugador.mostrar_puntos(screen)
-        self.jugador.mostrar_comodines(screen)
+        self.jugador.mostrar_comodines_mano(screen)
 
     def actualizar_pagina_juego(self, eventos):
         if self.jugador.sig_nivel:
