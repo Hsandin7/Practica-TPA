@@ -10,16 +10,24 @@ class Transicion:
         self.angulo = 0
         self.velocidad_expandir = 0.3
         self.velocidad_contraer = 0.2
+        self.animacion = 0
     
-    def iniciar(self, pagina_actual, pagina_destino, num_pagina_destino):
+    def iniciar(self, pagina_actual, pagina_destino, num_pagina_destino, num_transicion):
         self.paginas = [pagina_actual, pagina_destino]
         self.num_pagina_destino = num_pagina_destino
         self.grosor = 0
-        self.fase = "expandir"
-    
-    def actualizar(self, screen, num_transicion):
-        num = None
         match num_transicion:
+            case 1:
+                self.animacion = 1
+                self.fase = "expandir"
+            case 2:
+                self.animacion = 2
+                self.fase = "expandir"
+
+
+    def actualizar(self, screen):
+        num = None
+        match self.animacion:
             case 1:
                 self.animacion_1(screen)
             case 2:

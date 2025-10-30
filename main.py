@@ -39,7 +39,7 @@ while True:
 
 
     if Juego.num_transicion:
-        num_pagina_destino = transicion.actualizar(screen, juego.num_transicion)
+        num_pagina_destino = transicion.actualizar(screen)
         if num_pagina_destino is not None:
             juego.pagina_actual = num_pagina_destino
             Juego.num_transicion = None
@@ -70,7 +70,8 @@ while True:
         if Juego.num_transicion:
             transicion.iniciar(Juego.paginas_transicion[0],
                                Juego.paginas_transicion[1],
-                               Juego.paginas_transicion[2])
+                               Juego.paginas_transicion[2],
+                               Juego.num_transicion)
 
     pygame.display.flip()
     clock.tick(60)
