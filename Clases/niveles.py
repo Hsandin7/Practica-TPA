@@ -15,8 +15,18 @@ class Niveles:
         self.puntos = 0
         self.puntos_nivel = 100
         self.multiplicador = 1.5
+        self.color_pantalla = (0,0,0)
         self.valores = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12"]
-        self.colores = ["verde", "rojo", "morado", "azul", "rosa", "naranja"]
+        self.colores_boss = [
+            (100, 0, 0),     # rojo
+            (0, 0, 72),     # azul
+            (85, 0, 72),    # morado
+            (0, 60, 0),     # verde
+            (97, 0, 48),    # rosa
+            (127, 52, 0),    # naranja
+        ]
+        self.es_boss = False
+        self.cartas_invalidas = []
 
     def siguente_nivel(self):
         """Funcion siguente_nivel: pasa de nivel sumando 1 al nivel_actual, 
@@ -27,11 +37,11 @@ class Niveles:
         self.puntos_nivel = int(self.puntos_nivel * self.multiplicador)
 
         if self.verificar_boss():
-            valor  = random.choice(self.valores)
-            color = random.choice(self.colores)
-
-            self.cartas_anuladas = valor
-            self.color_pantalla = color
+            self.nivel_boss()
+        else:
+            self.es_boss = False
+            self.color_pantalla = (0,0,0)
+            self.cartas_invalidas = []
 
     
     def nivel_perdido(self):
@@ -40,17 +50,26 @@ class Niveles:
         self.nivel_actual = 1
         self.puntos = 0
         self.puntos_nivel = 100
+        self.es_boss = False
+        self.color_pantalla = (0,0,0)
+        self.cartas_invalidas = []
 
     def verificar_nivel(self, puntos):
         """Funcion verificar_nivel: comprueba si se ha alcanzado el objetivo de puntos y 
             si es así devuelve verdadero."""
         if puntos >= self.puntos_nivel:
             self.siguente_nivel()
-            print("siguente nivel")
+            print(f"NNivel: {self.nivel_actual}, es bos: {self.es_boss}")
             return True
     
+    def nivel_boss (self):
+        self.es_boss = True
+        self.color_pantalla = random.choice(self.colores_boss)
+
+        print (f"BOSS: {self.color_pantalla}")
+
     def verificar_boss (self):
         return (self.nivel_actual -1)%3 == 0
     
     def verificar_carta_valida (self, carta):
-        pass
+        return carta.valor not in self.cartas_invalidas

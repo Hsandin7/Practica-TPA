@@ -1,6 +1,7 @@
 from Clases.jugador import Jugador
 from Clases.boton import Boton
 import pygame
+import random
 
 class Juego:
     # Atributos de clase
@@ -85,6 +86,28 @@ class Juego:
     # Pagina de juego
     def mostrar_pagina_juego(self, screen):
         screen.blit(self.paginas[1], (0,0))
+        if self.jugador.niveles.es_boss:
+            
+            if self.jugador.carta_inhabilitada is None:
+                valor_inhabilitado = random.randint(1,12)
+                print(f"Valor BOSS inavilitado {valor_inhabilitado}")
+                self.jugador.carta_inhabilitada = valor_inhabilitado
+
+                for carta in self.jugador.mazo.cartas + self.jugador.mano:
+                    if carta.valor == valor_inhabilitado:
+                        carta.habilitada = False
+
+            filtro_color = pygame.Surface(screen.get_size(), pygame.SRCALPHA)
+
+            r, g, b = self.jugador.niveles.color_pantalla
+            filtro_color.fill((r , g, b, 120))
+            screen.blit(filtro_color, (0,0))
+
+        else:
+            if self.jugador.carta_inhabilitada is not None:
+                for carta in self.jugador.mazo.cartas + self.jugador.mano:
+                    carta.habilitada = True
+                self.jugador.carta_inhabilitada = None
 
         self.botones["jugar"].dibujar(screen)
         self.botones["descartar"].dibujar(screen)
