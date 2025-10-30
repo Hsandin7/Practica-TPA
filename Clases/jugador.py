@@ -106,7 +106,6 @@ class Jugador:
 
     def jugar_cartas(self):
         if len(self._cartas_seleccionadas) <= self.limite_seleccion and self._cartas_seleccionadas:    # Comprueba que haya cartas seleccionadas
-            self.limite_jugar -= 1
             evaluacion = self.evaluador.evaluar(self._cartas_seleccionadas)
             self._cartas_jugadas = evaluacion["Cartas"]
             self.puntos_cartas = evaluacion["Valor"]

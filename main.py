@@ -24,7 +24,7 @@ while True:
             sys.exit()
 
         # --- Detectar tecla ESC ---
-        if Juego.num_transicion is False and event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE:
+        if Juego.num_transicion is None and event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE:
             juego.mostrar_fondo = True
             match juego.pagina_actual:
                 case 0:                         # P Principal
@@ -32,7 +32,7 @@ while True:
                     sys.exit()
                 case 1 | 4:                     # P Juego / M Guardado
                     juego.pagina_actual = 2         # -> M Salida
-                case 2 | 3 | 6:                 # M Salida / M Tienda
+                case 2 | 3 | 6:                 # M Salida / M Tienda / M Info
                     juego.pagina_actual = 1         # -> P Juego
                 case _:
                     pass
