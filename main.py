@@ -60,8 +60,12 @@ while True:
             case 4:
                 juego.mostrar_menu_guardado(screen)
                 juego.actualizar_menu_guardado(eventos)
-            case _:
-                pass
+            case 5:
+                juego.mostrar_pagina_game_over(screen)
+                juego.actualizar_pagina_game_over(eventos)
+            case 6: 
+                juego.mostrar_pantalla_info(screen)
+
 
         if Juego.num_transicion:
             transicion.iniciar(Juego.paginas_transicion[0],
