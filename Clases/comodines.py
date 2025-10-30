@@ -85,7 +85,7 @@ def efecto_programador(mano, fichas, multi, dinero, cartas_jugadas):
     
 
 # Ahora mismo esta igual que la clase carta
-class Comodin(Boton,):
+class Comodin(Boton):
     def __init__(self, nombre):
         super().__init__(f"Graficos/Comodines/{nombre}.png", 0,0)
         self.nombre = nombre
@@ -104,21 +104,11 @@ class Comodin(Boton,):
             cartas_jugadas = []
         
         if self.nombre == "clon":
-            if comodines: 
-                i = comodines.index(self)
-                if i>=0 and i < len(comodines)-1:
-                    comodin_clonado = comodines[i+1]
-
-                    return comodin_clonado.aplicar(mano, fichas, multi, dinero, cartas_jugadas, comodines)
-                
-                else:
-                    return fichas, multi, dinero 
-            
-            else: 
-                return fichas, multi, dinero 
-            
+            for d in reversed(comodines):
+                if d is not self:
+                    return d.aplicar(mano,fichas,multi,dinero,cartas_jugadas,comodines)
+            return fichas, multi, dinero
         efecto = efectos_comodin.get(self.nombre)
-
         if efecto is None:
             return fichas, multi, dinero
         
@@ -145,13 +135,14 @@ class Comodin(Boton,):
                     self.offset_y = self.rect.y - mouse_y
 
             elif e.type == pygame.MOUSEBUTTONUP and e.button == 1:
-                self.arrastrado = False
-                for o in lista_comodines:
-                    if o is not self and self.rect.colliderect(o.rect):
-                        i = lista_comodines.index(self)
-                        j = lista_comodines.index(o)
-                        lista_comodines[i], lista_comodines[j] = lista_comodines[j], lista_comodines[i]
-                        break
+                if self.arrastrado:
+                    self.arrastrado = False
+                    for o in lista_comodines:
+                        if o is not self and self.rect.colliderect(o.rect):
+                            i = lista_comodines.index(self)
+                            j = lista_comodines.index(o)
+                            lista_comodines[i], lista_comodines[j] = lista_comodines[j], lista_comodines[i]
+                            break
 
             elif e.type == pygame.MOUSEMOTION and self.arrastrado:
                 mouse_x, mouse_y = e.pos
@@ -160,6 +151,11 @@ class Comodin(Boton,):
                 self.x, self.y = self.rect.topleft
                 if limite_rect:
                     self.rect.clamp_ip(limite_rect)
+        base_x=257 - float((len(lista_comodines)-1) / 2) * 100
+        for i,c in enumerate(lista_comodines):
+            if not c.arrastrado:
+                c.rect.topleft=(base_x+i*80,530)
+                c.x,c.y=c.rect.topleft
 
 
 

@@ -29,11 +29,11 @@ class Jugador:
         
         self.mano = [self.mazo.robar() for _ in range(0,8)]
         self.comodines_mano=[
+            Comodin("programador"),
             Comodin("clon"),
             Comodin("matematico"),
             Comodin("doblete"),
-            Comodin("esteroides"),
-            Comodin("programador")
+            Comodin("esteroides")
         ]
         
         self._cartas_seleccionadas =    list()
@@ -94,9 +94,9 @@ class Jugador:
         if self.comodines_mano:
             pos_x = 257 - float((len(self.comodines_mano)-1) / 2) * 100
             for comodin in self.comodines_mano:
-                if not comodin.arrastrado and comodin.rect.x == 0:
-                    comodin.rect.x = pos_x
-                    comodin.rect.y = 530
+                if not comodin.arrastrado:
+                    comodin.rect.topleft=(pos_x,530)
+                    comodin.x,comodin.y=comodin.rect.topleft
                 comodin.dibujar(screen)
                 pos_x += 80
         
@@ -140,7 +140,7 @@ class Jugador:
                 dinero = self.dinero
 
                 for c in self.comodines_mano:
-                    fichas,multi,dinero=c.aplicar(self.mano,fichas,multi,dinero,self._cartas_jugadas, self.comodines_mano)
+                    fichas,multi,dinero=c.aplicar(self.mano,fichas,multi,dinero,self._cartas_jugadas, comodines=self.comodines_mano)
             
                 self.puntos_cartas=fichas
                 self.multiplicador=multi
