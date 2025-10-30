@@ -16,10 +16,8 @@ def registrar_efecto(nombre):
 @registrar_efecto("gloton")
 def efecto_gloton(mano, fichas, multi, dinero, cartas_jugadas):
 
-    for m in cartas_jugadas:
-        fichas += m.valor + 50
-    for m in cartas_jugadas:
-        fichas = fichas - m.valor
+    for _ in cartas_jugadas:
+        fichas += 50
     multi += 10
     
     return fichas, multi, dinero
@@ -59,20 +57,18 @@ def efecto_el_loco(mano, fichas, multi, dinero, cartas_jugadas):
 def efecto_doblete(mano, fichas, multi, dinero, cartas_jugadas):
 
     for m in cartas_jugadas:
-        fichas+=m.valor*2
-    for m in cartas_jugadas:
-        fichas = fichas - m.valor
-
+        fichas+=m.valor
+   
     return fichas, multi, dinero
 
 @registrar_efecto("esteroides")
 def efecto_esteroides(mano, fichas, multi, dinero, cartas_jugadas):
     
-    for m in cartas_jugadas:
-        fichas+=20
-    for m in cartas_jugadas:
-        fichas = fichas - m.valor
-
+    for _ in cartas_jugadas:
+        fichas+=20 
+    # for m in cartas_jugadas:
+    #     fichas = fichas - m.valor
+        
     return fichas,multi, dinero
 
 @registrar_efecto("programador")

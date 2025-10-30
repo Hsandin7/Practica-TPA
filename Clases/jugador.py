@@ -32,7 +32,7 @@ class Jugador:
             Comodin("clon"),
             Comodin("matematico"),
             Comodin("doblete"),
-            Comodin("calculadora"),
+            Comodin("esteroides"),
             Comodin("programador")
         ]
         
