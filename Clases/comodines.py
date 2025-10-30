@@ -85,14 +85,18 @@ def efecto_programador(mano, fichas, multi, dinero, cartas_jugadas):
     
 
 # Ahora mismo esta igual que la clase carta
-class Comodin(Boton):
+class Comodin(Boton,):
     def __init__(self, nombre):
         super().__init__(f"Graficos/Comodines/{nombre}.png", 0,0)
         self.nombre = nombre
         self.descripcion = str()
         self.rareza = int() # "Comun", "Raro", "Epico"
         self.precio = int() # Precio de la carta
-    
+
+        self.arrastrado=False
+        self.offset_x=0
+        self.offset_y=0
+
     def aplicar(self, mano, fichas, multi, dinero, cartas_jugadas, comodines):
         print(self.nombre)
         print(f"Operacion antes: {fichas} + {multi}")
@@ -112,9 +116,7 @@ class Comodin(Boton):
             
             else: 
                 return fichas, multi, dinero 
-
-
-
+            
         efecto = efectos_comodin.get(self.nombre)
 
         if efecto is None:
@@ -133,5 +135,34 @@ class Comodin(Boton):
                 self.precio=8
         pass
 
+    def mover_comodines(self, eventos, lista_comodines, limite_rect=None):
+        for e in eventos:
+            if e.type == pygame.MOUSEBUTTONDOWN and e.button == 1:
+                if self.rect.collidepoint(e.pos):
+                    self.arrastrado = True
+                    mouse_x, mouse_y = e.pos
+                    self.offset_x = self.rect.x - mouse_x
+                    self.offset_y = self.rect.y - mouse_y
+
+            elif e.type == pygame.MOUSEBUTTONUP and e.button == 1:
+                self.arrastrado = False
+                for o in lista_comodines:
+                    if o is not self and self.rect.colliderect(o.rect):
+                        i = lista_comodines.index(self)
+                        j = lista_comodines.index(o)
+                        lista_comodines[i], lista_comodines[j] = lista_comodines[j], lista_comodines[i]
+                        break
+
+            elif e.type == pygame.MOUSEMOTION and self.arrastrado:
+                mouse_x, mouse_y = e.pos
+                self.rect.x = mouse_x + self.offset_x
+                self.rect.y = mouse_y + self.offset_y
+                self.x, self.y = self.rect.topleft
+                if limite_rect:
+                    self.rect.clamp_ip(limite_rect)
+
+
+
     def dibujar(self,screen):
+        self.x, self.y = self.rect.topleft
         super().dibujar(screen)

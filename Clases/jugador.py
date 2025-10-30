@@ -92,10 +92,11 @@ class Jugador:
                 carta.dibujar(screen)
 
         if self.comodines_mano:
-            pos_x = 257 - float( (len(self.comodines_mano)-1) / 2 ) * 100
+            pos_x = 257 - float((len(self.comodines_mano)-1) / 2) * 100
             for comodin in self.comodines_mano:
-                comodin.x = pos_x
-                comodin.y = 530
+                if not comodin.arrastrado and comodin.rect.x == 0:
+                    comodin.rect.x = pos_x
+                    comodin.rect.y = 530
                 comodin.dibujar(screen)
                 pos_x += 80
         
@@ -111,6 +112,9 @@ class Jugador:
 
 
     def actualizar(self, eventos):      # Comprueba si alguna carta es seleccionada, si esto se cumple, se anade a self._cartas_seleccionadas
+        area_comodines=pygame.Rect(150,520,250,120)
+        for c in self.comodines_mano:
+            c.mover_comodines(eventos,self.comodines_mano,limite_rect=area_comodines)
         for carta in self.mano:
             match carta.detectar_seleccion(eventos):
                 case True:
