@@ -21,6 +21,7 @@ class Jugador:
         self.game_over = False
         self.numero_nivel = 1
         self.dinero=0
+        self.carta_inhabilitada = None
         
         self.evaluador =        Evaluador_Cartas()
         self.animador_texto =   Animador_Texto()
@@ -153,6 +154,7 @@ class Jugador:
             self.limite_jugar -= 1
             if self.niveles.verificar_nivel(self.puntos):
                 self.siguente_ronda()
+                
             elif self.limite_jugar <= 0:
                 self.game_over = True
             
@@ -227,5 +229,13 @@ class Jugador:
         self.limite_jugar = 4
         self.limite_descartar = 3
         self.numero_nivel += 1
+        self.carta_inhabilitada = None
+
+        self.mano = [self.mazo.robar() for _ in range(8)]
+        for carta in self.mano:
+            carta.habilitada = True
+
+        if not self.niveles.es_boss:
+            self.niveles.color_pantalla = (0, 0, 0)
 
         

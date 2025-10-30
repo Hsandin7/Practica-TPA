@@ -1,4 +1,5 @@
 from Clases.boton import Boton
+import pygame
 
 class Carta(Boton):
     """Clase Carta: Guarda la informacion de cada carta y hereda de la clase Boton.
@@ -23,10 +24,14 @@ class Carta(Boton):
         self.y_final = self.y
         self.velocidad = 0.2
         self.seleccionada = False
+        self.habilitada = True
 
     @property
     def valor(self):
-        return self._valor
+        if self.habilitada:
+            return self._valor
+        else:
+            return 0
 
     @property
     def palo(self):
@@ -45,10 +50,17 @@ class Carta(Boton):
         """Funcion dibujar: accede a la funcion mover_hacia_destino y muestra la carta."""
         self.mover_hacia_destino()
         super().dibujar(screen)
-    
+
+        if not self.habilitada:
+            filtro_carta = pygame.Surface((90, 132), pygame.SRCALPHA)
+            filtro_carta.fill ((0, 0, 60, 180))
+            screen.blit(filtro_carta, (self.x, self.y))
+
+
     def detectar_seleccion(self, eventos):
         """Funcion deterctar_seleccion: detecta si se le ha dado click a la carta y 
             devuelve true o false"""
+            
         if self.detectar_click(eventos):
             self.seleccionada = not self.seleccionada
             if self.seleccionada:
