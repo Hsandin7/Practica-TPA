@@ -8,6 +8,7 @@ from Clases._utilidades import *
 from Clases.animaciones import Animador_Texto
 from Clases.guardado import *
 from Clases.niveles import Niveles
+from Clases.comodines import Comodin
 
 class Jugador:
     def __init__(self):
@@ -19,6 +20,7 @@ class Jugador:
         self.sig_nivel = False
         self.game_over = False
         self.numero_nivel = 1
+        self.dinero=0
         
         self.evaluador =        Evaluador_Cartas()
         self.animador_texto =   Animador_Texto()
@@ -26,6 +28,13 @@ class Jugador:
         self.niveles =          Niveles()
         
         self.mano = [self.mazo.robar() for _ in range(0,8)]
+        self.comodines_mano=[
+            Comodin("clon"),
+            Comodin("matematico"),
+            Comodin("doblete"),
+            Comodin("esteroides"),
+            Comodin("programador")
+        ]
         
         self._cartas_seleccionadas =    list()
         self._cartas_jugadas =          list()
@@ -42,7 +51,6 @@ class Jugador:
         mostrar_texto_centrado(screen, puntos_formateados, 900, 125, 50)
         mostrar_texto_centrado(screen, f"{self.multiplicador}", 950, 190)
         mostrar_texto_centrado(screen, f"{self.puntos_cartas}", 845, 190)
-        
         # Cambiar por el objetivo de puntos del nivel
         puntos_formateados = f"{self.puntos_nivel:,}".replace(",", ".")
         mostrar_texto_centrado(screen, puntos_formateados, 400, 125, 50)
@@ -53,9 +61,6 @@ class Jugador:
         mostrar_texto_centrado(screen, str(self.numero_nivel), 213, 328, 30, color= (0, 0, 0))
         mostrar_texto_centrado(screen, str(self.limite_descartar), 298, 382, 30, color= (0, 0, 0))
         mostrar_texto_centrado(screen, str(self.limite_jugar), 264, 437, 30, color = (0, 0, 0))
-
-
-
 
     def mostrar_cartas(self, screen):
         # Mostrar cartas de la mano / Animacion de seleccion de carta
@@ -85,12 +90,24 @@ class Jugador:
                 carta.x_final = screen.get_width()+1
                 carta.y_final = 350
                 carta.dibujar(screen)
+
+        if self.comodines_mano:
+            pos_x = 257 - float( (len(self.comodines_mano)-1) / 2 ) * 100
+            for comodin in self.comodines_mano:
+                comodin.x = pos_x
+                comodin.y = 530
+                comodin.dibujar(screen)
+                pos_x += 80
         
         # Mostrar num de cartas seleccionadas
         mostrar_texto(screen, f"{len(self._cartas_seleccionadas)}/5", 1170, 500, 20)
 
         # Temporal?
         mostrar_texto_centrado(screen, f"{len(self.mazo.cartas)}", 1230, 600, 50)
+
+    def mostrar_comodines_mano(self,screen):
+        for c in self.comodines_mano:
+            c.dibujar(screen)
 
 
     def actualizar(self, eventos):      # Comprueba si alguna carta es seleccionada, si esto se cumple, se anade a self._cartas_seleccionadas
@@ -112,8 +129,20 @@ class Jugador:
             self.multiplicador = evaluacion["Multiplicador"]
             self.puntos += self.puntos_cartas * self.multiplicador
             
-            # print(evaluacion)      # Para debugging
-            # print(self._cartas_jugadas)
+
+            if self.comodines_mano:
+                fichas = self.puntos_cartas
+                multi = self.multiplicador
+                dinero = self.dinero
+
+                for c in self.comodines_mano:
+                    fichas,multi,dinero=c.aplicar(self.mano,fichas,multi,dinero,self._cartas_jugadas, self.comodines_mano)
+            
+                self.puntos_cartas=fichas
+                self.multiplicador=multi
+                self.dinero=dinero
+                self.puntos=fichas*multi
+                print(f"Operacion despues: {fichas} * {multi} = {self.puntos}")
             
             for carta in self._cartas_jugadas:      # Quita las cartas que se hayan jugado para que el resto se descarte correctamente
                 self.mano.remove(carta)
@@ -177,7 +206,7 @@ class Jugador:
             mostrar_texto(screen, f"Puntos: {datos["puntos"]}", x, 215, 20)
             # Cambiar por informacion diferente
             mostrar_texto(screen, f"Nivel: {datos["puntos"]}", x, 245, 20)
-            mostrar_texto(screen, f"Comodines: {datos["puntos"]}", x, 275, 20)
+            mostrar_texto(screen, f"comodines_mano: {datos["puntos"]}", x, 275, 20)
             mostrar_texto(screen, f"Puntos: {datos["puntos"]}", x, 305, 20)
             x += 250
 
