@@ -188,12 +188,16 @@ class Jugador:
     
     def cargar_partida(self):
         datos = cargar_partida(self.slot_seleccionado)
-        self.puntos =           datos["puntos"]
-        self.puntos_cartas =    datos["puntos_cartas"]
-        self.multiplicador =    datos["multiplicador"]
-        self.mazo.cartas =      [Carta(c[0], c[1]) for c in datos["mazo"]]
-        self.mano =             [Carta(c[0], c[1]) for c in datos["mano"]]
-        self._cartas_jugadas =  [Carta(c[0], c[1]) for c in datos["cartas_jugadas"]]
+        if datos:
+            self.puntos =           datos["puntos"]
+            self.puntos_cartas =    datos["puntos_cartas"]
+            self.multiplicador =    datos["multiplicador"]
+            self.mazo.cartas =      [Carta(c[0], c[1]) for c in datos["mazo"]]
+            self.mano =             [Carta(c[0], c[1]) for c in datos["mano"]]
+            self._cartas_jugadas =  [Carta(c[0], c[1]) for c in datos["cartas_jugadas"]]
+            return True
+        else:
+            return None
     
     def borrar_partida(self):
         borrar_partida(self.slot_seleccionado)
@@ -203,12 +207,16 @@ class Jugador:
         for slot in range(1, 4):
             datos = cargar_partida(slot)
             mostrar_texto(screen, f"Guardado {slot}", x, 170, 30)
-            mostrar_texto(screen, f"Puntos: {datos["puntos"]}", x, 215, 20)
-            # Cambiar por informacion diferente
-            mostrar_texto(screen, f"Nivel: {datos["puntos"]}", x, 245, 20)
-            mostrar_texto(screen, f"comodines_mano: {datos["puntos"]}", x, 275, 20)
-            mostrar_texto(screen, f"Puntos: {datos["puntos"]}", x, 305, 20)
+            if datos:
+                mostrar_texto(screen, f"Puntos: {datos["puntos"]}", x, 215, 20)
+                # Cambiar por informacion diferente
+                mostrar_texto(screen, f"Puntos: {datos["puntos"]}", x, 245, 20)
+                mostrar_texto(screen, f"Puntos: {datos["puntos"]}", x, 275, 20)
+                mostrar_texto(screen, f"Puntos: {datos["puntos"]}", x, 305, 20)
+            else:
+                mostrar_texto(screen, "Vacio", x, 215, 20)
             x += 250
+
 
     def siguente_ronda (self):
         self.puntos = 0

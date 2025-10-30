@@ -4,7 +4,7 @@ import pygame
 
 class Juego:
     # Atributos de clase
-    transicion = False                      # Necesita la imagen cargada de ambas paginas,
+    num_transicion = None                   # Necesita la imagen cargada de ambas paginas,
     paginas_transicion = [None, None, 0]    # y el numero de la 2 [pag1, pag2, num_pag2]
     
     def __init__(self):
@@ -26,7 +26,7 @@ class Juego:
             pygame.image.load("Graficos/menu_tienda.png"),          # 3: M Tienda
             pygame.image.load("Graficos/menu_guardado.png"),        # 4: M Guardado
             pygame.image.load("Graficos/game_over.png"),            # 5: P GAME OVER
-            pygame.image.load("Graficos/pantalla_info.png")         # 6: P Info
+            pygame.image.load("Graficos/pantalla_info.png")         # 6: M Info
 
         ]
     
@@ -78,8 +78,8 @@ class Juego:
     def actualizar_pagina_principal(self, eventos):
         if self.botones["play"].detectar_click(eventos):
             self.mostrar_fondo = True
-            Juego.transicion = True
-            Juego.paginas_transicion = [self.paginas[0],self.paginas[1], 1]
+            Juego.num_transicion = 1        # Transicion 1
+            Juego.paginas_transicion = [self.paginas[0], self.paginas[1], 1]    # De la pagina 0 a la 1
 
 
     # Pagina de juego
@@ -96,22 +96,29 @@ class Juego:
         self.jugador.mostrar_comodines_mano(screen)
 
     def actualizar_pagina_juego(self, eventos):
-        if self.jugador.sig_nivel:
-            self.jugador.sig_nivel = False
-            self.pagina_actual = 3      # M Tienda
-
         self.jugador.actualizar(eventos)
         
         if self.botones["jugar"].detectar_click(eventos):
             self.jugador.jugar_cartas()
             if self.jugador.game_over:          # Transicion game over
-                self.pagina_actual = 5      # P GAME OVER
                 self.jugador.game_over = False
+                self.mostrar_fondo = True
+                Juego.num_transicion = 4        # Transicion 4 (Transicion de Game Over)
+                Juego.paginas_transicion = [self.paginas[1], self.paginas[5], 5]    # De la pagina 1 a la 5
+            elif self.jugador.sig_nivel:
+                self.jugador.sig_nivel = False
+                self.mostrar_fondo = True
+                Juego.num_transicion = 2        # Transicion 2 (La bajada de la tienda)
+                Juego.paginas_transicion = [self.paginas[1], self.paginas[3], 3]    # De la pagina 1 a la 3
         elif self.botones["descartar"].detectar_click(eventos):
             self.jugador.descartar_cartas("boton")
         
         elif self.botones["info"].detectar_click(eventos):
             self.pagina_actual = 6
+            # self.jugador.sig_nivel = False
+            # self.mostrar_fondo = True
+            # Juego.num_transicion = 2        # Transicion 2 (La bajada de la tienda)
+            # Juego.paginas_transicion = [self.paginas[1], self.paginas[6], 6]    # De la pagina 1 a la 6
 
 
 
@@ -135,8 +142,8 @@ class Juego:
         elif self.botones["controles"].detectar_click(eventos):
             pass
         elif self.botones["salir"].detectar_click(eventos):
-            Juego.transicion = True
-            Juego.paginas_transicion = [self.paginas[2],self.paginas[0], 0]
+            Juego.num_transicion = 1        # Transicion 1
+            Juego.paginas_transicion = [self.paginas[2],self.paginas[0], 0]     # De la pagina 2 a la 0
             self.reiniciar()
         elif self.botones["save"].detectar_click(eventos):
             self.mostrar_fondo = True
@@ -155,8 +162,9 @@ class Juego:
 
     def actualizar_menu_tienda(self, eventos):
         if self.botones["boton_SR"].detectar_click(eventos):
-            self.pagina_actual = 1
             self.mostrar_fondo = True
+            Juego.num_transicion = 3        # Transicion 3 (La subida de la tienda)
+            Juego.paginas_transicion = [self.paginas[1], self.paginas[3], 1]    # De la pagina 3 a la 1
         elif self.botones["cambiar"].detectar_click(eventos):
             pass
         elif self.botones["comprar"].detectar_click(eventos):
@@ -188,8 +196,8 @@ class Juego:
         if self.botones["guardar"].detectar_click(eventos):
             self.jugador.guardar_partida()
         elif self.botones["cargar"].detectar_click(eventos):
-            self.jugador.cargar_partida()
-            self.pagina_actual = 1
+            if self.jugador.cargar_partida():
+                self.pagina_actual = 1
         elif self.botones["papelera"].detectar_click(eventos):
             self.jugador.borrar_partida()
         elif self.botones["slot1"].detectar_click(eventos):
@@ -210,11 +218,15 @@ class Juego:
 
     def actualizar_pagina_game_over(self, eventos):
         if self.botones["game_over"].detectar_click(eventos):
+            self.mostrar_fondo = True
+            Juego.num_transicion = 5        # Transicion 5 (Desintegracion a la pagina de inicio)
+            Juego.paginas_transicion = [self.paginas[5], self.paginas[0], 0]    # De la pagina 3 a la 1
+            
             self.pagina_actual = 0
             self.mostrar_fondo =  True
             self.reiniciar()
 
-    # Pagina Info
+    # Menu Info
     def mostrar_pantalla_info(self, screen):
         if self.mostrar_fondo:                      # Muestra el fondo una sola vez
             screen.blit(self.paginas[6], (0,0))
