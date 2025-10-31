@@ -48,7 +48,7 @@ while True:
     elif demo.activa:
         demo.ejecutar_demo(screen, juego, transicion, eventos)
     else:
-        demo.checkear_inicio(juego.pagina_actual)
+        demo.checkear_inicio()
         
         match juego.pagina_actual:
             case 0:
