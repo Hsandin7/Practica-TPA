@@ -208,9 +208,7 @@ class Juego:
 
     # Tienda
     def mostrar_menu_tienda(self, screen):
-        if self.mostrar_fondo:
-            screen.blit(self.paginas[3], (0,0))
-            self.mostrar_fondo = False
+        screen.blit(self.paginas[3], (0,0))
 
         # Dibujar botones base
         self.botones["boton_SR"].dibujar(screen)
