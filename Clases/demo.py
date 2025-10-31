@@ -7,51 +7,58 @@ from Clases._utilidades import *
 class Demo:
     def __init__(self):
         self.activa = False
-        self.contador = 0
+        self.fase = 1
         self.funcionar = True
+        self.raton = Cursor(1280/2, 720/2)
     
-    def checkear_inicio(self, pag_actual):
-        if pag_actual == 0:
-            self.contador += 1
-        else:
-            self.contador = 0
+    def checkear_inicio(self):
+        contador = 0
         
-        if self.contador > 2*60:   # 30s x 60fps para esperar en total 30s
+        if contador > 2*60:   # 2s x 60fps para esperar en total 2s
             self.activa = True
             self.crear_partidas_customizadas()
-            self.contador = 0
+            contador = 0
 
-    def ejecutar_demo(self, screen, juego: Juego, transicion: Transicion):
-        self.contador += 1
-        if self.contador % 60 == 0: print(self.contador/60)
-        
+    def checkear_siguiente(self, eventos):
+        for event in eventos:
+            if event.type == pygame.KEYDOWN and event.key == pygame.K_RIGHT:
+                print(f"Fase: {self.fase}")
+                self.fase += 1
+                self.funcionar = True
+
+    def ejecutar_demo(self, screen, juego: Juego, transicion: Transicion, eventos):
+        self.checkear_siguiente(eventos)
         # Ir a pagina de Juego
-        if self.contador <= 1:
-            if self.funcionar:
-                self.funcionar = False
+        match self.fase:
+            case 1:
                 juego.mostrar_fondo = True
-                Juego.num_transicion = 1        # Transicion 1
+                Juego.num_transicion = 1
                 Juego.paginas_transicion = [juego.paginas[0], juego.paginas[1], 1]
-                transicion.iniciar( Juego.paginas_transicion[0],
-                                    Juego.paginas_transicion[1],
-                                    Juego.paginas_transicion[2],
-                                    Juego.num_transicion)
+                transicion.iniciar( Juego.paginas_transicion[0],Juego.paginas_transicion[1],Juego.paginas_transicion[2],Juego.num_transicion)
                 
                 # Cargar guardado 1
                 juego.jugador.slot_seleccionado = 1
                 juego.jugador.cargar_partida()
+                self.fase += 1
 
-        # Mostrar info
-        elif self.contador < 30*60:
-            juego.mostrar_pagina_juego(screen)
-            mostrar_texto(screen,"Pagina de informacion")
+            case 2:
+                juego.mostrar_pagina_juego(screen)
+            case 3:
+                juego.mostrar_pagina_juego(screen)
+                if self.funcionar:
+                    self.funcionar = False
+                    self.raton.asignar_posicion(410, 355)
+            
+            case 4:     # Mostrar info
+                juego.mostrar_pantalla_info(screen)
+            
+            case 5:
+                juego.mostrar_pagina_juego(screen)
 
 
-        # Seleccionar cartas
-        elif self.contador < 250*60:
-            if self.funcionar:
-                pass
-    
+
+
+        if self.fase is not 0: self.raton.dibujar(screen)
 
 
 
@@ -79,7 +86,7 @@ class Demo:
 
 
 
-class cursor:
+class Cursor:
     def __init__(self, x, y):
         self.imagen = pygame.image.load("Graficos/cursor.png").convert_alpha()   # Carga la imagen
         self.x = x
@@ -88,17 +95,20 @@ class cursor:
         self.y_final = self.y
         self.velocidad = 0.2
     
-    def _mover_hacia_destino(self):
-        x = self.x
-        y = self.y
-        x += (self.x_final - self.x) * self.velocidad
-        y += (self.y_final - self.y) * self.velocidad
-        self._asignar_posicion(x, y)
+    def asignar_posicion(self, posx, posy):
+        self.x_final = posx
+        self.y_final = posy
     
-    def _asignar_posicion(self, posx, posy):
-        self.x = posx
-        self.y = posy
+    def checkear_pos(self):
+        if self.x_final-1 <= self.x <= self.x_final+1 and self.y_final-1 <= self.y <= self.y_final+1:
+            return True
+        else:
+            return False
 
     def dibujar(self, screen):
         self._mover_hacia_destino()
         screen.blit(self.imagen, (self.x, self.y))
+
+    def _mover_hacia_destino(self):
+        self.x += (self.x_final - self.x) * self.velocidad
+        self.y += (self.y_final - self.y) * self.velocidad
