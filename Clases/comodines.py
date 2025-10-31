@@ -92,7 +92,13 @@ class Comodin(Boton):
         self.descripcion = str()
         self.rareza = int() # "Comun", "Raro", "Epico"
         self.precio = int() # Precio de la carta
-    
+        self.seleccionada = False
+
+        self._registrar_propiedades()
+        self.arrastrado=False
+        self.offset_x=0
+        self.offset_y=0
+
     def aplicar(self, mano, fichas, multi, dinero, cartas_jugadas, comodines):
         print(self.nombre)
         print(f"Operacion antes: {fichas} + {multi}")
@@ -100,30 +106,27 @@ class Comodin(Boton):
             cartas_jugadas = []
         
         if self.nombre == "clon":
-            if comodines: 
-                i = comodines.index(self)
-                if i>=0 and i < len(comodines)-1:
-                    comodin_clonado = comodines[i+1]
-
-                    return comodin_clonado.aplicar(mano, fichas, multi, dinero, cartas_jugadas, comodines)
-                
-                else:
-                    return fichas, multi, dinero 
-            
-            else: 
-                return fichas, multi, dinero 
-
-
-
+            for d in reversed(comodines):
+                if d is not self:
+                    return d.aplicar(mano,fichas,multi,dinero,cartas_jugadas,comodines)
+            return fichas, multi, dinero
         efecto = efectos_comodin.get(self.nombre)
-
         if efecto is None:
             return fichas, multi, dinero
         
         resultado = efecto(mano=mano, fichas=+fichas, multi=multi, dinero=dinero, cartas_jugadas=cartas_jugadas)
         return resultado
     
-    def registrar_precio(self):
+    def _registrar_propiedades(self):
+        # Asignar rareza
+        if self.nombre in ["matematico", "stonks", "calculadora"]:
+            self.rareza = "Comun"
+        elif self.nombre in ["loco", "doblete", "esteroides"]:
+            self.rareza = "Raro"
+        elif self.nombre in ["gloton", "programador", "clon"]:
+            self.rareza = "Epico"
+        
+        # Asignar precio basado en rareza
         match self.rareza:
             case "Comun":
                 self.precio=3
@@ -131,7 +134,78 @@ class Comodin(Boton):
                 self.precio=5
             case "Epico":
                 self.precio=8
-        pass
+            case _:
+                self.precio=1 # Precio por defecto si hay error
+
+    def detectar_seleccion(self, eventos):
+        if self.detectar_click(eventos):
+            return True
+        return False
+    
+    def mover_comodines(self, eventos, lista_comodines, limite_rect=None):
+        for e in eventos:
+            if e.type == pygame.MOUSEBUTTONDOWN and e.button == 1:
+                if self.rect.collidepoint(e.pos):
+                    self.arrastrado = True
+                    mouse_x, mouse_y = e.pos
+                    self.offset_x = self.rect.x - mouse_x
+                    self.offset_y = self.rect.y - mouse_y
+
+            elif e.type == pygame.MOUSEBUTTONUP and e.button == 1:
+                if self.arrastrado:
+                    self.arrastrado = False
+                    for o in lista_comodines:
+                        if o is not self and self.rect.colliderect(o.rect):
+                            i = lista_comodines.index(self)
+                            j = lista_comodines.index(o)
+                            lista_comodines[i], lista_comodines[j] = lista_comodines[j], lista_comodines[i]
+                            break
+
+            elif e.type == pygame.MOUSEMOTION and self.arrastrado:
+                mouse_x, mouse_y = e.pos
+                self.rect.x = mouse_x + self.offset_x
+                self.rect.y = mouse_y + self.offset_y
+                self.x, self.y = self.rect.topleft
+                if limite_rect:
+                    self.rect.clamp_ip(limite_rect)
+        base_x=257 - float((len(lista_comodines)-1) / 2) * 100
+        for i,c in enumerate(lista_comodines):
+            if not c.arrastrado:
+                c.rect.topleft=(base_x+i*80,530)
+                c.x,c.y=c.rect.topleft
+
+    def mover_comodines(self, eventos, lista_comodines, limite_rect=None):
+        for e in eventos:
+            if e.type == pygame.MOUSEBUTTONDOWN and e.button == 1:
+                if self.rect.collidepoint(e.pos):
+                    self.arrastrado = True
+                    mouse_x, mouse_y = e.pos
+                    self.offset_x = self.rect.x - mouse_x
+                    self.offset_y = self.rect.y - mouse_y
+
+            elif e.type == pygame.MOUSEBUTTONUP and e.button == 1:
+                if self.arrastrado:
+                    self.arrastrado = False
+                    for o in lista_comodines:
+                        if o is not self and self.rect.colliderect(o.rect):
+                            i = lista_comodines.index(self)
+                            j = lista_comodines.index(o)
+                            lista_comodines[i], lista_comodines[j] = lista_comodines[j], lista_comodines[i]
+                            break
+
+            elif e.type == pygame.MOUSEMOTION and self.arrastrado:
+                mouse_x, mouse_y = e.pos
+                self.rect.x = mouse_x + self.offset_x
+                self.rect.y = mouse_y + self.offset_y
+                self.x, self.y = self.rect.topleft
+                if limite_rect:
+                    self.rect.clamp_ip(limite_rect)
+        base_x=257 - float((len(lista_comodines)-1) / 2) * 100
+        for i,c in enumerate(lista_comodines):
+            if not c.arrastrado:
+                c.rect.topleft=(base_x+i*80,530)
+                c.x,c.y=c.rect.topleft
 
     def dibujar(self,screen):
+        self.x, self.y = self.rect.topleft
         super().dibujar(screen)

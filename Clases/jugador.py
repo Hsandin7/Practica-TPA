@@ -29,13 +29,14 @@ class Jugador:
         self.niveles =          Niveles()
         
         self.mano = [self.mazo.robar() for _ in range(0,8)]
-        self.comodines_mano=[
-            Comodin("clon"),
-            Comodin("matematico"),
-            Comodin("doblete"),
-            Comodin("esteroides"),
-            Comodin("programador")
-        ]
+        self.comodines_mano=[]
+        # self.comodines_mano=[
+        #     Comodin("programador"),
+        #     Comodin("clon"),
+        #     Comodin("matematico"),
+        #     Comodin("doblete"),
+        #     Comodin("esteroides")
+        # ]
         
         self._cartas_seleccionadas =    list()
         self._cartas_jugadas =          list()
@@ -56,6 +57,9 @@ class Jugador:
         # Cambiar por el objetivo de puntos del nivel
         puntos_formateados = f"{self.puntos_nivel:,}".replace(",", ".")
         mostrar_texto_centrado(screen, puntos_formateados, 400, 125, 50)
+
+        mostrar_texto_centrado(screen, f"{self.dinero}$", 412, 445, 25, color=(0,0,0))
+        
 
         # Muestra los puntos obtenidos que se suman al total
         self.animador_texto.dibujar(screen)
@@ -94,10 +98,11 @@ class Jugador:
                 carta.dibujar(screen)
 
         if self.comodines_mano:
-            pos_x = 257 - float( (len(self.comodines_mano)-1) / 2 ) * 100
+            pos_x = 257 - float((len(self.comodines_mano)-1) / 2) * 100
             for comodin in self.comodines_mano:
-                comodin.x = pos_x
-                comodin.y = 530
+                if not comodin.arrastrado:
+                    comodin.rect.topleft=(pos_x,530)
+                    comodin.x,comodin.y=comodin.rect.topleft
                 comodin.dibujar(screen)
                 pos_x += 80
         
@@ -113,6 +118,9 @@ class Jugador:
 
 
     def actualizar(self, eventos):      # Comprueba si alguna carta es seleccionada, si esto se cumple, se anade a self._cartas_seleccionadas
+        area_comodines=pygame.Rect(50,520,425,145)
+        for c in self.comodines_mano:
+            c.mover_comodines(eventos,self.comodines_mano,limite_rect=area_comodines)
         for carta in self.mano:
             match carta.detectar_seleccion(eventos):
                 case True:
@@ -129,8 +137,6 @@ class Jugador:
             self._cartas_jugadas = evaluacion["Cartas"]
             self.puntos_cartas = evaluacion["Valor"]
             self.multiplicador = evaluacion["Multiplicador"]
-            self.puntos += self.puntos_cartas * self.multiplicador
-            
 
             if self.comodines_mano:
                 fichas = self.puntos_cartas
@@ -143,9 +149,11 @@ class Jugador:
                 self.puntos_cartas=fichas
                 self.multiplicador=multi
                 self.dinero=dinero
-                self.puntos=fichas*multi
+                self.puntos+=fichas*multi
                 print(f"Operacion despues: {fichas} * {multi} = {self.puntos}")
-            
+            else:
+                self.puntos += self.puntos_cartas * self.multiplicador
+
             for carta in self._cartas_jugadas:      # Quita las cartas que se hayan jugado para que el resto se descarte correctamente
                 self.mano.remove(carta)
                 self._cartas_seleccionadas.remove(carta)
@@ -155,6 +163,7 @@ class Jugador:
             self.limite_jugar -= 1
             if self.niveles.verificar_nivel(self.puntos):
                 self.siguente_ronda()
+                self.dinero += 10
                 
             elif self.limite_jugar <= 0:
                 self.game_over = True
