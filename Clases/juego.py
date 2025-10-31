@@ -236,8 +236,8 @@ class Juego:
                 mostrar_texto_centrado(screen, f"{comodin.precio}$", comodin.rect.midbottom[0], comodin.rect.bottom + 3, 20, color_precio)
                 
                 # Resaltar si está seleccionado
-                # if comodin.seleccionada: # Usamos el atributo del comodín
-                #     screen.blit(comodin.imagen_hover, (comodin, comodin.y))
+                if comodin.seleccionada: # Usamos el atributo del comodín
+                    screen.blit(comodin.imagen_hover, (comodin.x,comodin.y))
 
     def actualizar_menu_tienda(self, eventos):
         
