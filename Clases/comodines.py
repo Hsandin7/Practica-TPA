@@ -157,8 +157,6 @@ class Comodin(Boton):
                 c.rect.topleft=(base_x+i*80,530)
                 c.x,c.y=c.rect.topleft
 
-
-
     def dibujar(self,screen):
         self.x, self.y = self.rect.topleft
         super().dibujar(screen)

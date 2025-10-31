@@ -112,7 +112,7 @@ class Jugador:
 
 
     def actualizar(self, eventos):      # Comprueba si alguna carta es seleccionada, si esto se cumple, se anade a self._cartas_seleccionadas
-        area_comodines=pygame.Rect(150,520,250,120)
+        area_comodines=pygame.Rect(50,520,425,145)
         for c in self.comodines_mano:
             c.mover_comodines(eventos,self.comodines_mano,limite_rect=area_comodines)
         for carta in self.mano:
