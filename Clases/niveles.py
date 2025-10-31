@@ -14,7 +14,7 @@ class Niveles:
         self.nivel_actual = 1
         self.puntos = 0
         self.puntos_nivel = 100
-        self.multiplicador = 1.5
+        self.multiplicador = 2.5
         self.color_pantalla = (0,0,0)
         self.valores = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12"]
         self.colores_boss = [
