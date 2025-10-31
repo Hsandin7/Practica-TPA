@@ -29,13 +29,7 @@ class Jugador:
         self.niveles =          Niveles()
         
         self.mano = [self.mazo.robar() for _ in range(0,8)]
-        self.comodines_mano=[
-            Comodin("clon"),
-            Comodin("matematico"),
-            Comodin("doblete"),
-            Comodin("esteroides"),
-            Comodin("programador")
-        ]
+        self.comodines_mano=[]
         
         self._cartas_seleccionadas =    list()
         self._cartas_jugadas =          list()
@@ -55,6 +49,9 @@ class Jugador:
         # Cambiar por el objetivo de puntos del nivel
         puntos_formateados = f"{self.puntos_nivel:,}".replace(",", ".")
         mostrar_texto_centrado(screen, puntos_formateados, 400, 125, 50)
+
+        mostrar_texto_centrado(screen, f"{self.dinero}$", 412, 445, 25, color=(0,0,0))
+        
 
         # Muestra los puntos obtenidos que se suman al total
         self.animador_texto.dibujar(screen)
@@ -154,6 +151,7 @@ class Jugador:
             self.limite_jugar -= 1
             if self.niveles.verificar_nivel(self.puntos):
                 self.siguente_ronda()
+                self.dinero += 10
                 
             elif self.limite_jugar <= 0:
                 self.game_over = True
