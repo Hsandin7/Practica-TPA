@@ -39,13 +39,14 @@ while True:
                 case _:
                     pass
 
-    if demo.activa:
-        demo.ejecutar_demo(juego, transicion)
+
     if Juego.num_transicion:
         num_pagina_destino = transicion.actualizar(screen)
         if num_pagina_destino is not None:
             juego.pagina_actual = num_pagina_destino
             Juego.num_transicion = None
+    elif demo.activa:
+        demo.ejecutar_demo(screen, juego, transicion)
     else:
         demo.checkear_inicio(juego.pagina_actual)
         
