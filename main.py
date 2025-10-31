@@ -1,9 +1,9 @@
-# from Clases.jugador import Jugador
+
+import sys
+import pygame
 from Clases.juego import Juego
 from Clases.animaciones import Transicion
 from Clases.demo import Demo
-import pygame
-import sys
 
 # Inicializar pygame
 pygame.init()
