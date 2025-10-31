@@ -1,6 +1,7 @@
 # from Clases.jugador import Jugador
 from Clases.juego import Juego
 from Clases.animaciones import Transicion
+from Clases.demo import Demo
 import pygame
 import sys
 
@@ -15,6 +16,7 @@ clock = pygame.time.Clock()
 # Creación del Juego
 juego = Juego()
 transicion = Transicion()
+demo = Demo()
 
 while True:
     eventos = pygame.event.get()
@@ -37,13 +39,16 @@ while True:
                 case _:
                     pass
 
-
+    if demo.activa:
+        demo.ejecutar_demo(juego, transicion)
     if Juego.num_transicion:
         num_pagina_destino = transicion.actualizar(screen)
         if num_pagina_destino is not None:
             juego.pagina_actual = num_pagina_destino
             Juego.num_transicion = None
     else:
+        demo.checkear_inicio(juego.pagina_actual)
+        
         match juego.pagina_actual:
             case 0:
                 juego.mostrar_pagina_principal(screen)
