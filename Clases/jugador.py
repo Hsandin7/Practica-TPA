@@ -145,7 +145,7 @@ class Jugador:
                 self.puntos_cartas=fichas
                 self.multiplicador=multi
                 self.dinero=dinero
-                self.puntos=fichas*multi
+                self.puntos+=fichas*multi
                 print(f"Operacion despues: {fichas} * {multi} = {self.puntos}")
             
             for carta in self._cartas_jugadas:      # Quita las cartas que se hayan jugado para que el resto se descarte correctamente
