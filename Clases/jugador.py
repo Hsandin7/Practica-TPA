@@ -136,8 +136,6 @@ class Jugador:
             self._cartas_jugadas = evaluacion["Cartas"]
             self.puntos_cartas = evaluacion["Valor"]
             self.multiplicador = evaluacion["Multiplicador"]
-            self.puntos += self.puntos_cartas * self.multiplicador
-            
 
             if self.comodines_mano:
                 fichas = self.puntos_cartas
@@ -145,14 +143,16 @@ class Jugador:
                 dinero = self.dinero
 
                 for c in self.comodines_mano:
-                    fichas,multi,dinero=c.aplicar(self.mano,fichas,multi,dinero,self._cartas_jugadas, comodines=self.comodines_mano)
+                    fichas,multi,dinero=c.aplicar(self.mano,fichas,multi,dinero,self._cartas_jugadas, self.comodines_mano)
             
                 self.puntos_cartas=fichas
                 self.multiplicador=multi
                 self.dinero=dinero
-                self.puntos=fichas*multi
+                self.puntos+=fichas*multi
                 print(f"Operacion despues: {fichas} * {multi} = {self.puntos}")
-            
+            else:
+                self.puntos += self.puntos_cartas * self.multiplicador
+
             for carta in self._cartas_jugadas:      # Quita las cartas que se hayan jugado para que el resto se descarte correctamente
                 self.mano.remove(carta)
                 self._cartas_seleccionadas.remove(carta)

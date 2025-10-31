@@ -92,7 +92,9 @@ class Comodin(Boton):
         self.descripcion = str()
         self.rareza = int() # "Comun", "Raro", "Epico"
         self.precio = int() # Precio de la carta
+        self.seleccionada = False
 
+        self._registrar_propiedades()
         self.arrastrado=False
         self.offset_x=0
         self.offset_y=0
