@@ -16,7 +16,7 @@ class Demo:
     
     def checkear_inicio(self):
         self.contador += 1
-        if self.contador > 2*60:   # 2s x 60fps para esperar en total 2s
+        if self.contador > 5*60:   # 2s x 60fps para esperar en total 2s
             self.activa = True
             self.crear_partidas_customizadas()
             self.contador = 0
