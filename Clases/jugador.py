@@ -163,7 +163,7 @@ class Jugador:
             self.limite_jugar -= 1
             if self.niveles.verificar_nivel(self.puntos):
                 self.siguente_ronda()
-                self.dinero += 10
+                self.dinero += 2
                 
             elif self.limite_jugar <= 0:
                 self.game_over = True
