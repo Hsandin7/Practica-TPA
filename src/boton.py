@@ -1,4 +1,4 @@
-from Clases._utilidades import reproducir_sonido
+from src._utilidades import reproducir_sonido
 import pygame
 
 class Boton:

@@ -1,4 +1,4 @@
-from Clases.carta import Carta
+from src.carta import Carta
 
 # Cada comprobacion devuelve una lista con las cartas que cumplen las condiciones
 # (Menos la de carta mas alta que devuelve una solo y despues se convierte en lista para un manejo mas sencillo)

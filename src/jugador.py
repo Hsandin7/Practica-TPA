@@ -1,14 +1,14 @@
 # Encapsula todo lo relacionado con la mano, el mazo y las acciones del jugador
 
 import pygame
-from Clases.mazo import Mazo
-from Clases.carta import Carta
-from Clases.evaluador_cartas import Evaluador_Cartas
-from Clases._utilidades import *
-from Clases.animaciones import Animador_Texto
-from Clases.guardado import *
-from Clases.niveles import Niveles
-from Clases.comodines import Comodin
+from src.mazo import Mazo
+from src.carta import Carta
+from src.evaluador_cartas import Evaluador_Cartas
+from src._utilidades import *
+from src.animaciones import Animador_Texto
+from src.guardado import *
+from src.niveles import Niveles
+from src.comodines import Comodin
 
 class Jugador:
     def __init__(self):
@@ -232,10 +232,10 @@ class Jugador:
             datos = cargar_partida(slot)
             mostrar_texto(screen, f"Guardado {slot}", x, 170, 30)
             if datos:
-                mostrar_texto(screen, f"Puntos: {datos["puntos"]}", x, 215, 20)
-                # Cambiar por informacion diferente
                 mostrar_texto(screen, f"Nivel: {datos["nivel"]}", x, 245, 20)
-                mostrar_texto(screen, f"Puntos: {datos["puntos"]}", x, 275, 20)
+                mostrar_texto(screen, f"Puntos: {datos["puntos"]}", x, 215, 20)
+                mostrar_texto(screen, f"Objetivo: {datos["puntos_nivel"]}", x, 275, 20)
+                # Cambiar por informacion diferente
                 mostrar_texto(screen, f"Puntos: {datos["puntos"]}", x, 305, 20)
             else:
                 mostrar_texto(screen, "Vacio", x, 215, 20)

@@ -1,7 +1,7 @@
-from Clases.jugador import Jugador
-from Clases.boton import Boton
-from Clases.comodines import Comodin
-from Clases._utilidades import mostrar_texto, mostrar_texto_centrado
+from src.jugador import Jugador
+from src.boton import Boton
+from src.comodines import Comodin
+from src._utilidades import mostrar_texto, mostrar_texto_centrado
 import pygame
 import random
 

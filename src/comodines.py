@@ -1,6 +1,6 @@
 import pygame
 import random
-from Clases.boton import Boton
+from src.boton import Boton
 # Hay que pensar que atributos tien y que hace cada comodin
 
 efectos_comodin={}

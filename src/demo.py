@@ -1,7 +1,7 @@
-from Clases.juego import Juego
-from Clases.animaciones import Transicion
-from Clases.guardado import *
-from Clases._utilidades import *
+from src.juego import Juego
+from src.animaciones import Transicion
+from src.guardado import *
+from src._utilidades import *
 
 # Pos boton jugar = (730, 670)
 # Pos boton descartar = (925, 670)
