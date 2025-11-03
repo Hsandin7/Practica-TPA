@@ -182,3 +182,17 @@ direction TB
       class transicion{
       }
 ```
+
+## 6. Documentacion
+
+Para el generar la documentacion es necesario el uso de pdoc. Instala los reqauirements de desarollador:
+
+```bash
+pip install -r requirements-dev.txt
+```
+
+Generando docs
+
+```bash
+pdoc -o docs Clases
+```
