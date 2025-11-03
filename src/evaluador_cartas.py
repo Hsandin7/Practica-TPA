@@ -8,10 +8,10 @@
 # Decorador
 def jugada(condicion, base, multiplicador):
     def decorador(func):
-        def nueva_funcion(self):
+        def nueva_funcion(self, *args, **kwargs):
             if not condicion(self):   # Comprobación del numero total de cartas jugadas (Es una funcion lambda)
                 return None
-            cartas = func(self)
+            cartas = func(self, *args, **kwargs)
             if cartas:
                 self.resultado = {
                     "Cartas": cartas,
@@ -62,7 +62,7 @@ class Evaluador_Cartas:
 
     @jugada(condicion= lambda self: len(self.cartas) == 5, base=100, multiplicador=8)
     def _Escalera_Color(self):
-        if self._Escalera() and self._Color(self.cartas.copy()):
+        if self._Escalera() and self._Color():
             return self.cartas
 
     @jugada(condicion= lambda self: len(self.cartas) >= 4, base=60, multiplicador=7)
@@ -81,7 +81,7 @@ class Evaluador_Cartas:
                 return self.cartas
     
     @jugada(condicion= lambda self: len(self.cartas) == 5, base=50, multiplicador=6)
-    def _Color(self, cartas=None):
+    def _Color(self):
         if all([c.palo == self.cartas[0].palo for c in self.cartas]):
             return self.cartas
 
@@ -100,13 +100,14 @@ class Evaluador_Cartas:
 
     @jugada(condicion= lambda self: len(self.cartas) >= 4, base=20, multiplicador=2)
     def _Doble_Pareja(self):
-        lista_cartas = self.cartas.copy()
-        pareja1 = self._Pareja(lista_cartas)
+        cartas_originales = self.cartas.copy()
+        pareja1 = self._Pareja()
         if pareja1:
-            restantes = [c for c in self.cartas if c not in pareja1]
-            pareja2 = self._Pareja(restantes)
+            self.cartas = [c for c in cartas_originales if c not in pareja1["Cartas"]]
+            pareja2 = self._Pareja()
+            self.cartas = cartas_originales
             if pareja2:
-                return pareja1 + pareja2
+                return pareja1["Cartas"] + pareja2["Cartas"]
 
     @jugada(condicion= lambda self: len(self.cartas) >= 2, base=10, multiplicador=2)
     def _Pareja(self, cartas=None):
