@@ -53,7 +53,7 @@ Según el sistema operativo, se inicializará el entorno virtual introduciendo e
 .venv\Scripts\activate
 ```
 ```
-# Linus o MacOS:
+# Linux o MacOS:
 source .venv/bin/activate
 ```
 
