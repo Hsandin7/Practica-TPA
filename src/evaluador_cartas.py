@@ -8,10 +8,10 @@
 # Decorador
 def jugada(condicion, base, multiplicador):
     def decorador(func):
-        def nueva_funcion(self, *args, **kwargs):
+        def nueva_funcion(self):
             if not condicion(self):   # Comprobación del numero total de cartas jugadas (Es una funcion lambda)
                 return None
-            cartas = func(self, *args, **kwargs)
+            cartas = func(self)
             if cartas:
                 self.resultado = {
                     "Cartas": cartas,
@@ -110,10 +110,9 @@ class Evaluador_Cartas:
                 return pareja1["Cartas"] + pareja2["Cartas"]
 
     @jugada(condicion= lambda self: len(self.cartas) >= 2, base=10, multiplicador=2)
-    def _Pareja(self, cartas=None):
-        cartas = cartas or self.cartas
-        for c1 in cartas:
-            iguales = [c for c in cartas if c.valor == c1.valor and c is not c1]
+    def _Pareja(self):
+        for c1 in self.cartas:
+            iguales = [c for c in self.cartas if c.valor == c1.valor and c is not c1]
             if iguales:
                 return [c1, iguales[0]]
 

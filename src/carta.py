@@ -52,10 +52,11 @@ class Carta(Boton):
         super().dibujar(screen)
 
         if not self.habilitada:
-            filtro_carta = pygame.Surface((90, 132), pygame.SRCALPHA)
-            filtro_carta.fill ((0, 0, 60, 180))
-            screen.blit(filtro_carta, (self.x, self.y))
-
+            imagen = self.imagen_original.copy()
+            filtro = pygame.Surface(self.rect.size, pygame.SRCALPHA)
+            filtro.fill((0, 0, 60, 180))
+            imagen.blit(filtro, (0, 0), special_flags=pygame.BLEND_RGBA_MULT)
+            screen.blit(imagen, (self.x, self.y))
 
     def detectar_seleccion(self, eventos):
         """Funcion deterctar_seleccion: detecta si se le ha dado click a la carta y 
