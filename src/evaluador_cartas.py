@@ -68,73 +68,53 @@ class Evaluador_Cartas:
     @jugada(condicion= lambda self: len(self.cartas) >= 4, base=60, multiplicador=7)
     def _Poker(self):
         for c1 in self.cartas:
-            for c2 in self.cartas:
-                for c3 in self.cartas:
-                    for c4 in self.cartas:
-                        if c1 != c2 and c1 != c3 and c1 != c4 and c2 != c3 and c2 != c4 and c3 != c4:
-                            if c1.valor == c2.valor == c3.valor == c4.valor:
-                                return [c1, c2, c3, c4]
+            iguales = [c for c in self.cartas if c.valor == c1.valor]
+            if len(iguales) == 4:
+                return iguales
 
     @jugada(condicion= lambda self: len(self.cartas) == 5, base=40, multiplicador=4)
     def _Trio_y_Pareja(self):
-        lista_cartas = self.cartas.copy()
         trio = self._Trio()
         if trio:
-            lista_cartas.remove(trio[0])
-            lista_cartas.remove(trio[1])
-            lista_cartas.remove(trio[2])
-            if lista_cartas[0].valor == lista_cartas[1].valor:
+            restantes = [c for c in self.cartas if c not in trio]
+            if restantes[0].valor == restantes[1].valor:
                 return self.cartas
     
     @jugada(condicion= lambda self: len(self.cartas) == 5, base=50, multiplicador=6)
     def _Color(self, cartas=None):
-        cartas = cartas or self.cartas
-        color = cartas[0].palo
-        for carta in cartas:
-            if carta.palo is not color:
-                return None
-        return cartas
+        if all([c.palo == self.cartas[0].palo for c in self.cartas]):
+            return self.cartas
 
     @jugada(condicion= lambda self: len(self.cartas) == 5, base=30, multiplicador=4)
     def _Escalera(self):
         lista = sorted(self.cartas, key=lambda carta: carta.valor)
-        c_anterior = lista[0]
-        lista_actualizada = lista.copy()
-        lista_actualizada.remove(c_anterior)
-        for c_actual in lista_actualizada:
-            if c_anterior.valor + 1 == c_actual.valor:
-                c_anterior = c_actual
-            else:
-                return None
-        return lista
+        if all(lista[i+1].valor == lista[i].valor + 1 for i in range(len(lista)-1)):
+            return lista
 
     @jugada(condicion= lambda self: len(self.cartas) >= 3, base=30, multiplicador=3)
     def _Trio(self):
         for c1 in self.cartas:
-            for c2 in self.cartas:
-                for c3 in self.cartas:
-                    if c1 != c2 and c1 != c3 and c2 != c3:
-                        if c1.valor == c2.valor == c3.valor:
-                            return [c1, c2, c3]
+            iguales = [c for c in self.cartas if c.valor == c1.valor]
+            if len(iguales) == 3:
+                return iguales
 
     @jugada(condicion= lambda self: len(self.cartas) >= 4, base=20, multiplicador=2)
     def _Doble_Pareja(self):
         lista_cartas = self.cartas.copy()
         pareja1 = self._Pareja(lista_cartas)
-        if pareja1 is not None:
-            lista_cartas.remove(pareja1[0])
-            lista_cartas.remove(pareja1[1])
-            pareja2 = self._Pareja(lista_cartas)
-            if pareja2 is not None:
-                return pareja2 + pareja1
+        if pareja1:
+            restantes = [c for c in self.cartas if c not in pareja1]
+            pareja2 = self._Pareja(restantes)
+            if pareja2:
+                return pareja1 + pareja2
 
     @jugada(condicion= lambda self: len(self.cartas) >= 2, base=10, multiplicador=2)
     def _Pareja(self, cartas=None):
         cartas = cartas or self.cartas
         for c1 in cartas:
-            for c2 in cartas:
-                if c1 is not c2 and c1.valor == c2.valor:
-                    return [c1, c2]
+            iguales = [c for c in cartas if c.valor == c1.valor and c is not c1]
+            if iguales:
+                return [c1, iguales[0]]
 
     @jugada(condicion= lambda self: True, base=5, multiplicador=1)
     def _Carta_mas_alta(self):
