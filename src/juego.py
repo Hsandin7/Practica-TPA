@@ -1,4 +1,5 @@
 from src.jugador import Jugador
+from src.tienda import Tienda
 from src.boton import Boton
 from src.comodines import Comodin
 from src._utilidades import mostrar_texto, mostrar_texto_centrado
@@ -17,6 +18,7 @@ class Juego:
         self.mostrar_fondo = True
 
         self.jugador = Jugador()
+        self.tienda = Tienda(self.jugador)
         
         self.coste_cambiar = 2 
         self.tienda_comodines = [None, None]
@@ -74,25 +76,6 @@ class Juego:
             "game_over":    Boton("Graficos/Botones/boton_game_over.png", 565, 605)
         }
     
-    def poblar_tienda(self):
-        pos_slot_1 = (690, 250)
-        pos_slot_2 = (840, 250)
-        
-        # Elegir nombres de comodines aleatoriamente
-        nombre1 = random.choice(self.comodines_disponibles)
-        nombre2 = random.choice(self.comodines_disponibles)
-        
-        # Crear objetos Comodin y asignarles posición
-        self.tienda_comodines[0] = Comodin(nombre1)
-        self.tienda_comodines[0].asignar_posicion(pos_slot_1[0], pos_slot_1[1])
-        
-        self.tienda_comodines[1] = Comodin(nombre2)
-        self.tienda_comodines[1].asignar_posicion(pos_slot_2[0], pos_slot_2[1])
-        
-        # Deseleccionar cualquier comodin anterior
-        self.comodin_seleccionado = None
-        self.tienda_comodines[0].seleccionada = False
-        self.tienda_comodines[1].seleccionada = False
 
     def comprobar_exito(self):
         if self.jugador.game_over:          # Transicion game over
@@ -101,7 +84,6 @@ class Juego:
             Juego.num_transicion = 4        # Transicion 4 (Transicion de Game Over)
             Juego.paginas_transicion = [self.paginas[1], self.paginas[5], 5]    # De la pagina 1 a la 5
         elif self.jugador.sig_nivel:
-            print("aaaaaaaaaaaaaa")
             self.jugador.sig_nivel = False
             self.mostrar_fondo = True
             self.poblar_tienda()
@@ -113,6 +95,7 @@ class Juego:
         self.coste_cambiar = 2
         self.tienda_comodines = [None, None]
         self.comodin_seleccionado = None
+
 
     # Pagina principal
     def mostrar_pagina_principal(self, screen):
@@ -214,87 +197,25 @@ class Juego:
     def mostrar_menu_tienda(self, screen):
         screen.blit(self.paginas[3], (0,0))
 
-        # Dibujar botones base
         self.botones["boton_SR"].dibujar(screen)
         self.botones["cambiar"].dibujar(screen)
         self.botones["comprar"].dibujar(screen)
 
-        # Mostrar dinero actual del jugador
-        mostrar_texto_centrado(screen, f"{self.jugador.dinero}$", 900, 150, 40, (255, 255, 255))
-
-        color_coste = (255, 255, 0) # Amarillo si se puede pagar
-        if self.jugador.dinero < self.coste_cambiar:
-            color_coste = (255, 0, 0) # Rojo si no
-        
-        # Posición al lado del botón "Cambiar"
-        mostrar_texto(screen, f"{self.coste_cambiar}$", 525, 400 , 30, color_coste)
-
-        for comodin in self.tienda_comodines:
-            if comodin: # Dibujar solo si el slot no está vendido (no es None)
-                comodin.dibujar(screen)
-                
-                # Mostrar precio
-                color_precio = (255, 255, 0) # Amarillo
-                if self.jugador.dinero < comodin.precio:
-                    color_precio = (255, 0, 0) # Rojo
-                mostrar_texto_centrado(screen, f"{comodin.precio}$", comodin.rect.midbottom[0], comodin.rect.bottom + 3, 20, color_precio)
-                
-                # Resaltar si está seleccionado
-                if comodin.seleccionada: # Usamos el atributo del comodín
-                    screen.blit(comodin.imagen_hover, (comodin.x,comodin.y))
+        self.tienda.mostrar(screen)
 
     def actualizar_menu_tienda(self, eventos):
-        
-        # Detectar clics en comodines para seleccionar
-        for comodin in self.tienda_comodines:
-            if comodin and comodin.detectar_seleccion(eventos):
-                if comodin.seleccionada: # Si ya estaba seleccionado
-                    comodin.seleccionada = False
-                    self.comodin_seleccionado = None
-                else: # Si no estaba seleccionado
-                    # Deseleccionar el otro (si lo hay)
-                    for c in self.tienda_comodines:
-                        if c: c.seleccionada = False
-                    # Seleccionar este
-                    comodin.seleccionada = True
-                    self.comodin_seleccionado = comodin
+        self.tienda.actualizar(eventos)
 
-        # Detectar clics en botones
         if self.botones["boton_SR"].detectar_click(eventos):
             self.mostrar_fondo = True
             Juego.num_transicion = 3
             Juego.paginas_transicion = [self.paginas[1], self.paginas[3], 1]
-            self.coste_cambiar = 2 # Resetear coste al salir
+            self.tienda.coste_cambiar = 2 # Resetear coste al salir
         
         elif self.botones["cambiar"].detectar_click(eventos):
-            if self.jugador.dinero >= self.coste_cambiar:
-                self.jugador.dinero -= self.coste_cambiar
-                self.coste_cambiar += 2 # Incrementar coste
-                self.poblar_tienda() # Cargar 2 nuevos comodines
-            else:
-                pass
-
-        # Lógica de "Comprar"
+            self.tienda.cambiar()
         elif self.botones["comprar"].detectar_click(eventos):
-            if self.comodin_seleccionado and \
-               self.jugador.dinero >= self.comodin_seleccionado.precio and \
-               len(self.jugador.comodines_mano) < 5:
-                
-                # Pagar
-                self.jugador.dinero -= self.comodin_seleccionado.precio
-                
-                # Añadir comodín al jugador
-                self.jugador.comodines_mano.append(self.comodin_seleccionado)
-                
-                # Quitar comodín de la tienda
-                try:
-                    index = self.tienda_comodines.index(self.comodin_seleccionado)
-                    self.tienda_comodines[index] = None # Poner el slot a None
-                except ValueError:
-                    pass # El comodín ya no estaba
-                
-                # Deseleccionar
-                self.comodin_seleccionado = None
+            self.tienda.comprar()
     
 
     # Menu Guardado
@@ -314,7 +235,7 @@ class Juego:
         self.jugador.mostrar_info_slots(screen)
 
         # Overlay oscurecido del slot seleccionado
-        if 1 <= self.jugador.slot_seleccionado <= 3:
+        if self.jugador.slot_seleccionado:
             slot_seleccionado = self.botones[f"slot{self.jugador.slot_seleccionado}"]
             screen.blit(slot_seleccionado.imagen_hover, (slot_seleccionado.x, slot_seleccionado.y))
 
@@ -327,11 +248,14 @@ class Juego:
         elif self.botones["papelera"].detectar_click(eventos):
             self.jugador.borrar_partida()
         elif self.botones["slot1"].detectar_click(eventos):
-            self.jugador.slot_seleccionado = 1
+            if self.jugador.slot_seleccionado != 1: self.jugador.slot_seleccionado = 1
+            else: self.jugador.slot_seleccionado = None
         elif self.botones["slot2"].detectar_click(eventos):
-            self.jugador.slot_seleccionado = 2
+            if self.jugador.slot_seleccionado != 2: self.jugador.slot_seleccionado = 2
+            else: self.jugador.slot_seleccionado = None
         elif self.botones["slot3"].detectar_click(eventos):
-            self.jugador.slot_seleccionado = 3
+            if self.jugador.slot_seleccionado != 3: self.jugador.slot_seleccionado = 3
+            else:self.jugador.slot_seleccionado = None
 
 
     # Pagina GAME OVER                  # Implemetación de graficos por hacer
@@ -347,9 +271,6 @@ class Juego:
             self.mostrar_fondo = True
             Juego.num_transicion = 5        # Transicion 5 (Desintegracion a la pagina de inicio)
             Juego.paginas_transicion = [self.paginas[5], self.paginas[0], 0]    # De la pagina 3 a la 1
-            
-            self.pagina_actual = 0
-            self.mostrar_fondo =  True
             self.reiniciar()
 
     # Menu Info
