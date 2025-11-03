@@ -1,8 +1,8 @@
-# from Clases.jugador import Jugador
-from Clases.juego import Juego
-from Clases.animaciones import Transicion
-import pygame
 import sys
+import pygame
+from src.juego import Juego
+from src.animaciones import Transicion
+from src.demo import Demo
 
 # Inicializar pygame
 pygame.init()
@@ -15,6 +15,7 @@ clock = pygame.time.Clock()
 # Creación del Juego
 juego = Juego()
 transicion = Transicion()
+demo = Demo()
 
 while True:
     eventos = pygame.event.get()
@@ -37,13 +38,22 @@ while True:
                 case _:
                     pass
 
-
+    # Manejo de transiciones
     if Juego.num_transicion:
         num_pagina_destino = transicion.actualizar(screen)
         if num_pagina_destino is not None:
             juego.pagina_actual = num_pagina_destino
             Juego.num_transicion = None
+    
+    # Ejecucion de la demo
+    elif demo.activa:
+        demo.ejecutar_demo(screen, juego, transicion, eventos)
+    
+    # Manejo de las paginas
     else:
+        if juego.pagina_actual == 0: demo.checkear_inicio()
+        else: demo.contador = 0
+        
         match juego.pagina_actual:
             case 0:
                 juego.mostrar_pagina_principal(screen)

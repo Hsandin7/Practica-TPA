@@ -1,7 +1,7 @@
-from Clases.jugador import Jugador
-from Clases.boton import Boton
-from Clases.comodines import Comodin
-from Clases._utilidades import mostrar_texto, mostrar_texto_centrado
+from src.jugador import Jugador
+from src.boton import Boton
+from src.comodines import Comodin
+from src._utilidades import mostrar_texto, mostrar_texto_centrado
 import pygame
 import random
 
@@ -94,6 +94,20 @@ class Juego:
         self.tienda_comodines[0].seleccionada = False
         self.tienda_comodines[1].seleccionada = False
 
+    def comprobar_exito(self):
+        if self.jugador.game_over:          # Transicion game over
+            self.jugador.game_over = False
+            self.mostrar_fondo = True
+            Juego.num_transicion = 4        # Transicion 4 (Transicion de Game Over)
+            Juego.paginas_transicion = [self.paginas[1], self.paginas[5], 5]    # De la pagina 1 a la 5
+        elif self.jugador.sig_nivel:
+            print("aaaaaaaaaaaaaa")
+            self.jugador.sig_nivel = False
+            self.mostrar_fondo = True
+            self.poblar_tienda()
+            Juego.num_transicion = 2        # Transicion 2 (La bajada de la tienda)
+            Juego.paginas_transicion = [self.paginas[1], self.paginas[3], 3]    # De la pagina 1 a la 3
+
     def reiniciar(self):
         self.jugador = Jugador()
         self.coste_cambiar = 2
@@ -155,17 +169,7 @@ class Juego:
         
         if self.botones["jugar"].detectar_click(eventos):
             self.jugador.jugar_cartas()
-            if self.jugador.game_over:          # Transicion game over
-                self.jugador.game_over = False
-                self.mostrar_fondo = True
-                Juego.num_transicion = 4        # Transicion 4 (Transicion de Game Over)
-                Juego.paginas_transicion = [self.paginas[1], self.paginas[5], 5]    # De la pagina 1 a la 5
-            elif self.jugador.sig_nivel:
-                self.jugador.sig_nivel = False
-                self.mostrar_fondo = True
-                self.poblar_tienda()
-                Juego.num_transicion = 2        # Transicion 2 (La bajada de la tienda)
-                Juego.paginas_transicion = [self.paginas[1], self.paginas[3], 3]    # De la pagina 1 a la 3
+            self.comprobar_exito()
         elif self.botones["descartar"].detectar_click(eventos):
             self.jugador.descartar_cartas("boton")
         

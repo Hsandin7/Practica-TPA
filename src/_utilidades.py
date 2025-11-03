@@ -5,9 +5,9 @@
 """
 Como usar:
     dentro de la clase que se quiera importar se hace:
-        from Clases._utilidades import funcion_que_se_quiera_usar
+        from src._utilidades import funcion_que_se_quiera_usar
     o, si se quieren importar todas las funciones:
-        from Clases._utilidades import *
+        from src._utilidades import *
 """
 
 import pygame

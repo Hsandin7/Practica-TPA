@@ -194,5 +194,5 @@ pip install -r requirements-dev.txt
 Generando docs
 
 ```bash
-pdoc -o docs Clases
+pdoc -o docs src
 ```

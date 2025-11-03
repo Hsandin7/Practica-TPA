@@ -1,5 +1,5 @@
 import pygame
-from Clases._utilidades import mostrar_texto_transparente
+from src._utilidades import mostrar_texto_transparente
 import random
 
 class Transicion:
@@ -96,9 +96,6 @@ class Transicion:
             return None
     
     def animacion_gameover(self, screen):
-        ancho_pantalla = screen.get_width()
-        alto_pantalla = screen.get_height()
-
         if self.fase == "aparecer":
             pantalla_go = self.paginas[1]
             pantalla_go.set_alpha(self.valor)
@@ -108,8 +105,6 @@ class Transicion:
             if self.valor >= 100:
                 return self.num_pagina_destino
         elif self.fase == "desintegrarse":
-            x = 0
-            y = 0
             superficie_borrado = pygame.Surface((40,40), pygame.SRCALPHA,)
             
             for _ in range(10):

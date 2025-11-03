@@ -1,14 +1,14 @@
 # Encapsula todo lo relacionado con la mano, el mazo y las acciones del jugador
 
 import pygame
-from Clases.mazo import Mazo
-from Clases.carta import Carta
-from Clases.evaluador_cartas import Evaluador_Cartas
-from Clases._utilidades import *
-from Clases.animaciones import Animador_Texto
-from Clases.guardado import *
-from Clases.niveles import Niveles
-from Clases.comodines import Comodin
+from src.mazo import Mazo
+from src.carta import Carta
+from src.evaluador_cartas import Evaluador_Cartas
+from src._utilidades import *
+from src.animaciones import Animador_Texto
+from src.guardado import *
+from src.niveles import Niveles
+from src.comodines import Comodin
 
 class Jugador:
     def __init__(self):
@@ -53,6 +53,7 @@ class Jugador:
         mostrar_texto_centrado(screen, puntos_formateados, 900, 125, 50)
         mostrar_texto_centrado(screen, f"{self.multiplicador}", 950, 190)
         mostrar_texto_centrado(screen, f"{self.puntos_cartas}", 845, 190)
+
         # Cambiar por el objetivo de puntos del nivel
         puntos_formateados = f"{self.puntos_nivel:,}".replace(",", ".")
         mostrar_texto_centrado(screen, puntos_formateados, 400, 125, 50)
@@ -189,11 +190,17 @@ class Jugador:
         # mazo y mano se guardan como listas de strings con el valor y el palo concatenados
         datos = {
             "puntos":           self.puntos,
+            "puntos_nivel":     self.puntos_nivel,
+            "nivel":            self.numero_nivel,
             "puntos_cartas":    self.puntos_cartas,
             "multiplicador":    self.multiplicador,
+
+            "limite_descartar": self.limite_descartar,
+            "limite_jugar":     self.limite_jugar,
+
             "mazo":             [[c._valor, c._palo] for c in self.mazo.cartas],
             "mano":             [[c._valor, c._palo] for c in self.mano],
-            "cartas_jugadas":   [[c._valor, c._palo] for c in self._cartas_jugadas]
+            "cartas_jugadas":   [[c._valor, c._palo] for c in self._cartas_jugadas] if self._cartas_jugadas else None
         }
         guardar_partida(self.slot_seleccionado, datos)
     
@@ -201,11 +208,17 @@ class Jugador:
         datos = cargar_partida(self.slot_seleccionado)
         if datos:
             self.puntos =           datos["puntos"]
+            self.numero_nivel =     datos["nivel"]
+            self.puntos_nivel =     datos["puntos_nivel"]
             self.puntos_cartas =    datos["puntos_cartas"]
             self.multiplicador =    datos["multiplicador"]
+
+            self.limite_descartar = datos["limite_descartar"]
+            self.limite_jugar =     datos["limite_jugar"]
+
             self.mazo.cartas =      [Carta(c[0], c[1]) for c in datos["mazo"]]
             self.mano =             [Carta(c[0], c[1]) for c in datos["mano"]]
-            self._cartas_jugadas =  [Carta(c[0], c[1]) for c in datos["cartas_jugadas"]]
+            self._cartas_jugadas =  [Carta(c[0], c[1]) for c in datos["cartas_jugadas"]] if datos["cartas_jugadas"] else None
             return True
         else:
             return None
@@ -219,10 +232,10 @@ class Jugador:
             datos = cargar_partida(slot)
             mostrar_texto(screen, f"Guardado {slot}", x, 170, 30)
             if datos:
+                mostrar_texto(screen, f"Nivel: {datos["nivel"]}", x, 245, 20)
                 mostrar_texto(screen, f"Puntos: {datos["puntos"]}", x, 215, 20)
+                mostrar_texto(screen, f"Objetivo: {datos["puntos_nivel"]}", x, 275, 20)
                 # Cambiar por informacion diferente
-                mostrar_texto(screen, f"Puntos: {datos["puntos"]}", x, 245, 20)
-                mostrar_texto(screen, f"Puntos: {datos["puntos"]}", x, 275, 20)
                 mostrar_texto(screen, f"Puntos: {datos["puntos"]}", x, 305, 20)
             else:
                 mostrar_texto(screen, "Vacio", x, 215, 20)
@@ -232,7 +245,10 @@ class Jugador:
     def siguente_ronda (self):
         self.puntos = 0
         self.puntos_nivel = self.niveles.puntos_nivel
+        
         self.mazo = Mazo()
+        self.mano = [self.mazo.robar() for _ in range(0,8)]
+
         self.sig_nivel = True
         self._cartas_jugadas = None
         self.limite_jugar = 4
@@ -240,7 +256,6 @@ class Jugador:
         self.numero_nivel += 1
         self.carta_inhabilitada = None
 
-        self.mano = [self.mazo.robar() for _ in range(8)]
         for carta in self.mano:
             carta.habilitada = True
 

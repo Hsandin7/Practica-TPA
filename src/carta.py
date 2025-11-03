@@ -1,4 +1,4 @@
-from Clases.boton import Boton
+from src.boton import Boton
 import pygame
 
 class Carta(Boton):
