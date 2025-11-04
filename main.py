@@ -78,10 +78,7 @@ while True:
 
 
         if Juego.num_transicion:
-            transicion.iniciar(Juego.paginas_transicion[0],
-                               Juego.paginas_transicion[1],
-                               Juego.paginas_transicion[2],
-                               Juego.num_transicion)
+            transicion.iniciar(*Juego.paginas_transicion, Juego.num_transicion)
 
     pygame.display.flip()
     clock.tick(60)

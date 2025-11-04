@@ -86,7 +86,7 @@ class Juego:
         elif self.jugador.sig_nivel:
             self.jugador.sig_nivel = False
             self.mostrar_fondo = True
-            self.poblar_tienda()
+            self.tienda.poblar()
             Juego.num_transicion = 2        # Transicion 2 (La bajada de la tienda)
             Juego.paginas_transicion = [self.paginas[1], self.paginas[3], 3]    # De la pagina 1 a la 3
 
