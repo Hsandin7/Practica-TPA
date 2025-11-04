@@ -16,7 +16,6 @@ class Niveles:
         self.puntos_nivel = 100
         self.multiplicador = 2.5
         self.color_pantalla = (0,0,0)
-        self.valores = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12"]
         self.colores_boss = [
             (100, 0, 0),     # rojo
             (0, 0, 72),     # azul
@@ -43,7 +42,14 @@ class Niveles:
             self.color_pantalla = (0,0,0)
             self.cartas_invalidas = []
 
-    
+    def check_boss(self):
+        if (self.nivel_actual -1)%3 == 0:
+            self.nivel_boss()
+        else:
+            self.es_boss = False
+            self.color_pantalla = (0,0,0)
+            self.cartas_invalidas = []
+
     def nivel_perdido(self):
         """Funcion nivel_perdido: cuando no logras llegar a los puntos 
             objetivo se reinician todos los valores a los del inicio."""

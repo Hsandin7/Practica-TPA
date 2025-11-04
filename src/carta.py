@@ -16,6 +16,17 @@ class Carta(Boton):
     PALOS = ["o", "c", "e", "b"]    # Oros(o), Copas(c), Espadas(e), Bastos(b)
     VALORES = list(range(1,13))
 
+    # _cache_deshabilitadas = {}     # Se puede meter en Boton ya que es la imagen del "boton"
+
+    # @classmethod
+    # def _get_cache_deshabilitadas(cls, valor, palo):
+    #     carta = (valor, palo)
+    #     if carta not in cls._cache_deshabilitadas:
+    #         filtro_carta = pygame.Surface((90, 132), pygame.SRCALPHA)
+    #         filtro_carta.fill ((0, 0, 60, 180))
+    #         cls._cache_deshabilitadas[carta] = filtro_carta
+    #     return cls._cache_deshabilitadas[carta]
+
     def __init__(self, valor, palo):
         super().__init__(f"Graficos/cartas/{valor}{palo}.png", 1200, 600, "Sonidos/sonido_seleccionar_cartas.mp3")
         self._valor = valor
