@@ -223,5 +223,3 @@ class Jugador:
         self.limite_jugar = 4
         self.limite_descartar = 3
         self.numero_nivel += 1
-
-        
