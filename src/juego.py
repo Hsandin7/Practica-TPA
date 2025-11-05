@@ -2,7 +2,7 @@ from src.jugador import Jugador
 from src.tienda import Tienda
 from src.boton import Boton
 from src.comodines import Comodin
-from src._utilidades import mostrar_texto, mostrar_texto_centrado
+from src._utilidades import Texto
 import pygame
 import random
 

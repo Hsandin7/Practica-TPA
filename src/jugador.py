@@ -4,7 +4,7 @@ import pygame
 from src.mazo import Mazo
 from src.carta import Carta
 from src.evaluador_cartas import Evaluador_Cartas
-from src._utilidades import *
+from src._utilidades import Texto
 from src.animaciones import Animador_Texto
 from src.guardado import Guardado
 from src.niveles import Niveles
@@ -50,23 +50,23 @@ class Jugador:
     
     def mostrar_puntos(self, screen):
         puntos_formateados = f"{self.puntos:,}".replace(",", ".")
-        mostrar_texto_centrado(screen, puntos_formateados, 900, 125, 50)
-        mostrar_texto_centrado(screen, f"{self.multiplicador}", 950, 190)
-        mostrar_texto_centrado(screen, f"{self.puntos_cartas}", 845, 190)
+        Texto.mostrar_texto_centrado(screen, puntos_formateados, 900, 125, 50)
+        Texto.mostrar_texto_centrado(screen, f"{self.multiplicador}", 950, 190)
+        Texto.mostrar_texto_centrado(screen, f"{self.puntos_cartas}", 845, 190)
 
         # Cambiar por el objetivo de puntos del nivel
         puntos_formateados = f"{self.puntos_nivel:,}".replace(",", ".")
-        mostrar_texto_centrado(screen, puntos_formateados, 400, 125, 50)
+        Texto.mostrar_texto_centrado(screen, puntos_formateados, 400, 125, 50)
 
-        mostrar_texto_centrado(screen, f"{self.dinero}$", 412, 445, 25, color=(0,0,0))
+        Texto.mostrar_texto_centrado(screen, f"{self.dinero}$", 412, 445, 25, color=(0,0,0))
         
 
         # Muestra los puntos obtenidos que se suman al total
         self.animador_texto.dibujar(screen)
 
-        mostrar_texto_centrado(screen, str(self.numero_nivel), 213, 328, 30, color= (0, 0, 0))
-        mostrar_texto_centrado(screen, str(self.limite_descartar), 298, 382, 30, color= (0, 0, 0))
-        mostrar_texto_centrado(screen, str(self.limite_jugar), 264, 437, 30, color = (0, 0, 0))
+        Texto.mostrar_texto_centrado(screen, str(self.numero_nivel), 213, 328, 30, color= (0, 0, 0))
+        Texto.mostrar_texto_centrado(screen, str(self.limite_descartar), 298, 382, 30, color= (0, 0, 0))
+        Texto.mostrar_texto_centrado(screen, str(self.limite_jugar), 264, 437, 30, color = (0, 0, 0))
 
     def mostrar_cartas(self, screen):
         # Mostrar cartas de la mano / Animacion de seleccion de carta
@@ -107,10 +107,10 @@ class Jugador:
                 pos_x += 80
         
         # Mostrar num de cartas seleccionadas
-        mostrar_texto(screen, f"{len(self._cartas_seleccionadas)}/5", 1170, 500, 20)
+        Texto.mostrar_texto(screen, f"{len(self._cartas_seleccionadas)}/5", 1170, 500, 20)
 
         # Temporal?
-        mostrar_texto_centrado(screen, f"{len(self.mazo.cartas)}", 1230, 600, 50)
+        Texto.mostrar_texto_centrado(screen, f"{len(self.mazo.cartas)}", 1230, 600, 50)
 
     def mostrar_comodines_mano(self,screen):
         for c in self.comodines_mano:
@@ -181,7 +181,7 @@ class Jugador:
                 self._cartas_descartadas.append(carta)
                 self.mano.remove(carta)
             self._cartas_seleccionadas.clear()
-        while len(self.mano) is not 8:
+        while len(self.mano) != 8:
             self.mano.append(self.mazo.robar())
 
 
@@ -230,15 +230,15 @@ class Jugador:
         x = 300
         for slot in range(1, 4):
             datos = self.guardado.cargar_partida(slot)
-            mostrar_texto(screen, f"Guardado {slot}", x, 170, 30)
+            Texto.mostrar_texto(screen, f"Guardado {slot}", x, 170, 30)
             if datos:
-                mostrar_texto(screen, f"Nivel: {datos["nivel"]}", x, 245, 20)
-                mostrar_texto(screen, f"Puntos: {datos["puntos"]}", x, 215, 20)
-                mostrar_texto(screen, f"Objetivo: {datos["puntos_nivel"]}", x, 275, 20)
+                Texto.mostrar_texto(screen, f"Nivel: {datos["nivel"]}", x, 245, 20)
+                Texto.mostrar_texto(screen, f"Puntos: {datos["puntos"]}", x, 215, 20)
+                Texto.mostrar_texto(screen, f"Objetivo: {datos["puntos_nivel"]}", x, 275, 20)
                 # Cambiar por informacion diferente
-                mostrar_texto(screen, f"Puntos: {datos["puntos"]}", x, 305, 20)
+                Texto.mostrar_texto(screen, f"Puntos: {datos["puntos"]}", x, 305, 20)
             else:
-                mostrar_texto(screen, "Vacio", x, 215, 20)
+                Texto.mostrar_texto(screen, "Vacio", x, 215, 20)
             x += 250
 
 

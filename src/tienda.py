@@ -1,7 +1,7 @@
 import random
 import pygame
 from src.comodines import Comodin
-from src._utilidades import mostrar_texto, mostrar_texto_centrado
+from src._utilidades import Texto
 
 class Tienda:
     def __init__(self, jugador):
@@ -33,17 +33,17 @@ class Tienda:
 
     def mostrar(self, screen):
         # Mostrar dinero actual del jugador
-        mostrar_texto_centrado(screen, f"{self.jugador.dinero}$", 900, 150, 40, (255, 255, 255))
+        Texto.mostrar_texto_centrado(screen, f"{self.jugador.dinero}$", 900, 150, 40, (255, 255, 255))
          # Amarillo si se puede pagar Rojo si no
         color_coste = (255, 255, 0) if self.jugador.dinero >= self.coste_cambiar else (255, 0, 0)
-        mostrar_texto(screen, f"{self.coste_cambiar}$", 525, 400 , 30, color_coste)
+        Texto.mostrar_texto(screen, f"{self.coste_cambiar}$", 525, 400 , 30, color_coste)
 
         
         for comodin in self.tienda_comodines:
             if comodin:
                 comodin.dibujar(screen)
                 color_precio = (255, 255, 0) if self.jugador.dinero >= comodin.precio else (255, 0, 0)
-                mostrar_texto_centrado(screen, f"{comodin.precio}$", comodin.rect.midbottom[0], comodin.rect.bottom + 3, 20, color_precio)
+                Texto.mostrar_texto_centrado(screen, f"{comodin.precio}$", comodin.rect.midbottom[0], comodin.rect.bottom + 3, 20, color_precio)
                 if comodin.seleccionada:
                     screen.blit(comodin.imagen_hover, (comodin.x, comodin.y))
 
