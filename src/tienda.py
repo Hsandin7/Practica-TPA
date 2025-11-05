@@ -21,9 +21,8 @@ class Tienda:
         pos_slot_2 = (840, 250)
         posiciones = [pos_slot_1, pos_slot_2]
 
-        nombres = random.sample(self.comodines_disponibles, 2)  # Elige dos comodines unicos
-        for nombre in nombres:
-            self.comodines_disponibles.remove(nombre)
+        n = min(2, len(self.comodines_disponibles))
+        nombres = random.sample(self.comodines_disponibles, n)  # Elige dos o menos comodines en funcion de los que haya disponibles
 
         while len(nombres) < 2:
             nombres.append(None)
@@ -34,6 +33,7 @@ class Tienda:
 
         # Deseleccionar cualquier comodín anterior
         self.comodin_seleccionado = None
+        print(self.comodines_disponibles)
 
     def mostrar(self, screen):
         mostrar_texto_centrado(screen, f"{self.jugador.dinero}$", 900, 150, 40)     # Mostrar dinero actual del jugador
@@ -76,4 +76,5 @@ class Tienda:
             self.jugador.comodines_mano.append(self.comodin_seleccionado)
             idx = self.tienda_comodines.index(self.comodin_seleccionado)
             self.tienda_comodines[idx] = None
+            self.comodines_disponibles.remove(self.comodin_seleccionado.nombre)
             self.comodin_seleccionado = None
