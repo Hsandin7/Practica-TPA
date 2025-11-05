@@ -30,13 +30,13 @@ class Jugador:
         
         self.mano = [self.mazo.robar() for _ in range(0,8)]
         self.comodines_mano=[]
-        # self.comodines_mano=[
-        #     Comodin("programador"),
-        #     Comodin("clon"),
-        #     Comodin("matematico"),
-        #     Comodin("doblete"),
-        #     Comodin("esteroides")
-        # ]
+        self.comodines_mano=[
+            Comodin("gloton"),
+            Comodin("gloton"),
+            Comodin("gloton"),
+            Comodin("gloton"),
+            Comodin("gloton")
+        ]
         
         self._cartas_seleccionadas =    list()
         self._cartas_jugadas =          list()
@@ -161,13 +161,13 @@ class Jugador:
             self.animador_texto.iniciar(f"{self.puntos_cartas * self.multiplicador}", 1100, 150,y_final=90)
 
             self.limite_jugar -= 1
-            if self.niveles.verificar_nivel(self.puntos):
+
+            if self.puntos >= self.puntos_nivel:
                 self.siguente_ronda()
-                self.dinero += 2
                 
             elif self.limite_jugar <= 0:
                 self.game_over = True
-            
+
 
     def descartar_cartas(self, origen):
         if (origen == "boton" and self.limite_descartar > 0):
@@ -243,10 +243,19 @@ class Jugador:
 
 
     def siguente_ronda (self):
+        self.niveles.siguente_nivel()
+        
         self.puntos = 0
+        self.dinero += 4
         self.puntos_nivel = self.niveles.puntos_nivel
+        self.carta_inhabilitada = self.niveles.carta_invalida
         
         self.mazo = Mazo()
+        if self.carta_inhabilitada:
+            for carta in self.mazo.cartas:
+                if carta.valor == self.carta_inhabilitada:
+                    carta.habilitada = False
+        print(f"Carta inhabilitada por BOSS: {self.carta_inhabilitada}")
         self.mano = [self.mazo.robar() for _ in range(0,8)]
 
         self.sig_nivel = True
@@ -256,8 +265,9 @@ class Jugador:
         self.numero_nivel += 1
         self.carta_inhabilitada = None
 
-        for carta in self.mano:
-            carta.habilitada = True
+
+        # for carta in self.mano:
+        #     carta.habilitada = True
 
         if not self.niveles.es_boss:
             self.niveles.color_pantalla = (0, 0, 0)
