@@ -1,14 +1,14 @@
 # Encapsula todo lo relacionado con la mano, el mazo y las acciones del jugador
 
 import pygame
-from Clases.mazo import Mazo
-from Clases.carta import Carta
-from Clases.evaluador_cartas import Evaluador_Cartas
-from Clases._utilidades import *
-from Clases.animaciones import Animador_Texto
-from Clases.guardado import *
-from Clases.niveles import Niveles
-from Clases.comodines import Comodin
+from src.mazo import Mazo
+from src.carta import Carta
+from src.evaluador_cartas import Evaluador_Cartas
+from src._utilidades import *
+from src.animaciones import Animador_Texto
+from src.guardado import Guardado
+from src.niveles import Niveles
+from src.comodines import Comodin
 
 class Jugador:
     def __init__(self):
@@ -21,19 +21,22 @@ class Jugador:
         self.game_over = False
         self.numero_nivel = 1
         self.dinero=0
+        self.carta_inhabilitada = None
         
         self.evaluador =        Evaluador_Cartas()
         self.animador_texto =   Animador_Texto()
         self.mazo =             Mazo()
         self.niveles =          Niveles()
+        self.guardado =         Guardado()
         
         self.mano = [self.mazo.robar() for _ in range(0,8)]
+        self.comodines_mano=[]
         self.comodines_mano=[
-            Comodin("programador"),
-            Comodin("clon"),
-            Comodin("matematico"),
-            Comodin("doblete"),
-            Comodin("esteroides")
+            Comodin("gloton"),
+            Comodin("gloton"),
+            Comodin("gloton"),
+            Comodin("gloton"),
+            Comodin("gloton")
         ]
         
         self._cartas_seleccionadas =    list()
@@ -43,7 +46,6 @@ class Jugador:
         self.limite_seleccion = 5
         self.limite_jugar = 4
         self.limite_descartar = 3
-        inicializar_archivo_guardado()
 
     
     def mostrar_puntos(self, screen):
@@ -51,9 +53,13 @@ class Jugador:
         mostrar_texto_centrado(screen, puntos_formateados, 900, 125, 50)
         mostrar_texto_centrado(screen, f"{self.multiplicador}", 950, 190)
         mostrar_texto_centrado(screen, f"{self.puntos_cartas}", 845, 190)
+
         # Cambiar por el objetivo de puntos del nivel
         puntos_formateados = f"{self.puntos_nivel:,}".replace(",", ".")
         mostrar_texto_centrado(screen, puntos_formateados, 400, 125, 50)
+
+        mostrar_texto_centrado(screen, f"{self.dinero}$", 412, 445, 25, color=(0,0,0))
+        
 
         # Muestra los puntos obtenidos que se suman al total
         self.animador_texto.dibujar(screen)
@@ -131,8 +137,6 @@ class Jugador:
             self._cartas_jugadas = evaluacion["Cartas"]
             self.puntos_cartas = evaluacion["Valor"]
             self.multiplicador = evaluacion["Multiplicador"]
-            self.puntos += self.puntos_cartas * self.multiplicador
-            
 
             if self.comodines_mano:
                 fichas = self.puntos_cartas
@@ -140,14 +144,16 @@ class Jugador:
                 dinero = self.dinero
 
                 for c in self.comodines_mano:
-                    fichas,multi,dinero=c.aplicar(self.mano,fichas,multi,dinero,self._cartas_jugadas, comodines=self.comodines_mano)
+                    fichas,multi,dinero=c.aplicar(self.mano,fichas,multi,dinero,self._cartas_jugadas, self.comodines_mano)
             
                 self.puntos_cartas=fichas
                 self.multiplicador=multi
                 self.dinero=dinero
                 self.puntos+=fichas*multi
                 print(f"Operacion despues: {fichas} * {multi} = {self.puntos}")
-            
+            else:
+                self.puntos += self.puntos_cartas * self.multiplicador
+
             for carta in self._cartas_jugadas:      # Quita las cartas que se hayan jugado para que el resto se descarte correctamente
                 self.mano.remove(carta)
                 self._cartas_seleccionadas.remove(carta)
@@ -157,6 +163,8 @@ class Jugador:
             self.limite_jugar -= 1
             if self.niveles.verificar_nivel(self.puntos):
                 self.siguente_ronda()
+                self.dinero += 2
+                
             elif self.limite_jugar <= 0:
                 self.game_over = True
             
@@ -182,44 +190,76 @@ class Jugador:
         # mazo y mano se guardan como listas de strings con el valor y el palo concatenados
         datos = {
             "puntos":           self.puntos,
+            "puntos_nivel":     self.puntos_nivel,
+            "nivel":            self.numero_nivel,
             "puntos_cartas":    self.puntos_cartas,
             "multiplicador":    self.multiplicador,
+
+            "limite_descartar": self.limite_descartar,
+            "limite_jugar":     self.limite_jugar,
+
             "mazo":             [[c._valor, c._palo] for c in self.mazo.cartas],
             "mano":             [[c._valor, c._palo] for c in self.mano],
-            "cartas_jugadas":   [[c._valor, c._palo] for c in self._cartas_jugadas]
+            "cartas_jugadas":   [[c._valor, c._palo] for c in self._cartas_jugadas] if self._cartas_jugadas else None
         }
-        guardar_partida(self.slot_seleccionado, datos)
+        self.guardado.guardar_partida(self.slot_seleccionado, datos)
     
     def cargar_partida(self):
-        datos = cargar_partida(self.slot_seleccionado)
-        self.puntos =           datos["puntos"]
-        self.puntos_cartas =    datos["puntos_cartas"]
-        self.multiplicador =    datos["multiplicador"]
-        self.mazo.cartas =      [Carta(c[0], c[1]) for c in datos["mazo"]]
-        self.mano =             [Carta(c[0], c[1]) for c in datos["mano"]]
-        self._cartas_jugadas =  [Carta(c[0], c[1]) for c in datos["cartas_jugadas"]]
+        datos = self.guardado.cargar_partida(self.slot_seleccionado)
+        if datos:
+            self.puntos =           datos["puntos"]
+            self.numero_nivel =     datos["nivel"]
+            self.puntos_nivel =     datos["puntos_nivel"]
+            self.puntos_cartas =    datos["puntos_cartas"]
+            self.multiplicador =    datos["multiplicador"]
+
+            self.limite_descartar = datos["limite_descartar"]
+            self.limite_jugar =     datos["limite_jugar"]
+
+            self.mazo.cartas =      [Carta(c[0], c[1]) for c in datos["mazo"]]
+            self.mano =             [Carta(c[0], c[1]) for c in datos["mano"]]
+            self._cartas_jugadas =  [Carta(c[0], c[1]) for c in datos["cartas_jugadas"]] if datos["cartas_jugadas"] else None
+            return True
+        else:
+            return None
     
     def borrar_partida(self):
-        borrar_partida(self.slot_seleccionado)
+        self.guardado.borrar_partida(self.slot_seleccionado)
     
     def mostrar_info_slots(self, screen):
         x = 300
         for slot in range(1, 4):
-            datos = cargar_partida(slot)
+            datos = self.guardado.cargar_partida(slot)
             mostrar_texto(screen, f"Guardado {slot}", x, 170, 30)
-            mostrar_texto(screen, f"Puntos: {datos["puntos"]}", x, 215, 20)
-            # Cambiar por informacion diferente
-            mostrar_texto(screen, f"Nivel: {datos["puntos"]}", x, 245, 20)
-            mostrar_texto(screen, f"comodines_mano: {datos["puntos"]}", x, 275, 20)
-            mostrar_texto(screen, f"Puntos: {datos["puntos"]}", x, 305, 20)
+            if datos:
+                mostrar_texto(screen, f"Nivel: {datos["nivel"]}", x, 245, 20)
+                mostrar_texto(screen, f"Puntos: {datos["puntos"]}", x, 215, 20)
+                mostrar_texto(screen, f"Objetivo: {datos["puntos_nivel"]}", x, 275, 20)
+                # Cambiar por informacion diferente
+                mostrar_texto(screen, f"Puntos: {datos["puntos"]}", x, 305, 20)
+            else:
+                mostrar_texto(screen, "Vacio", x, 215, 20)
             x += 250
+
 
     def siguente_ronda (self):
         self.puntos = 0
         self.puntos_nivel = self.niveles.puntos_nivel
+        
         self.mazo = Mazo()
+        self.mano = [self.mazo.robar() for _ in range(0,8)]
+
         self.sig_nivel = True
         self._cartas_jugadas = None
         self.limite_jugar = 4
         self.limite_descartar = 3
         self.numero_nivel += 1
+        self.carta_inhabilitada = None
+
+        for carta in self.mano:
+            carta.habilitada = True
+
+        if not self.niveles.es_boss:
+            self.niveles.color_pantalla = (0, 0, 0)
+
+        
