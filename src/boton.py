@@ -12,18 +12,31 @@ class Boton:
         - imagen_hover crea una version oscurecida de la imagen
         
     """
+
+    _cache_imagenes = {}
+    _cache_hover = {}
+    @classmethod
+    def _get_cache_botones(cls, ruta_imagen, hover):
+        cache = cls._cache_hover if hover else cls._cache_imagenes
+        if ruta_imagen not in cache:
+            imagen = pygame.image.load(ruta_imagen).convert_alpha()
+            if hover:
+                imagen_hover = imagen.copy()
+                oscuridad = pygame.Surface(imagen.get_size(), pygame.SRCALPHA)
+                oscuridad.fill((0, 0, 0, 80))  # negro semitransparente
+                imagen_hover.blit(oscuridad, (0, 0), special_flags=pygame.BLEND_RGBA_MULT)
+                cache[ruta_imagen] = imagen_hover
+            else:
+                cache[ruta_imagen] = imagen
+        return cache[ruta_imagen]
+
     def __init__(self, ruta_imagen, posx, posy, sonido = "Sonidos/sonido_boton.mp3"):
         self.x = posx
         self.y = posy
-        self.imagen_original = pygame.image.load(ruta_imagen).convert_alpha()   # Carga la imagen
-        self.rect = self.imagen_original.get_rect(topleft=(self.x,self.y))             # Crea el rect correspondiente
+        self.imagen_original = self._get_cache_botones(ruta_imagen, False)      # Carga la imagen normal
+        self.imagen_hover = self._get_cache_botones(ruta_imagen, True)          # Carga la imagen con el filtro hover
+        self.rect = self.imagen_original.get_rect(topleft=(self.x,self.y))      # Crea el rect correspondiente
         self._sonido_click = sonido
-
-        # Crea una version oscurecida de la imagen, usando multiplicacion RGBA
-        self.imagen_hover = self.imagen_original.copy()
-        oscuridad = pygame.Surface(self.rect.size, pygame.SRCALPHA)
-        oscuridad.fill((0, 0, 0, 80))  # negro semitransparente
-        self.imagen_hover.blit(oscuridad, (0, 0), special_flags=pygame.BLEND_RGBA_MULT)
 
     def asignar_posicion(self, posx, posy):     # Asigna la posicion de la imagen
         """Funcion asignar_posicion: pone la posicion x, y en el boton."""
