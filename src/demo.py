@@ -1,6 +1,6 @@
 from src.juego import Juego
 from src.animaciones import Transicion
-from src.guardado import *
+from src.guardado import Guardado
 from src._utilidades import *
 
 # Pos boton jugar = (730, 670)
@@ -13,6 +13,7 @@ class Demo:
         self.contador = 0
         self.funcionar = True
         self.raton = Cursor(1280/2, 720/2)
+        self.guardado = Guardado()
     
     def checkear_inicio(self):
         self.contador += 1
@@ -104,7 +105,7 @@ class Demo:
             "mazo":             [[3,"b"], [5,"b"], [10,"c"], [12,"o"],     [10,"e"], [10,"e"], [10,"e"], [10,"e"], [10,"e"], [10,"e"], [10,"e"], [10,"e"]],
             "cartas_jugadas":   None
         }
-        guardar_partida(1, self.guardado_1)
+        self.guardado.guardar_partida(1, self.guardado_1)
 
 
 
