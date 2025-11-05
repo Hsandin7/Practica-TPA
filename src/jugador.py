@@ -6,7 +6,7 @@ from src.carta import Carta
 from src.evaluador_cartas import Evaluador_Cartas
 from src._utilidades import *
 from src.animaciones import Animador_Texto
-from src.guardado import *
+from src.guardado import Guardado
 from src.niveles import Niveles
 from src.comodines import Comodin
 
@@ -27,16 +27,17 @@ class Jugador:
         self.animador_texto =   Animador_Texto()
         self.mazo =             Mazo()
         self.niveles =          Niveles()
+        self.guardado =         Guardado()
         
         self.mano = [self.mazo.robar() for _ in range(0,8)]
         self.comodines_mano=[]
-        # self.comodines_mano=[
-        #     Comodin("programador"),
-        #     Comodin("clon"),
-        #     Comodin("matematico"),
-        #     Comodin("doblete"),
-        #     Comodin("esteroides")
-        # ]
+        self.comodines_mano=[
+            Comodin("gloton"),
+            Comodin("gloton"),
+            Comodin("gloton"),
+            Comodin("gloton"),
+            Comodin("gloton")
+        ]
         
         self._cartas_seleccionadas =    list()
         self._cartas_jugadas =          list()
@@ -45,7 +46,6 @@ class Jugador:
         self.limite_seleccion = 5
         self.limite_jugar = 4
         self.limite_descartar = 3
-        inicializar_archivo_guardado()
 
     
     def mostrar_puntos(self, screen):
@@ -202,10 +202,10 @@ class Jugador:
             "mano":             [[c._valor, c._palo] for c in self.mano],
             "cartas_jugadas":   [[c._valor, c._palo] for c in self._cartas_jugadas] if self._cartas_jugadas else None
         }
-        guardar_partida(self.slot_seleccionado, datos)
+        self.guardado.guardar_partida(self.slot_seleccionado, datos)
     
     def cargar_partida(self):
-        datos = cargar_partida(self.slot_seleccionado)
+        datos = self.guardado.cargar_partida(self.slot_seleccionado)
         if datos:
             self.puntos =           datos["puntos"]
             self.numero_nivel =     datos["nivel"]
@@ -224,12 +224,12 @@ class Jugador:
             return None
     
     def borrar_partida(self):
-        borrar_partida(self.slot_seleccionado)
+        self.guardado.borrar_partida(self.slot_seleccionado)
     
     def mostrar_info_slots(self, screen):
         x = 300
         for slot in range(1, 4):
-            datos = cargar_partida(slot)
+            datos = self.guardado.cargar_partida(slot)
             mostrar_texto(screen, f"Guardado {slot}", x, 170, 30)
             if datos:
                 mostrar_texto(screen, f"Nivel: {datos["nivel"]}", x, 245, 20)
