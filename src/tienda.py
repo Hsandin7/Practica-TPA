@@ -1,10 +1,11 @@
 import random
 import pygame
+from src.jugador import Jugador
 from src.comodines import Comodin
 from src._utilidades import mostrar_texto, mostrar_texto_centrado
 
 class Tienda:
-    def __init__(self, jugador):
+    def __init__(self, jugador: Jugador):
         self.jugador = jugador
         self.comodines_disponibles = [
             "gloton", "stonks", "matematico", "calculadora", "loco",
@@ -18,31 +19,32 @@ class Tienda:
     def poblar(self):
         pos_slot_1 = (690, 250)
         pos_slot_2 = (840, 250)
+        posiciones = [pos_slot_1, pos_slot_2]
 
-        nombres = random.sample(self.comodines_disponibles, 2)
-        self.tienda_comodines[0] = Comodin(nombres[0])
-        self.tienda_comodines[0].asignar_posicion(*pos_slot_1)
-        
-        self.tienda_comodines[1] = Comodin(nombres[1])
-        self.tienda_comodines[1].asignar_posicion(*pos_slot_2)
+        n = min(2, len(self.comodines_disponibles))
+        nombres = random.sample(self.comodines_disponibles, n)  # Elige dos o menos comodines en funcion de los que haya disponibles
+
+        while len(nombres) < 2:
+            nombres.append(None)
+            
+        for i in range(2):
+            self.tienda_comodines[i] = Comodin(nombres[i])
+            self.tienda_comodines[i].asignar_posicion(*posiciones[i])
 
         # Deseleccionar cualquier comodín anterior
         self.comodin_seleccionado = None
-        for c in self.tienda_comodines:
-            if c: c.seleccionada = False
+        print(self.comodines_disponibles)
 
     def mostrar(self, screen):
-        # Mostrar dinero actual del jugador
-        mostrar_texto_centrado(screen, f"{self.jugador.dinero}$", 900, 150, 40, (255, 255, 255))
-         # Amarillo si se puede pagar Rojo si no
-        color_coste = (255, 255, 0) if self.jugador.dinero >= self.coste_cambiar else (255, 0, 0)
+        mostrar_texto_centrado(screen, f"{self.jugador.dinero}$", 900, 150, 40)     # Mostrar dinero actual del jugador
+        
+        color_coste = (255, 255, 0) if self.jugador.dinero >= self.coste_cambiar else (255, 0, 0)   # Amarillo si se puede pagar Rojo si no
         mostrar_texto(screen, f"{self.coste_cambiar}$", 525, 400 , 30, color_coste)
 
-        
         for comodin in self.tienda_comodines:
             if comodin:
                 comodin.dibujar(screen)
-                color_precio = (255, 255, 0) if self.jugador.dinero >= comodin.precio else (255, 0, 0)
+                color_precio = (255, 255, 0) if self.jugador.dinero >= comodin.precio else (255, 0, 0)      # Amarillo si se puede pagar Rojo si no
                 mostrar_texto_centrado(screen, f"{comodin.precio}$", comodin.rect.midbottom[0], comodin.rect.bottom + 3, 20, color_precio)
                 if comodin.seleccionada:
                     screen.blit(comodin.imagen_hover, (comodin.x, comodin.y))
@@ -69,11 +71,10 @@ class Tienda:
 
     def comprar(self):
         # Botón "Comprar"
-        if self.comodin_seleccionado and \
-            self.jugador.dinero >= self.comodin_seleccionado.precio and \
-            len(self.jugador.comodines_mano) < 5:
+        if self.comodin_seleccionado and self.jugador.dinero >= self.comodin_seleccionado.precio and len(self.jugador.comodines_mano) < 5:
             self.jugador.dinero -= self.comodin_seleccionado.precio
             self.jugador.comodines_mano.append(self.comodin_seleccionado)
             idx = self.tienda_comodines.index(self.comodin_seleccionado)
             self.tienda_comodines[idx] = None
+            self.comodines_disponibles.remove(self.comodin_seleccionado.nombre)
             self.comodin_seleccionado = None

@@ -1,4 +1,5 @@
 import random
+import pygame
 
 class Niveles:
     """Clase Niveles: Hace toda la funcionalidad de los niveles y los niveles que son un boss.
@@ -10,9 +11,20 @@ class Niveles:
             - multiplicador este multiplicador es lo que aumenta cada nivel.
 
     """
+
+    _cache_filtros = {}
+    @classmethod
+    def _get_cache_filtro(cls, color):
+        if  color not in cls._cache_filtros:
+            imagen = pygame.image.load(f"Graficos/pagina_juego.png").convert_alpha()
+            filtro_color = pygame.Surface(imagen.get_size(), pygame.SRCALPHA)
+            filtro_color.fill((*color, 120))
+            imagen.blit(filtro_color, (0,0))
+            cls._cache_filtros[color] = imagen
+        return cls._cache_filtros[color]
+    
     def __init__(self):
         self.nivel_actual = 1
-        self.puntos = 0
         self.puntos_nivel = 100
         self.multiplicador = 2.5
         self.color_pantalla = (0,0,0)
@@ -25,57 +37,29 @@ class Niveles:
             (127, 52, 0),    # naranja
         ]
         self.es_boss = False
-        self.cartas_invalidas = []
+        self.carta_invalida = int()
 
     def siguente_nivel(self):
         """Funcion siguente_nivel: pasa de nivel sumando 1 al nivel_actual, 
             multiplicando los puntos objetivo por el multiplicador y pone los puntos del jugador a 0."""
         
+        print(f"NNivel: {self.nivel_actual}, es bos: {self.es_boss}")
         self.nivel_actual += 1
-        self.puntos = 0
         self.puntos_nivel = int(self.puntos_nivel * self.multiplicador)
 
-        if self.verificar_boss():
-            self.nivel_boss()
-        else:
-            self.es_boss = False
-            self.color_pantalla = (0,0,0)
-            self.cartas_invalidas = []
+        self.check_boss()
 
     def check_boss(self):
         if (self.nivel_actual -1)%3 == 0:
-            self.nivel_boss()
+            self.es_boss = True
+            self.color_pantalla = random.choice(self.colores_boss)
+            self.carta_invalida = random.randint(1, 12)
+            print (f"BOSS: {self.color_pantalla}")
         else:
             self.es_boss = False
             self.color_pantalla = (0,0,0)
-            self.cartas_invalidas = []
+            self.carta_invalida = None
 
-    def nivel_perdido(self):
-        """Funcion nivel_perdido: cuando no logras llegar a los puntos 
-            objetivo se reinician todos los valores a los del inicio."""
-        self.nivel_actual = 1
-        self.puntos = 0
-        self.puntos_nivel = 100
-        self.es_boss = False
-        self.color_pantalla = (0,0,0)
-        self.cartas_invalidas = []
-
-    def verificar_nivel(self, puntos):
-        """Funcion verificar_nivel: comprueba si se ha alcanzado el objetivo de puntos y 
-            si es así devuelve verdadero."""
-        if puntos >= self.puntos_nivel:
-            self.siguente_nivel()
-            print(f"NNivel: {self.nivel_actual}, es bos: {self.es_boss}")
-            return True
-    
-    def nivel_boss (self):
-        self.es_boss = True
-        self.color_pantalla = random.choice(self.colores_boss)
-
-        print (f"BOSS: {self.color_pantalla}")
-
-    def verificar_boss (self):
-        return (self.nivel_actual -1)%3 == 0
-    
-    def verificar_carta_valida (self, carta):
-        return carta.valor not in self.cartas_invalidas
+    def dibujar_filtro_pantalla(self, screen):
+        imagen = Niveles._get_cache_filtro(self.color_pantalla)
+        screen.blit(imagen, (0,0))
