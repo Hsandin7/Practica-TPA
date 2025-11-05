@@ -20,15 +20,6 @@ class Juego:
         self.jugador = Jugador()
         self.tienda = Tienda(self.jugador)
         
-        self.coste_cambiar = 2 
-        self.tienda_comodines = [None, None]
-        self.comodin_seleccionado = None
-        
-        self.comodines_disponibles = [
-            "gloton", "stonks", "matematico", "calculadora", "loco", 
-            "doblete", "esteroides", "programador", "clon"
-        ]
-        
 
     def cargar_paginas(self):
         # Imagenes de fondo
@@ -79,9 +70,6 @@ class Juego:
         
     def reiniciar(self):
         self.jugador = Jugador()
-        self.coste_cambiar = 2
-        self.tienda_comodines = [None, None]
-        self.comodin_seleccionado = None
 
 
     # Pagina principal
@@ -116,7 +104,6 @@ class Juego:
 
         self.jugador.mostrar_cartas(screen)
         self.jugador.mostrar_puntos(screen)
-        self.jugador.mostrar_comodines_mano(screen)
 
     def actualizar_pagina_juego(self, eventos):
         self.jugador.actualizar(eventos)
@@ -213,7 +200,7 @@ class Juego:
         self.botones["slot3"].dibujar(screen)
 
         # Mostrar informacion de cada slot
-        self.jugador.mostrar_info_slots(screen)
+        self.jugador.guardado.mostrar_info_slots(screen)
 
         # Overlay oscurecido del slot seleccionado
         if self.jugador.slot_seleccionado:

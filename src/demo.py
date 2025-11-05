@@ -70,10 +70,11 @@ class Demo:
             case 10:
                 juego.mostrar_pagina_juego(screen)
                 self.boton_jugar(juego)
-                juego.comprobar_exito()
                 transicion.iniciar( Juego.paginas_transicion[0],Juego.paginas_transicion[1],Juego.paginas_transicion[2],Juego.num_transicion)
                 if Juego.num_transicion:
                     self.fase += 1
+            case _:
+                self.exit_demo(juego)
 
 
 
@@ -108,15 +109,20 @@ class Demo:
             "nivel":            1,
             "puntos_cartas":    0,
             "multiplicador":    0,
+            "dinero":           0,
 
             "limite_descartar": 3,
             "limite_jugar":     4,
 
+            "comodines":        None,
             "mano":             [[5,"c"], [8,"b"], [7,"o"], [10,"c"], [9,"b"], [6,"c"], [7,"e"], [6,"e"]],
             "mazo":             [[10,"b"], [8,"e"], [4,"e"], [11,"c"],     [10,"e"], [10,"e"], [10,"e"], [10,"e"], [10,"e"], [10,"e"], [10,"e"], [10,"e"]],
             "cartas_jugadas":   None
         }
         self.guardado.guardar_partida(1, self.guardado_1)
+    
+    def exit_demo(self):
+        self.__init__()
 
 
 

@@ -168,43 +168,7 @@ class Comodin(Boton):
                 self.x, self.y = self.rect.topleft
                 if limite_rect:
                     self.rect.clamp_ip(limite_rect)
-        base_x=257 - float((len(lista_comodines)-1) / 2) * 100
-        for i,c in enumerate(lista_comodines):
-            if not c.arrastrado:
-                c.rect.topleft=(base_x+i*80,530)
-                c.x,c.y=c.rect.topleft
-
-    def mover_comodines(self, eventos, lista_comodines, limite_rect=None):
-        for e in eventos:
-            if e.type == pygame.MOUSEBUTTONDOWN and e.button == 1:
-                if self.rect.collidepoint(e.pos):
-                    self.arrastrado = True
-                    mouse_x, mouse_y = e.pos
-                    self.offset_x = self.rect.x - mouse_x
-                    self.offset_y = self.rect.y - mouse_y
-
-            elif e.type == pygame.MOUSEBUTTONUP and e.button == 1:
-                if self.arrastrado:
-                    self.arrastrado = False
-                    for o in lista_comodines:
-                        if o is not self and self.rect.colliderect(o.rect):
-                            i = lista_comodines.index(self)
-                            j = lista_comodines.index(o)
-                            lista_comodines[i], lista_comodines[j] = lista_comodines[j], lista_comodines[i]
-                            break
-
-            elif e.type == pygame.MOUSEMOTION and self.arrastrado:
-                mouse_x, mouse_y = e.pos
-                self.rect.x = mouse_x + self.offset_x
-                self.rect.y = mouse_y + self.offset_y
-                self.x, self.y = self.rect.topleft
-                if limite_rect:
-                    self.rect.clamp_ip(limite_rect)
-        base_x=257 - float((len(lista_comodines)-1) / 2) * 100
-        for i,c in enumerate(lista_comodines):
-            if not c.arrastrado:
-                c.rect.topleft=(base_x+i*80,530)
-                c.x,c.y=c.rect.topleft
+        
 
     def dibujar(self,screen):
         self.x, self.y = self.rect.topleft

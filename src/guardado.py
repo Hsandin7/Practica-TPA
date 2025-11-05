@@ -1,6 +1,7 @@
 import json
 import os
 from datetime import datetime
+from src._utilidades import *
 
 class Guardado:
     def __init__(self):
@@ -51,3 +52,40 @@ class Guardado:
         if slot not in (1, 2, 3):
             raise ValueError("El número de slot debe ser 1, 2 o 3.")
         return f"slot_{slot}"
+    
+
+    def mostrar_info_slots(self, screen):
+        x = 305
+        gris = (220,220,220)
+        for slot in range(1, 4):
+            datos = self.cargar_partida(slot)
+            mostrar_texto(screen, f"Guardado {slot}", x-5, 170, 30,)
+            y = 215
+
+            if datos:
+                textos = [
+                    f"{datos["fecha"]}",
+                    f"Nivel: {datos["nivel"]}",
+                    f"Dinero: {datos["dinero"]}",
+                    f"Puntos: {datos["puntos"]}",
+                    f"Objetivo: {datos["puntos_nivel"]}"
+                    ]
+                for texto in textos:
+                    mostrar_texto(screen, texto, x, y, 20, gris)
+                    y += 30
+                if datos["comodines"]:
+                    mostrar_texto(screen, f"Comodines:", x, y, 20, gris)
+                    x_copy = x -5
+                    y += 28
+                    for n, comodin in enumerate(datos["comodines"], start=1):
+                        mostrar_texto(screen, comodin, x_copy, y, 15, gris)
+                        y += 20
+                        if n == 3:
+                            x_copy += 100
+                            y -= 60
+                else:
+                    mostrar_texto(screen, f"Comodines: cero", x, y, 20, gris)
+
+            else:
+                mostrar_texto(screen, "Vacio", x, 215, 20, gris)
+            x += 250
