@@ -86,11 +86,23 @@ def efecto_programador(mano, fichas, multi, dinero, cartas_jugadas):
 
 # Ahora mismo esta igual que la clase carta
 class Comodin(Boton):
+    _descripciones = {
+        "gloton":       "Por cada carta jugada se suman 50 puntos y 10 de multi",
+        "stonks":       "Gana el doble de dinero cada ronda",
+        "matematico":   "Duplica el valor del multiplicador",
+        "calculadora":  "La carta mas alta jugada suma su valor como multiplicador en vez de puntos",
+        "loco":         "Suma un multiplicador aleatorio   1/5/10/20/50",
+        "doblete":      "Las cartas jugadas suman el doble",
+        "esteroides":   "Todas las cartas suman 20 puntos",
+        "programador":  "Por cada as que tengas en la mano, aumenta el multiplicador en +1",
+        "clon":         "Copia la accion del comodín que este colocado mas a la derecha"
+    }
+    
     def __init__(self, nombre):
         super().__init__(f"Graficos/Comodines/{nombre}.png", 0,0)
         self.nombre = nombre
-        self.descripcion = str()
-        self.rareza = int() # "Comun", "Raro", "Epico"
+        self.descripcion = Comodin._descripciones[nombre]
+        self.rareza = str() # "Comun", "Raro", "Epico"
         self.precio = int() # Precio de la carta
         self.seleccionada = False
 
@@ -120,19 +132,19 @@ class Comodin(Boton):
     def _registrar_propiedades(self):
         # Asignar rareza
         if self.nombre in ["matematico", "stonks", "calculadora"]:
-            self.rareza = "Comun"
+            self.rareza = "comun"
         elif self.nombre in ["loco", "doblete", "esteroides"]:
-            self.rareza = "Raro"
+            self.rareza = "raro"
         elif self.nombre in ["gloton", "programador", "clon"]:
-            self.rareza = "Epico"
+            self.rareza = "epico"
         
         # Asignar precio basado en rareza
         match self.rareza:
-            case "Comun":
+            case "comun":
                 self.precio=3
-            case "Raro":
+            case "raro":
                 self.precio=5
-            case "Epico":
+            case "epico":
                 self.precio=8
             case _:
                 self.precio=1 # Precio por defecto si hay error
