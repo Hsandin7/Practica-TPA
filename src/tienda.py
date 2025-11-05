@@ -19,13 +19,18 @@ class Tienda:
     def poblar(self):
         pos_slot_1 = (690, 250)
         pos_slot_2 = (840, 250)
+        posiciones = [pos_slot_1, pos_slot_2]
 
-        nombres = random.sample(self.comodines_disponibles, 2)
-        self.tienda_comodines[0] = Comodin(nombres[0])
-        self.tienda_comodines[0].asignar_posicion(*pos_slot_1)
-        
-        self.tienda_comodines[1] = Comodin(nombres[1])
-        self.tienda_comodines[1].asignar_posicion(*pos_slot_2)
+        nombres = random.sample(self.comodines_disponibles, 2)  # Elige dos comodines unicos
+        for nombre in nombres:
+            self.comodines_disponibles.remove(nombre)
+
+        while len(nombres) < 2:
+            nombres.append(None)
+            
+        for i in range(2):
+            self.tienda_comodines[i] = Comodin(nombres[i])
+            self.tienda_comodines[i].asignar_posicion(*posiciones[i])
 
         # Deseleccionar cualquier comodín anterior
         self.comodin_seleccionado = None
