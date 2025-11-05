@@ -1,4 +1,5 @@
 import random
+import pygame
 
 class Niveles:
     """Clase Niveles: Hace toda la funcionalidad de los niveles y los niveles que son un boss.
@@ -10,6 +11,18 @@ class Niveles:
             - multiplicador este multiplicador es lo que aumenta cada nivel.
 
     """
+
+    _cache_filtros = {}
+    @classmethod
+    def _get_cache_filtro(cls, color):
+        if  color not in cls._cache_filtros:
+            imagen = pygame.image.load(f"Graficos/pagina_juego.png").convert_alpha()
+            filtro_color = pygame.Surface(imagen.get_size(), pygame.SRCALPHA)
+            filtro_color.fill((*color, 120))
+            imagen.blit(filtro_color, (0,0))
+            cls._cache_filtros[color] = imagen
+        return cls._cache_filtros[color]
+    
     def __init__(self):
         self.nivel_actual = 1
         self.puntos_nivel = 100
@@ -46,3 +59,7 @@ class Niveles:
             self.es_boss = False
             self.color_pantalla = (0,0,0)
             self.carta_invalida = None
+
+    def dibujar_filtro_pantalla(self, screen):
+        imagen = Niveles._get_cache_filtro(self.color_pantalla)
+        screen.blit(imagen, (0,0))

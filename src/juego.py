@@ -31,7 +31,6 @@ class Juego:
             pygame.image.load("Graficos/menu_guardado.png"),        # 4: M Guardado
             pygame.image.load("Graficos/game_over.png"),            # 5: P GAME OVER
             pygame.image.load("Graficos/pantalla_info.png")         # 6: M Info
-
         ]
     
     def cargar_botones(self):
@@ -89,13 +88,10 @@ class Juego:
 
     # Pagina de juego
     def mostrar_pagina_juego(self, screen):
-        screen.blit(self.paginas[1], (0,0))
         if self.jugador.niveles.es_boss:
-            filtro_color = pygame.Surface(screen.get_size(), pygame.SRCALPHA)
-
-            r, g, b = self.jugador.niveles.color_pantalla
-            filtro_color.fill((r , g, b, 120))
-            screen.blit(filtro_color, (0,0))
+            self.jugador.niveles.dibujar_filtro_pantalla(screen)
+        else:
+            screen.blit(self.paginas[1], (0,0))
 
         self.botones["jugar"].dibujar(screen)
         self.botones["descartar"].dibujar(screen)
