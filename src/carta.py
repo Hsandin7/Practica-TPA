@@ -16,16 +16,17 @@ class Carta(Boton):
     PALOS = ["o", "c", "e", "b"]    # Oros(o), Copas(c), Espadas(e), Bastos(b)
     VALORES = list(range(1,13))
 
-    # _cache_deshabilitadas = {}     # Se puede meter en Boton ya que es la imagen del "boton"
-
-    # @classmethod
-    # def _get_cache_deshabilitadas(cls, valor, palo):
-    #     carta = (valor, palo)
-    #     if carta not in cls._cache_deshabilitadas:
-    #         filtro_carta = pygame.Surface((90, 132), pygame.SRCALPHA)
-    #         filtro_carta.fill ((0, 0, 60, 180))
-    #         cls._cache_deshabilitadas[carta] = filtro_carta
-    #     return cls._cache_deshabilitadas[carta]
+    _cache_filtros = {}
+    @classmethod
+    def _get_cache_filtro(cls, valor, palo):
+        carta = (valor, palo)
+        if carta not in cls._cache_filtros:
+            imagen = pygame.image.load(f"Graficos/cartas/{valor}{palo}.png").convert_alpha()
+            filtro = pygame.Surface(imagen.get_size(), pygame.SRCALPHA)
+            filtro.fill((0, 0, 60, 180))
+            imagen.blit(filtro, (0, 0), special_flags=pygame.BLEND_RGBA_MULT)
+            cls._cache_filtros[carta] = imagen
+        return cls._cache_filtros[carta]
 
     def __init__(self, valor, palo):
         super().__init__(f"Graficos/cartas/{valor}{palo}.png", 1200, 600, "Sonidos/sonido_seleccionar_cartas.mp3")
@@ -61,12 +62,8 @@ class Carta(Boton):
         """Funcion dibujar: accede a la funcion mover_hacia_destino y muestra la carta."""
         self.mover_hacia_destino()
         super().dibujar(screen)
-
         if not self.habilitada:
-            imagen = self.imagen_original.copy()
-            filtro = pygame.Surface(self.rect.size, pygame.SRCALPHA)
-            filtro.fill((0, 0, 60, 180))
-            imagen.blit(filtro, (0, 0), special_flags=pygame.BLEND_RGBA_MULT)
+            imagen = Carta._get_cache_filtro(self._valor, self._palo)
             screen.blit(imagen, (self.x, self.y))
 
     def detectar_seleccion(self, eventos):

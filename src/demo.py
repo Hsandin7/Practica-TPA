@@ -1,6 +1,6 @@
 from src.juego import Juego
 from src.animaciones import Transicion
-from src.guardado import *
+from src.guardado import Guardado
 from src._utilidades import *
 
 # Pos boton jugar = (730, 670)
@@ -13,6 +13,7 @@ class Demo:
         self.contador = 0
         self.funcionar = True
         self.raton = Cursor(1280/2, 720/2)
+        self.guardado = Guardado()
     
     def checkear_inicio(self):
         self.contador += 1
@@ -56,14 +57,17 @@ class Demo:
                 juego.mostrar_pagina_juego(screen)
             case 6:
                 juego.mostrar_pagina_juego(screen)
-                self.seleccionar_cartas([3, 4, 5, 6], juego)
+                self.seleccionar_cartas([2, 5, 6, 7], juego)
             case 7:
                 juego.mostrar_pagina_juego(screen)
                 self.boton_jugar(juego)
             case 8:
                 juego.mostrar_pagina_juego(screen)
-                self.seleccionar_cartas([1, 2, 3, 6, 7], juego)
+                self.seleccionar_cartas([0, 2, 5, 6, 7], juego)
             case 9:
+                juego.mostrar_pagina_juego(screen)
+                self.boton_descartar(juego)
+            case 10:
                 juego.mostrar_pagina_juego(screen)
                 self.boton_jugar(juego)
                 juego.comprobar_exito()
@@ -82,6 +86,14 @@ class Demo:
             self.raton.asignar_posicion(730, 670)
         if self.raton.checkear_pos():
             juego.jugador.jugar_cartas()
+            
+    def boton_descartar(self, juego: Juego):
+        if self.funcionar:          # Darle al boton de jugar
+            self.funcionar = False
+            self.raton.asignar_posicion(925, 670)
+        if self.raton.checkear_pos():
+            juego.jugador.descartar_cartas("boton")
+
     def seleccionar_cartas(self, cartas: list, juego: Juego):
         if self.raton.checkear_pos() and self.contador < len(cartas):
             self.raton.asignar_posicion_carta(cartas[self.contador])
@@ -100,11 +112,11 @@ class Demo:
             "limite_descartar": 3,
             "limite_jugar":     4,
 
-            "mano":             [[12,"b"], [8,"b"], [9,"b"], [5,"e"], [4,"o"], [4,"b"], [5,"o"], [11,"e"]],
-            "mazo":             [[3,"b"], [5,"b"], [10,"c"], [12,"o"],     [10,"e"], [10,"e"], [10,"e"], [10,"e"], [10,"e"], [10,"e"], [10,"e"], [10,"e"]],
+            "mano":             [[5,"c"], [8,"b"], [7,"o"], [10,"c"], [9,"b"], [6,"c"], [7,"e"], [6,"e"]],
+            "mazo":             [[10,"b"], [8,"e"], [4,"e"], [11,"c"],     [10,"e"], [10,"e"], [10,"e"], [10,"e"], [10,"e"], [10,"e"], [10,"e"], [10,"e"]],
             "cartas_jugadas":   None
         }
-        guardar_partida(1, self.guardado_1)
+        self.guardado.guardar_partida(1, self.guardado_1)
 
 
 
