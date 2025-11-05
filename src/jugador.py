@@ -228,17 +228,18 @@ class Jugador:
     
     def mostrar_info_slots(self, screen):
         x = 300
+        gris = (220,220,220)
         for slot in range(1, 4):
             datos = self.guardado.cargar_partida(slot)
-            mostrar_texto(screen, f"Guardado {slot}", x, 170, 30)
+            mostrar_texto(screen, f"Guardado {slot}", x, 170, 30,)
             if datos:
-                mostrar_texto(screen, f"Nivel: {datos["nivel"]}", x, 245, 20)
-                mostrar_texto(screen, f"Puntos: {datos["puntos"]}", x, 215, 20)
-                mostrar_texto(screen, f"Objetivo: {datos["puntos_nivel"]}", x, 275, 20)
+                mostrar_texto(screen, f"{datos["fecha"]}", x, 215, 20, gris)
+                mostrar_texto(screen, f"Nivel: {datos["nivel"]}", x, 245, 20, gris)
+                mostrar_texto(screen, f"Puntos: {datos["puntos"]}", x, 275, 20, gris)
+                mostrar_texto(screen, f"Objetivo: {datos["puntos_nivel"]}", x, 305, 20, gris)
                 # Cambiar por informacion diferente
-                mostrar_texto(screen, f"Puntos: {datos["puntos"]}", x, 305, 20)
             else:
-                mostrar_texto(screen, "Vacio", x, 215, 20)
+                mostrar_texto(screen, "Vacio", x, 215, 20, gris)
             x += 250
 
 
