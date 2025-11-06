@@ -85,7 +85,7 @@ def poblar_tienda(self):
 
     def actualizar(self, eventos):
         """
-            Devuelve si un comodin esta seleccionado o no
+            Devuelve si un comodin esta seleccionado o no.
         """
         # Selección de comodines
         for comodin in self.tienda_comodines:
@@ -101,7 +101,7 @@ def poblar_tienda(self):
 
     def cambiar(self):
         """
-            Funcion del boton cambiar
+            Funcion del boton cambiar.
         """
         # Botón "Cambiar"
         if self.jugador.dinero >= self.coste_cambiar:
@@ -111,7 +111,7 @@ def poblar_tienda(self):
 
     def comprar(self):
         """
-            Funcion del boton comprar
+            Funcion del boton comprar.
         """
         # Botón "Comprar"
         if self.comodin_seleccionado and self.jugador.dinero >= self.comodin_seleccionado.precio and len(self.jugador.comodines_mano) < 5:

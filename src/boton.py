@@ -5,11 +5,11 @@ class Boton:
     """Clase Boton: crea, asigna las posiciones del boton y detecta si estan conectados.
         
         Inicializa los atributos: 
-        - x pone la posicion en x
-        - y pone la posicion en y
-        - imagen_original asigna la ruta de la imagen al boton
+        - x pone la posicion en x.
+        - y pone la posicion en y.
+        - imagen_original asigna la ruta de la imagen al boton.
         - _sonido_click le asigna un sonido al boton.
-        - imagen_hover crea una version oscurecida de la imagen
+        - imagen_hover crea una version oscurecida de la imagen.
         
     """
 

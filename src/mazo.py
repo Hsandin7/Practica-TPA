@@ -2,7 +2,7 @@ import random
 from src.carta import Carta
 
 class Mazo:
-    """Clase Mazo: Crea el mazo con todas las cartas y su funcionalidad
+    """Clase Mazo: Crea el mazo con todas las cartas y su funcionalidad.
        
         Inicializa los atributos:
         - Cartas: lista de las cartas del mazo.
