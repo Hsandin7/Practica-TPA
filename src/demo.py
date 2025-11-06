@@ -17,21 +17,23 @@ class Demo:
         self.raton = Cursor(1280/2, 720/2)
         self.guardado = Guardado()
         self.comodin = Comodin("calculadora")
+        self.tiempo_fase = {fase: 90 for fase in range(1,60)}
+        self.fases_seleccion_cartas = {6, 8, 10, 12, 19, 21, 23, 25, 34, 36, 38, 44, 46, 48}
+        self.indice_carta = 0
+        self._seleccionando = False
+        self._cartas_a_seleccionar = []
+        self._pause_frames = 20
+
     
     def checkear_inicio(self):
         self.contador += 1
-        if self.contador > 5*60:   # 2s x 60fps para esperar en total 2s
+        if self.contador > 5*60:   # 5s x 60fps para esperar en total 5s
             self.activa = True
             self.crear_partidas_customizadas()
             self.contador = 0
 
     def checkear_siguiente(self, eventos):
-        for event in eventos:
-            if event.type == pygame.KEYDOWN and event.key == pygame.K_RIGHT:
-                print(f"Fase: {self.fase}")
-                self.fase += 1
-                self.funcionar = True
-                self.contador = 0
+        pass
 
     def ejecutar_demo(self, screen, juego: Juego, transicion: Transicion, eventos):
         self.checkear_siguiente(eventos)
@@ -86,12 +88,10 @@ class Demo:
                 juego.mostrar_pagina_juego(screen)
                 self.boton_jugar(juego)
             case 15:
-                juego.tienda.comodines_disponibles = [
-                    "esteroides", 
-                    "gloton"
+                juego.tienda.tienda_comodines = [
+                    Comodin("esteroides"), 
+                    Comodin("gloton")
                 ]
-
-                juego.tienda.poblar()
 
                 if self.funcionar:
                     self.funcionar = False
@@ -110,7 +110,7 @@ class Demo:
                 juego.mostrar_pagina_juego(screen)
                 if self.funcionar:
                     self.funcionar = False
-                    self.raton.asignar_posicion(410, 355)
+                    self.raton.asignar_posicion(500, 500)
             case 19:
                 juego.mostrar_pagina_juego(screen)
                 self.seleccionar_cartas([5, 7], juego)
@@ -136,12 +136,10 @@ class Demo:
                 juego.mostrar_pagina_juego(screen)
                 self.boton_jugar(juego)
             case 27:
-                juego.tienda.comodines_disponibles = [
-                    "calculadora", 
-                    "loco"
+                juego.tienda.tienda_comodines = [
+                    Comodin("calculadora"), 
+                    Comodin("loco")
                 ]
-
-                juego.tienda.poblar()
 
                 if self.funcionar:
                     self.funcionar = False
@@ -155,7 +153,8 @@ class Demo:
             case 29:
                 juego.mostrar_pagina_juego(screen)
                 juego.mostrar_menu_tienda(screen)
-                self.raton.asignar_posicion(self.comodin.x, self.comodin.y)
+                self.raton.asignar_posicion(740, 320)
+                # juego.tienda.tienda_comodines[0].seleccionada = True
             case 30:
                 juego.mostrar_pagina_juego(screen)
                 juego.mostrar_menu_tienda(screen)
@@ -172,8 +171,107 @@ class Demo:
                 juego.mostrar_pagina_juego(screen)
                 if self.funcionar:
                     self.funcionar = False
-                    self.raton.asignar_posicion(410, 355)
-        if self.fase is not 0: self.raton.dibujar(screen)
+                    self.raton.asignar_posicion(500, 500)
+            case 34:
+                juego.mostrar_pagina_juego(screen)
+                self.seleccionar_cartas([4, 5, 6], juego)
+            case 35:
+                juego.mostrar_pagina_juego(screen)
+                self.boton_jugar(juego)
+            case 36:
+                juego.mostrar_pagina_juego(screen)
+                self.seleccionar_cartas([1, 2, 3, 4, 6], juego)
+            case 37:
+                juego.mostrar_pagina_juego(screen)
+                self.boton_descartar(juego)
+            case 38:
+                juego.mostrar_pagina_juego(screen)
+                self.seleccionar_cartas([3, 4, 5, 6, 7], juego)
+            case 39:
+                juego.mostrar_pagina_juego(screen)
+                self.boton_jugar(juego)
+            case 40:
+                juego.tienda.tienda_comodines = [
+                    Comodin("clon"), 
+                    Comodin("gloton")
+                ]
+
+                if self.funcionar:
+                    self.funcionar = False
+                    self.raton.asignar_posicion(200, 200)
+
+                self.fase = 41
+
+            case 41:
+                juego.mostrar_pagina_juego(screen)
+                juego.mostrar_menu_tienda(screen)
+                self.boton_SR()
+            case 42:
+                self.guardado.guardar_partida(1, self.guardado_4)
+                juego.jugador.cargar_partida()
+            case 43:
+                juego.mostrar_pagina_juego(screen)
+                if self.funcionar:
+                    self.funcionar = False
+                    self.raton.asignar_posicion(500, 500)
+            case 44:
+                juego.mostrar_pagina_juego(screen)
+                self.seleccionar_cartas([0], juego)
+            case 45:
+                juego.mostrar_pagina_juego(screen)
+                self.boton_jugar(juego)
+            case 46:
+                juego.mostrar_pagina_juego(screen)
+                self.seleccionar_cartas([1], juego)
+            case 47:
+                juego.mostrar_pagina_juego(screen)
+                self.boton_jugar(juego)
+            case 48:
+                juego.mostrar_pagina_juego(screen)
+                self.seleccionar_cartas([1], juego)
+            case 49:
+                juego.mostrar_pagina_juego(screen)
+                self.boton_jugar(juego)
+            case 50:
+                juego.mostrar_fondo = True
+                juego.mostrar_pagina_game_over(screen)
+            case 51: 
+                juego.mostrar_pagina_game_over(screen)
+                self.boton_salir()
+            case 52:
+                juego.mostrar_fondo = True
+                juego.mostrar_pagina_principal(screen)
+            case 53:
+                self.activa = False
+                self.fase = 0
+                self.funcionar = False
+
+                # Resetear cursor para que no siga moviéndose
+                self.raton = None
+
+                # Cambiar pantalla al menú principal
+                juego.mostrar_fondo = True
+                juego.pagina_actual = 0  # <-- Si el menú principal es la página 0. Ajústalo si es otro índice.
+                juego.reiniciar()
+                return
+
+
+        # Dibujar cursor
+        if self.fase != 0:
+            self.raton.dibujar(screen)
+
+        # Si la fase es de selección de cartas no avanza
+        if self.fase in self.fases_seleccion_cartas:
+            return
+
+        # Fases normales avanzar con temporizador
+        self.contador += 1
+        if self.contador >= self.tiempo_fase.get(self.fase, 60):  
+            self.contador = 0
+            self.fase += 1
+            self.funcionar = True
+
+
 
 
     def boton_jugar(self, juego: Juego):
@@ -185,7 +283,7 @@ class Demo:
             self.fase +=1
 
     def boton_descartar(self, juego: Juego):
-        if self.funcionar:          # Darle al boton de jugar
+        if self.funcionar:          # Darle al boton de descartar
             self.funcionar = False
             self.raton.asignar_posicion(925, 670)
         if self.raton.checkear_pos():
@@ -201,13 +299,52 @@ class Demo:
         self.raton.asignar_posicion(460, 525)
         if self.raton.checkear_pos():
             self.fase +=1
+    
+    def boton_salir(self):
+        self.raton.asignar_posicion(640, 635)
+        if self.raton.checkear_pos():
+            self.fase +=1
 
     def seleccionar_cartas(self, cartas: list, juego: Juego):
-        if self.raton.checkear_pos() and self.contador < len(cartas):
-            self.raton.asignar_posicion_carta(cartas[self.contador])
-            juego.jugador.mano[cartas[self.contador]].seleccionada = True
-            juego.jugador._cartas_seleccionadas.append(juego.jugador.mano[cartas[self.contador]])
-            self.contador += 1
+       
+        # Si no se ha iniciado la selección para esta lista se inicializa
+        if not self._seleccionando:
+            self._seleccionando = True
+            self._cartas_a_seleccionar = list(cartas)
+            self.indice_carta = 0
+            self.contador = 0
+            self.funcionar = False
+            return
+
+        # Si se estan seleccionando cartas
+        if self.indice_carta < len(self._cartas_a_seleccionar):
+            carta_id = self._cartas_a_seleccionar[self.indice_carta]
+            # mover cursor hacia la carta actual
+            self.raton.asignar_posicion_carta(carta_id)
+
+            # esperar a que el cursor llegue
+            if self.raton.checkear_pos():
+                carta = juego.jugador.mano[carta_id]
+                # marcar selección si no está marcada
+                if not getattr(carta, "seleccionada", False):
+                    carta.seleccionada = True
+                    juego.jugador._cartas_seleccionadas.append(carta)
+                    
+
+                self.contador += 1
+                if self.contador >= self._pause_frames:
+                    self.contador = 0
+                    self.indice_carta += 1
+        else:
+            
+            self._seleccionando = False
+            self._cartas_a_seleccionar = []
+            self.indice_carta = 0
+            self.contador = 0
+            self.funcionar = True
+            self.fase += 1
+
+
 
     def crear_partidas_customizadas(self):
         self.guardado_1 = {
@@ -252,17 +389,36 @@ class Demo:
         self.guardado_3 = {
             "puntos":           0,
             "puntos_nivel":     625,
-            "nivel":            2,
+            "nivel":            3,
             "puntos_cartas":    0,
             "multiplicador":    0,
-            "dinero":           4,
+            "dinero":           1,
 
             "limite_descartar": 3,
             "limite_jugar":     4,
 
             "comodines":        ["calculadora"],
-            "mano":             [[4,"o"], [11,"e"], [10,"o"], [6,"e"], [7,"e"], [8,"o"], [5,"o"], [8,"c"]],
-            "mazo":             [[9,"o"], [2,"c"],     [6,"o"], [12,"c"], [10,"b"], [6,"c"],     [2,"e"], [9,"c"], [2,"b"] ,[8, "b"], 
+            "mano":             [[3,"e"], [8,"o"], [11,"b"], [1,"o"], [2,"e"], [2,"b"], [2,"c"], [9,"b"]],
+            "mazo":             [[4,"e"], [6,"c"], [8,"e"],     [4,"b"], [12,"b"], [5,"b"],[10,"b"], [1,"b"], [2,"b"] ,[8, "b"], 
+                                 [1, "b"], [12, "b"], [2, "e"], 
+                                 [3, "e"], [5, "e"], [6, "c"], [6, "c"], [6, "c"], [6, "c"], [6, "c"], [6, "c"],],
+            "cartas_jugadas":   None
+        }
+
+        self.guardado_4 = {
+            "puntos":           0,
+            "puntos_nivel":     1564,
+            "nivel":            4,
+            "puntos_cartas":    0,
+            "multiplicador":    0,
+            "dinero":           3,
+
+            "limite_descartar": 3,
+            "limite_jugar":     4,
+
+            "comodines":        ["calculadora"],
+            "mano":             [[4,"o"], [1,"e"], [1,"o"], [6,"e"], [7,"e"], [10,"o"], [5,"o"], [8,"c"]],
+            "mazo":             [[3,"o"], [2,"c"],     [6,"o"], [1,"c"], [10,"b"], [6,"c"],     [2,"e"], [9,"c"], [2,"b"] ,[8, "b"], 
                                  [1, "b"], [12, "b"], [2, "e"], 
                                  [3, "e"], [5, "e"], [6, "c"], [6, "c"], [6, "c"], [6, "c"], [6, "c"], [6, "c"],],
             "cartas_jugadas":   None
@@ -286,10 +442,10 @@ class Cursor:
         self.y_final = posy
     
     def checkear_pos(self):
-        if self.x_final-1 <= self.x <= self.x_final+1 and self.y_final-1 <= self.y <= self.y_final+1:
-            return True
-        else:
-            return False
+        dx = self.x_final - self.x
+        dy = self.y_final - self.y
+        dist2 = dx*dx + dy*dy
+        return dist2 <= (3 * 3)
 
     def dibujar(self, screen):
         self._mover_hacia_destino()
