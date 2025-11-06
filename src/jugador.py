@@ -220,7 +220,7 @@ class Jugador:
         self.niveles.siguente_nivel()
         
         self.puntos = 0
-        self.dinero += 3
+        self.dinero += 2
         self.puntos_nivel = self.niveles.puntos_nivel
         self.carta_inhabilitada = self.niveles.carta_invalida
         
