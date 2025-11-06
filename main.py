@@ -48,6 +48,7 @@ while True:
     # Ejecucion de la demo
     elif demo.activa:
         demo.ejecutar_demo(screen, juego, transicion, eventos)
+
     
     # Manejo de las paginas
     else:
