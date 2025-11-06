@@ -53,7 +53,7 @@ class Juego:
             # M Tienda
             "boton_SR":     Boton("Graficos/Botones/boton_siguiente_ronda.png", 345, 250),
             "cambiar":      Boton("Graficos/Botones/boton_cambiar.png", 345, 380),
-            "comprar":      Boton("Graficos/Botones/boton_comprar.png", 345, 485),
+            "comprar":      Boton("Graficos/Botones/boton_comprar.png", 345, 485, "Sonidos/sonido_comprar.mp3"),
         
             # M Guardado
             "guardar":      Boton("Graficos/Botones/boton_guardar.png", 435, 515),

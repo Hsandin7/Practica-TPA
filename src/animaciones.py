@@ -3,6 +3,10 @@ from src._utilidades import mostrar_texto_transparente
 import random
 
 class Transicion:
+    """
+    Clase Transion:
+        Sirve para todas las animaciones del juego.
+    """
     def __init__(self):
         self.valor = 0      # Un valor estandar para poder crear animaciones progresivas
         self.fase = ""      # expandir , contraer
@@ -12,6 +16,10 @@ class Transicion:
         self.animacion = 0
     
     def iniciar(self, pagina_actual, pagina_destino, num_pagina_destino, num_transicion):
+        """
+        Funcion Iniciar:
+            Crea las transiciones que se van a usar.
+        """
         self.paginas = [pagina_actual.copy(), pagina_destino.copy()]
         for pag in self.paginas:
             pag.convert_alpha()
@@ -39,6 +47,10 @@ class Transicion:
 
 
     def actualizar(self, screen):
+        """
+            Funcion actualizar:
+                Clasifica y actualiza las transiciones.
+        """
         match self.animacion:
             case 1:
                 return self.animacion_inicio(screen)
@@ -50,7 +62,11 @@ class Transicion:
                 pass
         
 
-    def animacion_inicio(self, screen):      # Animacion de inicio 
+    def animacion_inicio(self, screen):      # Animacion de inicio
+        """
+            Funcion animacion inicio:
+                La animacion de la pantalla de inicio.
+        """
         ancho_pantalla = screen.get_width()
         alto_pantalla = screen.get_height()
         
@@ -74,6 +90,10 @@ class Transicion:
         return None
     
     def animacion_tienda(self, screen):      # Animacion bajada y subida de la Tienda
+        """
+            Funcion animacion tienda:
+                Anima la tienda al salir.
+        """
         ancho_pantalla = screen.get_width()
         alto_pantalla = screen.get_height()
         
@@ -96,6 +116,10 @@ class Transicion:
             return None
     
     def animacion_gameover(self, screen):
+        """
+            Funcion animacion gameover:
+                La animacion de cuando pierdes el juego.
+        """
         if self.fase == "aparecer":
             pantalla_go = self.paginas[1]
             pantalla_go.set_alpha(self.valor)
@@ -121,10 +145,17 @@ class Transicion:
 
         return None
 
-        
-
 
 class Animador_Texto:
+    """
+        Clase animador texto:
+            Anima los textos en pantalla.
+            
+            Inicializacion de atributos:
+            - Texto: texto que se va a escribir.
+            - X, y: posicion del texto, con posicion final.
+            - La mayoria son todos atributos del texto.
+    """
     def __init__(self):
         # Estado actual del texto animado
         self.texto = str()
@@ -140,6 +171,10 @@ class Animador_Texto:
         self.activo = False
 
     def iniciar(self, texto, x, y, x_final = None, y_final = None, color=(255,255,255), tamano=40):
+        """
+        Funcion iniciar:
+            Funcion de la clase para inicializar el texto dentro de otras clases.
+        """
         self.texto = texto
         self.x = x
         self.y = y
@@ -151,6 +186,10 @@ class Animador_Texto:
         self.activo = True
 
     def actualizar(self):
+        """
+            Funcion actualizar:
+                Animacion que tienen os textos.
+        """
         if not self.activo:
             return
 
@@ -164,6 +203,10 @@ class Animador_Texto:
             self.activo = False  # La animación termina
 
     def dibujar(self, screen):
+        """
+            Funcion dibujar:
+                Sirve para mostrar en pantalla.
+        """
         self.actualizar()
         if self.activo and self.opacidad > 0:
             mostrar_texto_transparente(screen, f"+{self.texto}", self.x, self.y, self.opacidad, self.tamano, self.color)

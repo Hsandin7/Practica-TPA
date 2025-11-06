@@ -5,7 +5,7 @@ class Mazo:
     """Clase Mazo: Crea el mazo con todas las cartas y su funcionalidad
        
         Inicializa los atributos:
-        - cartas: lista de las cartas del mazo.
+        - Cartas: lista de las cartas del mazo.
 
         """
     

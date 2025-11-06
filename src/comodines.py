@@ -3,6 +3,11 @@ import random
 from src.boton import Boton
 # Hay que pensar que atributos tien y que hace cada comodin
 
+"""
+    Decorador efectos comodin:
+        Sirve para registrar la funcion que hace cada comodin.
+    
+"""
 efectos_comodin={}
 def registrar_efecto(nombre):
     def decorator(func):
@@ -10,8 +15,26 @@ def registrar_efecto(nombre):
         return func
     return decorator
 
-#Definicion de efectos para cada comodin
+#Diccionarios
+rareza_map = {
+    "matematico": "Comun",
+    "stonks": "Comun",
+    "calculadora": "Comun",
+    "loco": "Raro",
+    "doblete": "Raro",
+    "esteroides": "Raro",
+    "gloton": "Epico",
+    "programador": "Epico",
+    "clon": "Epico",
+}
 
+precio_map = {
+    "Comun": 3,
+    "Raro": 5,
+    "Epico": 8,
+}
+
+#Definicion de efectos para cada comodin
 
 @registrar_efecto("gloton")
 def efecto_gloton(mano, fichas, multi, dinero, cartas_jugadas):
@@ -86,6 +109,16 @@ def efecto_programador(mano, fichas, multi, dinero, cartas_jugadas):
 
 # Ahora mismo esta igual que la clase carta
 class Comodin(Boton):
+    """
+        Clase comodin:
+            Sirve para clasificar cada comodin.
+            
+            Inicializacion de atributos:
+            - Nombre: nombre del comodin.
+            - Descripcion: descripcion del comodin.
+            - Rareza: rareza del comodin.
+            - Precio: precio del comodin.
+    """
     def __init__(self, nombre):
         super().__init__(f"Graficos/Comodines/{nombre}.png", 0,0)
         self.nombre = nombre
@@ -100,6 +133,10 @@ class Comodin(Boton):
         self.offset_y=0
 
     def aplicar(self, mano, fichas, multi, dinero, cartas_jugadas, comodines):
+        """
+            Funcion aplicar:
+                Sirve para aplicar los efectos del comodin a la partida.
+        """
         print(self.nombre)
         print(f"Operacion antes: {fichas} + {multi}")
         if cartas_jugadas is None:
@@ -118,31 +155,30 @@ class Comodin(Boton):
         return resultado
     
     def _registrar_propiedades(self):
+        """
+            Funcion registrar propiedades:
+                Se registra las propiedades de cada comodin.
+        """
         # Asignar rareza
-        if self.nombre in ["matematico", "stonks", "calculadora"]:
-            self.rareza = "Comun"
-        elif self.nombre in ["loco", "doblete", "esteroides"]:
-            self.rareza = "Raro"
-        elif self.nombre in ["gloton", "programador", "clon"]:
-            self.rareza = "Epico"
+        self.rareza = rareza_map.get(self.nombre, "Comun")
         
         # Asignar precio basado en rareza
-        match self.rareza:
-            case "Comun":
-                self.precio=3
-            case "Raro":
-                self.precio=5
-            case "Epico":
-                self.precio=8
-            case _:
-                self.precio=1 # Precio por defecto si hay error
+        self.precio = precio_map.get(self.rareza, 1)
 
     def detectar_seleccion(self, eventos):
+        """
+            Funcion detectar seleccion:
+                Detecta si esta seleccionado un comodin.
+        """
         if self.detectar_click(eventos):
             return True
         return False
     
     def mover_comodines(self, eventos, lista_comodines, limite_rect=None):
+        """
+            Funcion mover comodines:
+                Sirve para mover los comodines que tiene en mano el jugador.
+        """
         for e in eventos:
             if e.type == pygame.MOUSEBUTTONDOWN and e.button == 1:
                 if self.rect.collidepoint(e.pos):
