@@ -79,14 +79,14 @@ def efecto_programador(mano, fichas, multi, dinero, cartas_jugadas):
     
 class Comodin(Boton):
     _descripciones = {
-        "gloton":       "Por cada carta jugada se suman 50 puntos y 10 de multi",
-        "stonks":       "Gana el doble de dinero cada ronda",
         "matematico":   "Duplica el valor del multiplicador",
+        "stonks":       "Gana el doble de dinero cada ronda",
         "calculadora":  "La carta mas alta jugada suma su valor como multiplicador en vez de puntos",
+        "programador":  "Por cada as que tengas en la mano, aumenta el multiplicador en +1",
         "loco":         "Suma un multiplicador aleatorio   1/5/10/20/50",
         "doblete":      "Las cartas jugadas suman el doble",
         "esteroides":   "Todas las cartas suman 20 puntos",
-        "programador":  "Por cada as que tengas en la mano, aumenta el multiplicador en +1",
+        "gloton":       "Por cada carta jugada se suman 50 puntos y 10 de multi",
         "clon":         "Copia la accion del comodín que este colocado mas a la derecha"
     }
     
@@ -122,11 +122,11 @@ class Comodin(Boton):
     def _registrar_propiedades(self):
         # Asignar rareza y precio en base a la misma
         match self.nombre:
-            case "matematico" | "stonks" | "calculadora":
+            case "matematico" | "stonks" | "calculadora" | "programador":
                 self.rareza, self.precio = "comun", 3
             case "loco" | "doblete" | "esteroides":
                 self.rareza, self.precio = "raro", 5
-            case "gloton" | "programador" | "clon":
+            case "gloton" | "clon":
                 self.rareza, self.precio = "epico", 8
             case _:
                 self.rareza, self.precio = "Desconocido", 1

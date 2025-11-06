@@ -16,12 +16,11 @@ class Jugador:
         self.puntos_nivel = 100
         self.puntos_cartas = 0
         self.multiplicador = 0
-        self.slot_seleccionado = 0
-        self.sig_nivel = False
+        self.slot_seleccionado = None
+        self.nivel_completado = False
         self.game_over = False
         self.numero_nivel = 1
         self.dinero=0
-        self.carta_inhabilitada = None
         
         self.evaluador =        Evaluador_Cartas()
         self.animador_texto =   Animador_Texto()
@@ -30,13 +29,7 @@ class Jugador:
         self.guardado =         Guardado()
         
         self.mano = [self.mazo.robar() for _ in range(0,8)]
-        self.comodines_mano=[
-            Comodin("gloton"),
-            Comodin("gloton"),
-            Comodin("gloton"),
-            Comodin("gloton"),
-            Comodin("gloton")
-        ]
+        self.comodines_mano = []
         
         self._cartas_seleccionadas =    list()
         self._cartas_jugadas =          list()
@@ -108,7 +101,7 @@ class Jugador:
         # Mostrar num de cartas seleccionadas
         mostrar_texto(screen, f"{len(self._cartas_seleccionadas)}/5", 1170, 500, 20)
 
-        # Temporal?
+        # Mostrar num de cartas en el mazo
         mostrar_texto_centrado(screen, f"{len(self.mazo.cartas)}", 1230, 600, 50)
 
 
@@ -139,7 +132,7 @@ class Jugador:
                 for comodin in self.comodines_mano:
                     self.puntos_cartas, self.multiplicador, self.dinero = comodin.aplicar(self.mano, self.puntos_cartas, self.multiplicador, self.dinero, self._cartas_jugadas, self.comodines_mano)
 
-                print(f"Operacion despues: {self.puntos_cartas} * {self.multiplicador} = {self.puntos}")
+                # print(f"Operacion despues: {self.puntos_cartas} * {self.multiplicador} = {self.puntos}")
 
             self.puntos += self.puntos_cartas * self.multiplicador
 
@@ -150,7 +143,7 @@ class Jugador:
             self.animador_texto.iniciar(f"{self.puntos_cartas * self.multiplicador}", 1100, 150,y_final=90)
 
             if self.puntos >= self.puntos_nivel:
-                self.siguente_ronda()
+                self.siguiente_ronda()
             elif self.limite_jugar <= 0:
                 self.game_over = True
 
@@ -167,7 +160,7 @@ class Jugador:
                 self._cartas_descartadas.append(carta)
                 self.mano.remove(carta)
             self._cartas_seleccionadas.clear()
-        while len(self.mano) is not 8:
+        while len(self.mano) != 8:
             self.mano.append(self.mazo.robar())
 
 
@@ -216,28 +209,26 @@ class Jugador:
     def borrar_partida(self):
         self.guardado.borrar_partida(self.slot_seleccionado)
 
-    def siguente_ronda (self):
+    def siguiente_ronda (self):
         self.niveles.siguente_nivel()
         
         self.puntos = 0
         self.dinero += 3
         self.puntos_nivel = self.niveles.puntos_nivel
-        self.carta_inhabilitada = self.niveles.carta_invalida
         
         self.mazo = Mazo()
-        if self.carta_inhabilitada:
+        if self.niveles.carta_invalida:
             for carta in self.mazo.cartas:
-                if carta.valor == self.carta_inhabilitada:
+                if carta.valor == self.niveles.carta_invalida:
                     carta.habilitada = False
-        print(f"Carta inhabilitada por BOSS: {self.carta_inhabilitada}")
+        # print(f"Carta inhabilitada por BOSS: {self.niveles.carta_invalida}")
         self.mano = [self.mazo.robar() for _ in range(0,8)]
 
-        self.sig_nivel = True
+        self.nivel_completado = True
         self._cartas_jugadas = None
         self.limite_jugar = 4
         self.limite_descartar = 3
         self.numero_nivel += 1
-        self.carta_inhabilitada = None
 
         if not self.niveles.es_boss:
             self.niveles.color_pantalla = (0, 0, 0)

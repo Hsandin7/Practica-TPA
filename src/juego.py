@@ -111,8 +111,8 @@ class Juego:
                 self.mostrar_fondo = True
                 Juego.num_transicion = 4        # Transicion 4 (Transicion de Game Over)
                 Juego.paginas_transicion = [self.paginas[1], self.paginas[5], 5]    # De la pagina 1 a la 5
-            elif self.jugador.sig_nivel:
-                self.jugador.sig_nivel = False
+            elif self.jugador.nivel_completado:
+                self.jugador.nivel_completado = False
                 self.mostrar_fondo = True
                 self.tienda.poblar()
                 Juego.num_transicion = 2        # Transicion 2 (La bajada de la tienda)
@@ -122,7 +122,7 @@ class Juego:
         
         elif self.botones["info"].detectar_click(eventos):
             self.pagina_actual = 6
-            # self.jugador.sig_nivel = False
+            # self.jugador.nivel_completado = False
             # self.mostrar_fondo = True
             # Juego.num_transicion = 2        # Transicion 2 (La bajada de la tienda)
             # Juego.paginas_transicion = [self.paginas[1], self.paginas[6], 6]    # De la pagina 1 a la 6
