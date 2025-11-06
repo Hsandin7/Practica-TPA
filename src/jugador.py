@@ -31,11 +31,11 @@ class Jugador:
         
         self.mano = [self.mazo.robar() for _ in range(0,8)]
         self.comodines_mano=[
-            Comodin("gloton"),
-            Comodin("gloton"),
-            Comodin("gloton"),
-            Comodin("gloton"),
-            Comodin("gloton")
+            # Comodin("gloton"),
+            # Comodin("gloton"),
+            # Comodin("gloton"),
+            # Comodin("gloton"),
+            # Comodin("gloton")
         ]
         
         self._cartas_seleccionadas =    list()
