@@ -15,7 +15,7 @@ clock = pygame.time.Clock()
 # Creación del Juego
 juego = Juego()
 transicion = Transicion()
-demo = Demo()
+demo = Demo(juego, transicion)
 
 while True:
     eventos = pygame.event.get()
@@ -47,7 +47,7 @@ while True:
     
     # Ejecucion de la demo
     elif demo.activa:
-        demo.ejecutar_demo(screen, juego, transicion, eventos)
+        demo.ejecutar_demo(screen, eventos)
 
     
     # Manejo de las paginas

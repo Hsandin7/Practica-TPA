@@ -198,7 +198,7 @@ class Jugador:
             self.limite_descartar = datos["limite_descartar"]
             self.limite_jugar =     datos["limite_jugar"]
 
-            self.comodines_mano =   [Comodin(nombre) for nombre in datos["comodines"]] if datos["comodines"] else None
+            self.comodines_mano =   [Comodin(nombre) for nombre in datos["comodines"]] if datos["comodines"] else []
             self.mano =             [Carta(c[0], c[1]) for c in datos["mano"]]
             self.mazo.cartas =      [Carta(c[0], c[1]) for c in datos["mazo"]]
             self._cartas_jugadas =  [Carta(c[0], c[1]) for c in datos["cartas_jugadas"]] if datos["cartas_jugadas"] else None

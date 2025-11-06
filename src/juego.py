@@ -69,6 +69,7 @@ class Juego:
         
     def reiniciar(self):
         self.jugador = Jugador()
+        self.tienda = Tienda(self.jugador)
 
 
     # Pagina principal
@@ -113,8 +114,8 @@ class Juego:
                 Juego.paginas_transicion = [self.paginas[1], self.paginas[5], 5]    # De la pagina 1 a la 5
             elif self.jugador.nivel_completado:
                 self.jugador.nivel_completado = False
-                self.mostrar_fondo = True
                 self.tienda.poblar()
+                self.mostrar_fondo = True
                 Juego.num_transicion = 2        # Transicion 2 (La bajada de la tienda)
                 Juego.paginas_transicion = [self.paginas[1], self.paginas[3], 3]    # De la pagina 1 a la 3
         elif self.botones["descartar"].detectar_click(eventos):
