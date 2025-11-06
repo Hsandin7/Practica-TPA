@@ -41,6 +41,25 @@ def mostrar_texto_transparente(screen, texto: str, posx: int, posy: int, opacida
     superficie.set_alpha(opacidad)
     screen.blit(superficie, (posx, posy))
 
+def mostrar_texto_multilinea(screen, texto: str, posx: int, posy: int, tamano=20, color=(255,255,255), ancho_max=300):
+    fuente = cargar_fuente(tamano)
+    palabras = texto.split(' ')
+    lineas = []
+    linea_actual = ""
+
+    for palabra in palabras:
+        prueba = linea_actual + palabra + " "
+        if fuente.size(prueba)[0] > ancho_max:
+            lineas.append(linea_actual)
+            linea_actual = palabra + " "
+        else:
+            linea_actual = prueba
+    lineas.append(linea_actual)
+
+    for i, linea in enumerate(lineas):
+        texto_renderizado = fuente.render(linea.strip(), True, color)
+        screen.blit(texto_renderizado, (posx, posy + i * (tamano + 4)))
+
 
 
 # Cache de los diferentes sonidos del juego

@@ -2,7 +2,7 @@ import random
 import pygame
 from src.jugador import Jugador
 from src.comodines import Comodin
-from src._utilidades import mostrar_texto, mostrar_texto_centrado
+from src._utilidades import mostrar_texto, mostrar_texto_centrado, mostrar_texto_multilinea
 
 class Tienda:
     def __init__(self, jugador: Jugador):
@@ -15,12 +15,9 @@ class Tienda:
         self.tienda_comodines = [None, None]
         self.comodin_seleccionado = None
         self.poblar()
+        self.imagen_descripcion = pygame.image.load("Graficos/descripcion_comodines_tienda.png")
 
     def poblar(self):
-        pos_slot_1 = (690, 250)
-        pos_slot_2 = (840, 250)
-        posiciones = [pos_slot_1, pos_slot_2]
-
         n = min(2, len(self.comodines_disponibles))
         nombres = random.sample(self.comodines_disponibles, n)  # Elige dos o menos comodines en funcion de los que haya disponibles
 
@@ -29,25 +26,39 @@ class Tienda:
             
         for i in range(2):
             self.tienda_comodines[i] = Comodin(nombres[i])
-            self.tienda_comodines[i].asignar_posicion(*posiciones[i])
 
         # Deseleccionar cualquier comodín anterior
         self.comodin_seleccionado = None
-        print(self.comodines_disponibles)
 
     def mostrar(self, screen):
         mostrar_texto_centrado(screen, f"{self.jugador.dinero}$", 900, 150, 40)     # Mostrar dinero actual del jugador
         
         color_coste = (255, 255, 0) if self.jugador.dinero >= self.coste_cambiar else (255, 0, 0)   # Amarillo si se puede pagar Rojo si no
         mostrar_texto(screen, f"{self.coste_cambiar}$", 525, 400 , 30, color_coste)
-
+        x = 690
+        y = 250
         for comodin in self.tienda_comodines:
             if comodin:
+                comodin.asignar_posicion(x, y)
                 comodin.dibujar(screen)
                 color_precio = (255, 255, 0) if self.jugador.dinero >= comodin.precio else (255, 0, 0)      # Amarillo si se puede pagar Rojo si no
                 mostrar_texto_centrado(screen, f"{comodin.precio}$", comodin.rect.midbottom[0], comodin.rect.bottom + 3, 20, color_precio)
                 if comodin.seleccionada:
                     screen.blit(comodin.imagen_hover, (comodin.x, comodin.y))
+
+                    # Mostrar descripcion
+                    screen.blit(self.imagen_descripcion, (0,0))
+                    gris = (220,220,220)
+                    mostrar_texto(screen, f"{self.comodin_seleccionado.nombre.capitalize()}", 670, 438, 30)
+                    color_rareza = {
+                        "comun":    (245,245,245),
+                        "raro":     (170,235,145),
+                        "epico":    (170,50,255)
+                    }
+                    mostrar_texto_centrado(screen, f"{self.comodin_seleccionado.rareza.capitalize()}", 920, 445, 20, color_rareza[self.comodin_seleccionado.rareza])
+                    mostrar_texto_multilinea(screen, f"{self.comodin_seleccionado.descripcion}", 670, 480, 20, gris, 290)
+            x += 150
+
 
     def actualizar(self, eventos):
         # Selección de comodines
