@@ -14,36 +14,62 @@ import pygame
 
 # Se hace cache de cada uno de los tamanos de fuente y se cargan a traves de esta funcion
 _fuentes = {}
+
+
 def cargar_fuente(tamano):
     if tamano not in _fuentes:
         _fuentes[tamano] = pygame.font.Font("./tipografia_naipo.ttf", tamano)
     return _fuentes[tamano]
 
-def mostrar_texto(screen, texto: str, posx: int, posy: int, tamano=30, color=(255,255,255)):
+
+def mostrar_texto(
+    screen, texto: str, posx: int, posy: int, tamano=30, color=(255, 255, 255)
+):
     fuente = cargar_fuente(tamano)
-    
+
     texto_renderizado = fuente.render(texto, True, color)
     screen.blit(texto_renderizado, (posx, posy))
 
-def mostrar_texto_centrado(screen, texto: str, posx_centrada: int, posy: int, tamano=30, color=(255,255,255)):
+
+def mostrar_texto_centrado(
+    screen, texto: str, posx_centrada: int, posy: int, tamano=30, color=(255, 255, 255)
+):
     fuente = cargar_fuente(tamano)
-    
+
     texto_renderizado = fuente.render(texto, True, color)
-    posx = posx_centrada - texto_renderizado.get_width()//2
+    posx = posx_centrada - texto_renderizado.get_width() // 2
     screen.blit(texto_renderizado, (posx, posy))
 
-def mostrar_texto_transparente(screen, texto: str, posx: int, posy: int, opacidad: int, tamano=30, color=(255,255,255)):
+
+def mostrar_texto_transparente(
+    screen,
+    texto: str,
+    posx: int,
+    posy: int,
+    opacidad: int,
+    tamano=30,
+    color=(255, 255, 255),
+):
     fuente = cargar_fuente(tamano)
-    
+
     texto_renderizado = fuente.render(texto, True, color)
     superficie = pygame.Surface(texto_renderizado.get_size(), pygame.SRCALPHA)
-    superficie.blit(texto_renderizado, (0,0))
+    superficie.blit(texto_renderizado, (0, 0))
     superficie.set_alpha(opacidad)
     screen.blit(superficie, (posx, posy))
 
-def mostrar_texto_multilinea(screen, texto: str, posx: int, posy: int, tamano=20, color=(255,255,255), ancho_max=300):
+
+def mostrar_texto_multilinea(
+    screen,
+    texto: str,
+    posx: int,
+    posy: int,
+    tamano=20,
+    color=(255, 255, 255),
+    ancho_max=300,
+):
     fuente = cargar_fuente(tamano)
-    palabras = texto.split(' ')
+    palabras = texto.split(" ")
     lineas = []
     linea_actual = ""
 
@@ -61,9 +87,10 @@ def mostrar_texto_multilinea(screen, texto: str, posx: int, posy: int, tamano=20
         screen.blit(texto_renderizado, (posx, posy + i * (tamano + 4)))
 
 
-
 # Cache de los diferentes sonidos del juego
 _sonidos = {}
+
+
 def reproducir_sonido(ruta: str):
     if ruta not in _sonidos:
         _sonidos[ruta] = pygame.mixer.Sound(ruta)

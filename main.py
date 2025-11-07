@@ -25,16 +25,20 @@ while True:
             sys.exit()
 
         # --- Detectar tecla ESC ---
-        if Juego.num_transicion is None and event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE:
+        if (
+            Juego.num_transicion is None
+            and event.type == pygame.KEYDOWN
+            and event.key == pygame.K_ESCAPE
+        ):
             juego.mostrar_fondo = True
             match juego.pagina_actual:
-                case 0:                         # P Principal
-                    pygame.quit()                   # -> Cerrar el juego
+                case 0:  # P Principal
+                    pygame.quit()  # -> Cerrar el juego
                     sys.exit()
-                case 1 | 4:                     # P Juego / M Guardado
-                    juego.pagina_actual = 2         # -> M Salida
-                case 2 | 3 | 6:                 # M Salida / M Tienda / M Info
-                    juego.pagina_actual = 1         # -> P Juego
+                case 1 | 4:  # P Juego / M Guardado
+                    juego.pagina_actual = 2  # -> M Salida
+                case 2 | 3 | 6:  # M Salida / M Tienda / M Info
+                    juego.pagina_actual = 1  # -> P Juego
                 case _:
                     pass
 
@@ -44,17 +48,18 @@ while True:
         if num_pagina_destino is not None:
             juego.pagina_actual = num_pagina_destino
             Juego.num_transicion = None
-    
+
     # Ejecucion de la demo
     elif demo.activa:
         demo.ejecutar_demo(screen, eventos)
 
-    
     # Manejo de las paginas
     else:
-        if juego.pagina_actual == 0: demo.checkear_inicio()
-        else: demo.contador = 0
-        
+        if juego.pagina_actual == 0:
+            demo.checkear_inicio()
+        else:
+            demo.contador = 0
+
         match juego.pagina_actual:
             case 0:
                 juego.mostrar_pagina_principal(screen)
@@ -74,14 +79,11 @@ while True:
             case 5:
                 juego.mostrar_pagina_game_over(screen)
                 juego.actualizar_pagina_game_over(eventos)
-            case 6: 
+            case 6:
                 juego.mostrar_pantalla_info(screen)
-
 
         if Juego.num_transicion:
             transicion.iniciar(*Juego.paginas_transicion, Juego.num_transicion)
 
     pygame.display.flip()
     clock.tick(60)
-
-
