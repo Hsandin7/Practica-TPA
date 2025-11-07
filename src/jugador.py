@@ -4,7 +4,7 @@ import pygame
 from src.mazo import Mazo
 from src.carta import Carta
 from src.evaluador_cartas import Evaluador_Cartas
-from src._utilidades import *
+from src._utilidades import Texto
 from src.animaciones import Animador_Texto
 from src.guardado import Guardado
 from src.niveles import Niveles
@@ -56,26 +56,26 @@ class Jugador:
             Muestra por pantalla los puntos conseguidos.
         """
         puntos_formateados = f"{self.puntos:,}".replace(",", ".")
-        mostrar_texto_centrado(screen, puntos_formateados, 900, 125, 50)
-        mostrar_texto_centrado(screen, f"{self.multiplicador}", 950, 190)
-        mostrar_texto_centrado(screen, f"{self.puntos_cartas}", 845, 190)
+        Texto.mostrar_texto_centrado(screen, puntos_formateados, 900, 125, 50)
+        Texto.mostrar_texto_centrado(screen, f"{self.multiplicador}", 950, 190)
+        Texto.mostrar_texto_centrado(screen, f"{self.puntos_cartas}", 845, 190)
 
         # Cambiar por el objetivo de puntos del nivel
         puntos_formateados = f"{self.puntos_nivel:,}".replace(",", ".")
-        mostrar_texto_centrado(screen, puntos_formateados, 400, 125, 50)
+        Texto.mostrar_texto_centrado(screen, puntos_formateados, 400, 125, 50)
 
-        mostrar_texto_centrado(screen, f"{self.dinero}$", 412, 445, 25, color=(0, 0, 0))
+        Texto.mostrar_texto_centrado(screen, f"{self.dinero}$", 412, 445, 25, color=(0,0,0))
 
         # Muestra los puntos obtenidos que se suman al total
         self.animador_texto.dibujar(screen)
 
-        mostrar_texto_centrado(
+        Texto.mostrar_texto_centrado(
             screen, str(self.numero_nivel), 213, 328, 30, color=(0, 0, 0)
         )
-        mostrar_texto_centrado(
+        Texto.mostrar_texto_centrado(
             screen, str(self.limite_descartar), 298, 382, 30, color=(0, 0, 0)
         )
-        mostrar_texto_centrado(
+        Texto.mostrar_texto_centrado(
             screen, str(self.limite_jugar), 264, 437, 30, color=(0, 0, 0)
         )
 
@@ -122,10 +122,10 @@ class Jugador:
                 pos_x += 80
 
         # Mostrar num de cartas seleccionadas
-        mostrar_texto(screen, f"{len(self._cartas_seleccionadas)}/5", 1170, 500, 20)
+        Texto.mostrar_texto(screen, f"{len(self._cartas_seleccionadas)}/5", 1170, 500, 20)
 
         # Mostrar num de cartas en el mazo
-        mostrar_texto_centrado(screen, f"{len(self.mazo.cartas)}", 1230, 600, 50)
+        Texto.mostrar_texto_centrado(screen, f"{len(self.mazo.cartas)}", 1230, 600, 50)
 
     def actualizar(
         self, eventos
