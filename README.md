@@ -98,8 +98,31 @@ python main.py
 ```mermaid
 classDiagram
 direction TB
-
-    class boton {
+    class Juego {
+        +int pagina_actual
+        +list paginas
+        +dict botones
+        +bool mostrar_fondo
+        +Jugador jugador
+        +Tienda tienda
+        +cargar_paginas()
+        +cargar_botones()
+        +reiniciar()
+        +mostrar_pagina_principal()
+        +actualizar_pagina_principal()
+        +mostrar_pagina_juego()
+        +actualizar_pagina_juego()
+        +mostrar_menu_salida()
+        +actualizar_menu_salida()
+        +mostrar_menu_tienda()
+        +actualizar_menu_tienda()
+        +mostrar_menu_guardado()
+        +actualizar_menu_guardado()
+        +mostrar_pagina_game_over()
+        +actualizar_pagina_game_over()
+        +mostrar_pantalla_info()
+    }
+    class Boton {
 	    + int posx
 	    + int posy
 	    + imagen
@@ -133,7 +156,7 @@ direction TB
 		+mover_comodines()
 		+dibujar()
     }
-    class evaluador_cartas{
+    class Evaluador_Cartas{
 	    + list cartas
 	    + dict resultado
 	    + evaluar()
@@ -153,7 +176,7 @@ direction TB
 		+ barajar()
 		+ robar()
 	}
-	class jugador{
+	class Jugador{
 		+ int puntos
 		+ int puntos_cartas
 		+ int puntos_nivel
@@ -236,8 +259,29 @@ direction TB
         + mostrar_texto_multilinea()
     }
 
-    %% Relaciones
-    boton --|> Carta
-    boton--|> Comodin
-    
+    %% Herencias
+    Boton <|-- Carta
+    Boton <|-- Comodin
+
+    %% Asociaciones / composiciones (direccionales)
+    Juego o-- Jugador : jugador
+    Juego o-- Tienda : tienda
+    Juego "1" o-- "many" Boton : botones
+
+    Jugador o-- Mazo : mazo
+    Jugador o-- Evaluador_Cartas : evaluador
+    Jugador o-- Animador_Texto : animador_texto
+    Jugador o-- Niveles : niveles
+    Jugador o-- Guardado : guardado
+    Jugador "8" o-- "0..8" Carta : mano
+    Jugador "0..5" o-- "0..5" Comodin : comodines_mano
+
+    Tienda o-- Comodin : tienda_comodines "2"
+
+    Comodin ..> Evaluador_Cartas : usa efectos (funciones registradas)
+    Carta ..> Boton : hereda comportamiento (imagen/rect/sonido)
+
+    Transicion ..> Juego : pagina destino (uso en runtime)
+
+    Texto <.. Animador_Texto : usa métodos estáticos    
 ```
