@@ -20,7 +20,7 @@ class Demo:
         self.guardado = Guardado()
         self.comodin = Comodin("calculadora")
         self.tiempo_fase = {fase: 90 for fase in range(1,60)}
-        self.fases_seleccion_cartas = {6, 8, 10, 12, 17, 19, 21, 23, 25, 32} #  34, 36, 38, 42, 44, 46, 48
+        self.fases_seleccion_cartas = {6, 8, 10, 12, 17, 19, 21, 23, 25, 32, 58, 60}
         self.indice_carta = 0
         self._seleccionando = False
         self._cartas_a_seleccionar = []
@@ -163,9 +163,6 @@ class Demo:
                 self.guardado.guardar_partida(1, self.guardado_3)
                 self.juego.jugador.cargar_partida()
                 self.fase = 33
-            
-            
-            
             case 33:
                 self.juego.mostrar_pagina_juego(screen)
 
@@ -215,97 +212,128 @@ class Demo:
                 self.juego.jugador.cargar_partida()
             case 42:
                 self.juego.mostrar_pagina_juego(screen)
-            # case 33:
-                
-            # case 33:
-                
-            # case 33:
-                
-
-
-
-
-            case 42:
+            case 43:
+                self.juego.mostrar_fondo = True
+                self.juego.mostrar_pagina_juego(screen)
+                self.juego.mostrar_menu_salida(screen)
+                if self.funcionar:
+                    self.funcionar = False
+                    self.raton.asignar_posicion(635, 485)   # Boton M Guardado
+            case 44:
+                self.juego.mostrar_fondo = True
+                self.juego.mostrar_menu_guardado(screen)
+            case 45:
+                self.juego.mostrar_fondo = True
+                self.juego.mostrar_menu_guardado(screen)
+                if self.funcionar:
+                    self.funcionar = False
+                    self.raton.asignar_posicion(650, 350)   # Slot 2
+            case 46:
+                self.juego.jugador.slot_seleccionado = 2
+                self.juego.mostrar_fondo = True
+                self.juego.mostrar_menu_guardado(screen)
+                if self.funcionar:
+                    self.funcionar = False
+                    self.raton.asignar_posicion(980, 560)   # Boton Borrar
+            case 47:
+                self.juego.jugador.borrar_partida()
+            case 48:
+                self.juego.mostrar_fondo = True
+                self.juego.mostrar_menu_guardado(screen)
+                if self.funcionar:
+                    self.funcionar = False
+                    self.raton.asignar_posicion(400, 350)   # Slot 1
+            case 49:
+                self.juego.jugador.slot_seleccionado = 1
+                self.juego.mostrar_fondo = True
+                self.juego.mostrar_menu_guardado(screen)
+                if self.funcionar:
+                    self.funcionar = False
+                    self.raton.asignar_posicion(750, 550)   # Boton Cargar
+            case 50:
+                self.juego.jugador.cargar_partida()
+            case 51:
+                self.juego.mostrar_pagina_juego(screen)
+            case 52:
                 self.juego.mostrar_pagina_juego(screen)
                 self.seleccionar_cartas([4, 5, 6], self.juego)
-            # case 35:
-            #     self.juego.mostrar_pagina_juego(screen)
-            #     self.boton_jugar()
-            # case 36:
-            #     self.juego.mostrar_pagina_juego(screen)
-            #     self.seleccionar_cartas([1, 2, 3, 4, 6], self.juego)
-            # case 37:
-            #     self.juego.mostrar_pagina_juego(screen)
-            #     self.boton_descartar()
-            # case 38:
-            #     self.juego.mostrar_pagina_juego(screen)
-            #     self.seleccionar_cartas([3, 4, 5, 6, 7], self.juego)
-            # case 39:
-            #     self.juego.mostrar_pagina_juego(screen)
-            #     self.boton_jugar()
-            # case 40:
-            #     self.abrir_tienda([Comodin("clon"), Comodin("gloton")])
-            #     if self.funcionar:
-            #         self.funcionar = False
-            #         self.raton.asignar_posicion(200, 200)
-            #     self.fase = 41
-            # case 41:
-            #     self.mostrar_tienda(screen)
-            #     self.boton_SR()
-            # case 42:
-            #     self.guardado.guardar_partida(1, self.guardado_4)
-            #     self.juego.jugador.cargar_partida()
-            #     self.juego.jugador.niveles.es_boss = True
-            #     self.juego.jugador.niveles.color_pantalla = self.juego.jugador.niveles.colores_boss[2]
-            #     self.juego.jugador.niveles.carta_invalida = 1
-            #     for carta in self.juego.jugador.mazo.cartas:
-            #         if carta.valor == self.juego.jugador.niveles.carta_invalida:
-            #             carta.habilitada = False
-            #     for carta in self.juego.jugador.mano:
-            #         if carta.valor == self.juego.jugador.niveles.carta_invalida:
-            #             carta.habilitada = False
-            #     self.fase = 43
-            # case 43:
-            #     self.juego.mostrar_pagina_juego(screen)
-            #     if self.funcionar:
-            #         self.funcionar = False
-            #         self.raton.asignar_posicion(500, 500)
-            # case 44:
-            #     self.juego.mostrar_pagina_juego(screen)
-            #     self.seleccionar_cartas([1, 2], self.juego)
-            # case 45:
-            #     self.juego.mostrar_pagina_juego(screen)
-            #     self.boton_jugar()
-            # case 46:
-            #     self.juego.mostrar_pagina_juego(screen)
-            #     self.seleccionar_cartas([0, 6, 7], self.juego)
-            # case 47:
-            #     self.juego.mostrar_pagina_juego(screen)
-            #     self.boton_jugar()
-            # case 48:
-            #     self.juego.mostrar_pagina_juego(screen)
-            #     self.seleccionar_cartas([0, 5], self.juego)
-            # case 49:
-            #     self.juego.mostrar_pagina_juego(screen)
-            #     self.boton_jugar()
-            # case 50:
-            #     self.juego.mostrar_fondo = True
-            #     self.juego.mostrar_pagina_game_over(screen)
-            # case 51: 
-            #     self.juego.mostrar_fondo = True
-            #     self.juego.mostrar_pagina_game_over(screen)
-            #     self.boton_salir()
-            # case 52:
-            #     self.juego.mostrar_fondo = True
-            #     self.juego.mostrar_pagina_principal(screen)
+            case 53:
+                self.juego.mostrar_pagina_juego(screen)
+                self.boton_jugar()
+            case 54:
+                self.juego.mostrar_pagina_juego(screen)
+                self.seleccionar_cartas([1, 2, 3, 4, 6], self.juego)
+            case 55:
+                self.juego.mostrar_pagina_juego(screen)
+                self.boton_descartar()
+            case 56:
+                self.juego.mostrar_pagina_juego(screen)
+                self.seleccionar_cartas([3, 4, 5, 6, 7], self.juego)
+            case 57:
+                self.juego.mostrar_pagina_juego(screen)
+                self.boton_jugar()
+            case 58:
+                self.abrir_tienda([Comodin("clon"), Comodin("gloton")])
+                if self.funcionar:
+                    self.funcionar = False
+                    self.raton.asignar_posicion(200, 200)
+                self.fase = 59
+            case 59:
+                self.mostrar_tienda(screen)
+                self.boton_SR()
+            case 60:
+                self.guardado.guardar_partida(1, self.guardado_4)
+                self.juego.jugador.cargar_partida()
+                self.juego.jugador.niveles.es_boss = True
+                self.juego.jugador.niveles.color_pantalla = self.juego.jugador.niveles.colores_boss[2]
+                self.juego.jugador.niveles.carta_invalida = 1
+                for carta in self.juego.jugador.mazo.cartas:
+                    if carta.valor == self.juego.jugador.niveles.carta_invalida:
+                        carta.habilitada = False
+                for carta in self.juego.jugador.mano:
+                    if carta.valor == self.juego.jugador.niveles.carta_invalida:
+                        carta.habilitada = False
+                self.fase = 61
+            case 61:
+                self.juego.mostrar_pagina_juego(screen)
+                if self.funcionar:
+                    self.funcionar = False
+                    self.raton.asignar_posicion(500, 500)
+            case 62:
+                self.juego.mostrar_pagina_juego(screen)
+                self.seleccionar_cartas([1, 2], self.juego)
+            case 63:
+                self.juego.mostrar_pagina_juego(screen)
+                self.boton_jugar()
+            case 64:
+                self.juego.mostrar_pagina_juego(screen)
+                self.seleccionar_cartas([0, 6, 7], self.juego)
+            case 65:
+                self.juego.mostrar_pagina_juego(screen)
+                self.boton_jugar()
+            case 66:
+                self.juego.mostrar_pagina_juego(screen)
+                self.seleccionar_cartas([0, 5], self.juego)
+            case 67:
+                self.juego.mostrar_pagina_juego(screen)
+                self.boton_jugar()
+            case 68:
+                self.juego.mostrar_fondo = True
+                self.juego.mostrar_pagina_game_over(screen)
+            case 69: 
+                self.juego.mostrar_fondo = True
+                self.juego.mostrar_pagina_game_over(screen)
+                self.boton_salir()
+            case 70:
+                self.juego.mostrar_fondo = True
+                self.juego.mostrar_pagina_principal(screen)
             case _:
-                print(self.fase)
+                self.cargar_guardado_previo()
                 self.__init__(self.juego, self.transicion)
                 # Cambiar pantalla al menú principal
                 self.juego.mostrar_fondo = True
                 self.juego.pagina_actual = 0  # <-- Si el menú principal es la página 0. Ajústalo si es otro índice.
                 self.juego.reiniciar()
-                self.cargar_guardado_previo()
                 return
 
 
@@ -420,11 +448,16 @@ class Demo:
         for i in range(0, 3):
             if self.guardado_previo[i]:
                 self.guardado.guardar_partida(i+1, self.guardado_previo[i])
-
-    def crear_partidas_customizadas(self):
+            else:
+                self.guardado.borrar_partida(i+1)
+    
+    def crear_guardado_previo(self):
         for i in range(1, 4):
             self.guardado_previo.append(self.guardado.cargar_partida(i))
-        print(self.guardado_previo)
+            self.guardado.borrar_partida(i)
+
+    def crear_partidas_customizadas(self):
+        self.crear_guardado_previo()
 
         self.guardado_1 = {
             "puntos":           0,
