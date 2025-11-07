@@ -95,10 +95,10 @@
 </span><span id="L-6"><a href="#L-6"><span class="linenos"> 6</span></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;Clase Niveles: Hace toda la funcionalidad de los niveles y los niveles que son un boss.</span>
 </span><span id="L-7"><a href="#L-7"><span class="linenos"> 7</span></a>
 </span><span id="L-8"><a href="#L-8"><span class="linenos"> 8</span></a><span class="sd">    Inicializa los atributos:</span>
-</span><span id="L-9"><a href="#L-9"><span class="linenos"> 9</span></a><span class="sd">        - nivel_actual a 1 ya que se empieza en el nivel 1</span>
-</span><span id="L-10"><a href="#L-10"><span class="linenos">10</span></a><span class="sd">        - puntos a 0 porque en cada nivel empieza con 0 puntos</span>
-</span><span id="L-11"><a href="#L-11"><span class="linenos">11</span></a><span class="sd">        - puntos_nivel que son los puntos objetivo a lo que hay que llegar</span>
-</span><span id="L-12"><a href="#L-12"><span class="linenos">12</span></a><span class="sd">        - multiplicador este multiplicador es lo que aumenta cada nivel.</span>
+</span><span id="L-9"><a href="#L-9"><span class="linenos"> 9</span></a><span class="sd">    - nivel_actual a 1 ya que se empieza en el nivel 1</span>
+</span><span id="L-10"><a href="#L-10"><span class="linenos">10</span></a><span class="sd">    - puntos a 0 porque en cada nivel empieza con 0 puntos</span>
+</span><span id="L-11"><a href="#L-11"><span class="linenos">11</span></a><span class="sd">    - puntos_nivel que son los puntos objetivo a lo que hay que llegar</span>
+</span><span id="L-12"><a href="#L-12"><span class="linenos">12</span></a><span class="sd">    - multiplicador este multiplicador es lo que aumenta cada nivel.</span>
 </span><span id="L-13"><a href="#L-13"><span class="linenos">13</span></a>
 </span><span id="L-14"><a href="#L-14"><span class="linenos">14</span></a><span class="sd">    &quot;&quot;&quot;</span>
 </span><span id="L-15"><a href="#L-15"><span class="linenos">15</span></a>
@@ -142,19 +142,22 @@
 </span><span id="L-53"><a href="#L-53"><span class="linenos">53</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">check_boss</span><span class="p">()</span>
 </span><span id="L-54"><a href="#L-54"><span class="linenos">54</span></a>
 </span><span id="L-55"><a href="#L-55"><span class="linenos">55</span></a>    <span class="k">def</span><span class="w"> </span><span class="nf">check_boss</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-</span><span id="L-56"><a href="#L-56"><span class="linenos">56</span></a>        <span class="k">if</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">nivel_actual</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="o">%</span> <span class="mi">3</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
-</span><span id="L-57"><a href="#L-57"><span class="linenos">57</span></a>            <span class="bp">self</span><span class="o">.</span><span class="n">es_boss</span> <span class="o">=</span> <span class="kc">True</span>
-</span><span id="L-58"><a href="#L-58"><span class="linenos">58</span></a>            <span class="bp">self</span><span class="o">.</span><span class="n">color_pantalla</span> <span class="o">=</span> <span class="n">random</span><span class="o">.</span><span class="n">choice</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">colores_boss</span><span class="p">)</span>
-</span><span id="L-59"><a href="#L-59"><span class="linenos">59</span></a>            <span class="bp">self</span><span class="o">.</span><span class="n">carta_invalida</span> <span class="o">=</span> <span class="n">random</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">12</span><span class="p">)</span>
-</span><span id="L-60"><a href="#L-60"><span class="linenos">60</span></a>            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;BOSS: </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">color_pantalla</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-</span><span id="L-61"><a href="#L-61"><span class="linenos">61</span></a>        <span class="k">else</span><span class="p">:</span>
-</span><span id="L-62"><a href="#L-62"><span class="linenos">62</span></a>            <span class="bp">self</span><span class="o">.</span><span class="n">es_boss</span> <span class="o">=</span> <span class="kc">False</span>
-</span><span id="L-63"><a href="#L-63"><span class="linenos">63</span></a>            <span class="bp">self</span><span class="o">.</span><span class="n">color_pantalla</span> <span class="o">=</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
-</span><span id="L-64"><a href="#L-64"><span class="linenos">64</span></a>            <span class="bp">self</span><span class="o">.</span><span class="n">carta_invalida</span> <span class="o">=</span> <span class="kc">None</span>
-</span><span id="L-65"><a href="#L-65"><span class="linenos">65</span></a>
-</span><span id="L-66"><a href="#L-66"><span class="linenos">66</span></a>    <span class="k">def</span><span class="w"> </span><span class="nf">dibujar_filtro_pantalla</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">screen</span><span class="p">):</span>
-</span><span id="L-67"><a href="#L-67"><span class="linenos">67</span></a>        <span class="n">imagen</span> <span class="o">=</span> <span class="n">Niveles</span><span class="o">.</span><span class="n">_get_cache_filtro</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">color_pantalla</span><span class="p">)</span>
-</span><span id="L-68"><a href="#L-68"><span class="linenos">68</span></a>        <span class="n">screen</span><span class="o">.</span><span class="n">blit</span><span class="p">(</span><span class="n">imagen</span><span class="p">,</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">))</span>
+</span><span id="L-56"><a href="#L-56"><span class="linenos">56</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;Funcion check_boss: comprueba que el nivel actual sea un boss para inhabilitar una carta y poner un</span>
+</span><span id="L-57"><a href="#L-57"><span class="linenos">57</span></a><span class="sd">        filtro a la pantalla.&quot;&quot;&quot;</span>
+</span><span id="L-58"><a href="#L-58"><span class="linenos">58</span></a>        <span class="k">if</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">nivel_actual</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="o">%</span> <span class="mi">3</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+</span><span id="L-59"><a href="#L-59"><span class="linenos">59</span></a>            <span class="bp">self</span><span class="o">.</span><span class="n">es_boss</span> <span class="o">=</span> <span class="kc">True</span>
+</span><span id="L-60"><a href="#L-60"><span class="linenos">60</span></a>            <span class="bp">self</span><span class="o">.</span><span class="n">color_pantalla</span> <span class="o">=</span> <span class="n">random</span><span class="o">.</span><span class="n">choice</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">colores_boss</span><span class="p">)</span>
+</span><span id="L-61"><a href="#L-61"><span class="linenos">61</span></a>            <span class="bp">self</span><span class="o">.</span><span class="n">carta_invalida</span> <span class="o">=</span> <span class="n">random</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">12</span><span class="p">)</span>
+</span><span id="L-62"><a href="#L-62"><span class="linenos">62</span></a>            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;BOSS: </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">color_pantalla</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</span><span id="L-63"><a href="#L-63"><span class="linenos">63</span></a>        <span class="k">else</span><span class="p">:</span>
+</span><span id="L-64"><a href="#L-64"><span class="linenos">64</span></a>            <span class="bp">self</span><span class="o">.</span><span class="n">es_boss</span> <span class="o">=</span> <span class="kc">False</span>
+</span><span id="L-65"><a href="#L-65"><span class="linenos">65</span></a>            <span class="bp">self</span><span class="o">.</span><span class="n">color_pantalla</span> <span class="o">=</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+</span><span id="L-66"><a href="#L-66"><span class="linenos">66</span></a>            <span class="bp">self</span><span class="o">.</span><span class="n">carta_invalida</span> <span class="o">=</span> <span class="kc">None</span>
+</span><span id="L-67"><a href="#L-67"><span class="linenos">67</span></a>
+</span><span id="L-68"><a href="#L-68"><span class="linenos">68</span></a>    <span class="k">def</span><span class="w"> </span><span class="nf">dibujar_filtro_pantalla</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">screen</span><span class="p">):</span>
+</span><span id="L-69"><a href="#L-69"><span class="linenos">69</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;Funcion dibujar_filtro_pantalla: pone una pantalla de color transparente en el fondo.&quot;&quot;&quot;</span>
+</span><span id="L-70"><a href="#L-70"><span class="linenos">70</span></a>        <span class="n">imagen</span> <span class="o">=</span> <span class="n">Niveles</span><span class="o">.</span><span class="n">_get_cache_filtro</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">color_pantalla</span><span class="p">)</span>
+</span><span id="L-71"><a href="#L-71"><span class="linenos">71</span></a>        <span class="n">screen</span><span class="o">.</span><span class="n">blit</span><span class="p">(</span><span class="n">imagen</span><span class="p">,</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">))</span>
 </span></pre></div>
 
 
@@ -174,10 +177,10 @@
 </span><span id="Niveles-7"><a href="#Niveles-7"><span class="linenos"> 7</span></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;Clase Niveles: Hace toda la funcionalidad de los niveles y los niveles que son un boss.</span>
 </span><span id="Niveles-8"><a href="#Niveles-8"><span class="linenos"> 8</span></a>
 </span><span id="Niveles-9"><a href="#Niveles-9"><span class="linenos"> 9</span></a><span class="sd">    Inicializa los atributos:</span>
-</span><span id="Niveles-10"><a href="#Niveles-10"><span class="linenos">10</span></a><span class="sd">        - nivel_actual a 1 ya que se empieza en el nivel 1</span>
-</span><span id="Niveles-11"><a href="#Niveles-11"><span class="linenos">11</span></a><span class="sd">        - puntos a 0 porque en cada nivel empieza con 0 puntos</span>
-</span><span id="Niveles-12"><a href="#Niveles-12"><span class="linenos">12</span></a><span class="sd">        - puntos_nivel que son los puntos objetivo a lo que hay que llegar</span>
-</span><span id="Niveles-13"><a href="#Niveles-13"><span class="linenos">13</span></a><span class="sd">        - multiplicador este multiplicador es lo que aumenta cada nivel.</span>
+</span><span id="Niveles-10"><a href="#Niveles-10"><span class="linenos">10</span></a><span class="sd">    - nivel_actual a 1 ya que se empieza en el nivel 1</span>
+</span><span id="Niveles-11"><a href="#Niveles-11"><span class="linenos">11</span></a><span class="sd">    - puntos a 0 porque en cada nivel empieza con 0 puntos</span>
+</span><span id="Niveles-12"><a href="#Niveles-12"><span class="linenos">12</span></a><span class="sd">    - puntos_nivel que son los puntos objetivo a lo que hay que llegar</span>
+</span><span id="Niveles-13"><a href="#Niveles-13"><span class="linenos">13</span></a><span class="sd">    - multiplicador este multiplicador es lo que aumenta cada nivel.</span>
 </span><span id="Niveles-14"><a href="#Niveles-14"><span class="linenos">14</span></a>
 </span><span id="Niveles-15"><a href="#Niveles-15"><span class="linenos">15</span></a><span class="sd">    &quot;&quot;&quot;</span>
 </span><span id="Niveles-16"><a href="#Niveles-16"><span class="linenos">16</span></a>
@@ -221,29 +224,35 @@
 </span><span id="Niveles-54"><a href="#Niveles-54"><span class="linenos">54</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">check_boss</span><span class="p">()</span>
 </span><span id="Niveles-55"><a href="#Niveles-55"><span class="linenos">55</span></a>
 </span><span id="Niveles-56"><a href="#Niveles-56"><span class="linenos">56</span></a>    <span class="k">def</span><span class="w"> </span><span class="nf">check_boss</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-</span><span id="Niveles-57"><a href="#Niveles-57"><span class="linenos">57</span></a>        <span class="k">if</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">nivel_actual</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="o">%</span> <span class="mi">3</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
-</span><span id="Niveles-58"><a href="#Niveles-58"><span class="linenos">58</span></a>            <span class="bp">self</span><span class="o">.</span><span class="n">es_boss</span> <span class="o">=</span> <span class="kc">True</span>
-</span><span id="Niveles-59"><a href="#Niveles-59"><span class="linenos">59</span></a>            <span class="bp">self</span><span class="o">.</span><span class="n">color_pantalla</span> <span class="o">=</span> <span class="n">random</span><span class="o">.</span><span class="n">choice</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">colores_boss</span><span class="p">)</span>
-</span><span id="Niveles-60"><a href="#Niveles-60"><span class="linenos">60</span></a>            <span class="bp">self</span><span class="o">.</span><span class="n">carta_invalida</span> <span class="o">=</span> <span class="n">random</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">12</span><span class="p">)</span>
-</span><span id="Niveles-61"><a href="#Niveles-61"><span class="linenos">61</span></a>            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;BOSS: </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">color_pantalla</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-</span><span id="Niveles-62"><a href="#Niveles-62"><span class="linenos">62</span></a>        <span class="k">else</span><span class="p">:</span>
-</span><span id="Niveles-63"><a href="#Niveles-63"><span class="linenos">63</span></a>            <span class="bp">self</span><span class="o">.</span><span class="n">es_boss</span> <span class="o">=</span> <span class="kc">False</span>
-</span><span id="Niveles-64"><a href="#Niveles-64"><span class="linenos">64</span></a>            <span class="bp">self</span><span class="o">.</span><span class="n">color_pantalla</span> <span class="o">=</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
-</span><span id="Niveles-65"><a href="#Niveles-65"><span class="linenos">65</span></a>            <span class="bp">self</span><span class="o">.</span><span class="n">carta_invalida</span> <span class="o">=</span> <span class="kc">None</span>
-</span><span id="Niveles-66"><a href="#Niveles-66"><span class="linenos">66</span></a>
-</span><span id="Niveles-67"><a href="#Niveles-67"><span class="linenos">67</span></a>    <span class="k">def</span><span class="w"> </span><span class="nf">dibujar_filtro_pantalla</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">screen</span><span class="p">):</span>
-</span><span id="Niveles-68"><a href="#Niveles-68"><span class="linenos">68</span></a>        <span class="n">imagen</span> <span class="o">=</span> <span class="n">Niveles</span><span class="o">.</span><span class="n">_get_cache_filtro</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">color_pantalla</span><span class="p">)</span>
-</span><span id="Niveles-69"><a href="#Niveles-69"><span class="linenos">69</span></a>        <span class="n">screen</span><span class="o">.</span><span class="n">blit</span><span class="p">(</span><span class="n">imagen</span><span class="p">,</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">))</span>
+</span><span id="Niveles-57"><a href="#Niveles-57"><span class="linenos">57</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;Funcion check_boss: comprueba que el nivel actual sea un boss para inhabilitar una carta y poner un</span>
+</span><span id="Niveles-58"><a href="#Niveles-58"><span class="linenos">58</span></a><span class="sd">        filtro a la pantalla.&quot;&quot;&quot;</span>
+</span><span id="Niveles-59"><a href="#Niveles-59"><span class="linenos">59</span></a>        <span class="k">if</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">nivel_actual</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="o">%</span> <span class="mi">3</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+</span><span id="Niveles-60"><a href="#Niveles-60"><span class="linenos">60</span></a>            <span class="bp">self</span><span class="o">.</span><span class="n">es_boss</span> <span class="o">=</span> <span class="kc">True</span>
+</span><span id="Niveles-61"><a href="#Niveles-61"><span class="linenos">61</span></a>            <span class="bp">self</span><span class="o">.</span><span class="n">color_pantalla</span> <span class="o">=</span> <span class="n">random</span><span class="o">.</span><span class="n">choice</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">colores_boss</span><span class="p">)</span>
+</span><span id="Niveles-62"><a href="#Niveles-62"><span class="linenos">62</span></a>            <span class="bp">self</span><span class="o">.</span><span class="n">carta_invalida</span> <span class="o">=</span> <span class="n">random</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">12</span><span class="p">)</span>
+</span><span id="Niveles-63"><a href="#Niveles-63"><span class="linenos">63</span></a>            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;BOSS: </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">color_pantalla</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</span><span id="Niveles-64"><a href="#Niveles-64"><span class="linenos">64</span></a>        <span class="k">else</span><span class="p">:</span>
+</span><span id="Niveles-65"><a href="#Niveles-65"><span class="linenos">65</span></a>            <span class="bp">self</span><span class="o">.</span><span class="n">es_boss</span> <span class="o">=</span> <span class="kc">False</span>
+</span><span id="Niveles-66"><a href="#Niveles-66"><span class="linenos">66</span></a>            <span class="bp">self</span><span class="o">.</span><span class="n">color_pantalla</span> <span class="o">=</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+</span><span id="Niveles-67"><a href="#Niveles-67"><span class="linenos">67</span></a>            <span class="bp">self</span><span class="o">.</span><span class="n">carta_invalida</span> <span class="o">=</span> <span class="kc">None</span>
+</span><span id="Niveles-68"><a href="#Niveles-68"><span class="linenos">68</span></a>
+</span><span id="Niveles-69"><a href="#Niveles-69"><span class="linenos">69</span></a>    <span class="k">def</span><span class="w"> </span><span class="nf">dibujar_filtro_pantalla</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">screen</span><span class="p">):</span>
+</span><span id="Niveles-70"><a href="#Niveles-70"><span class="linenos">70</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;Funcion dibujar_filtro_pantalla: pone una pantalla de color transparente en el fondo.&quot;&quot;&quot;</span>
+</span><span id="Niveles-71"><a href="#Niveles-71"><span class="linenos">71</span></a>        <span class="n">imagen</span> <span class="o">=</span> <span class="n">Niveles</span><span class="o">.</span><span class="n">_get_cache_filtro</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">color_pantalla</span><span class="p">)</span>
+</span><span id="Niveles-72"><a href="#Niveles-72"><span class="linenos">72</span></a>        <span class="n">screen</span><span class="o">.</span><span class="n">blit</span><span class="p">(</span><span class="n">imagen</span><span class="p">,</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">))</span>
 </span></pre></div>
 
 
             <div class="docstring"><p>Clase Niveles: Hace toda la funcionalidad de los niveles y los niveles que son un boss.</p>
 
-<p>Inicializa los atributos:
-    - nivel_actual a 1 ya que se empieza en el nivel 1
-    - puntos a 0 porque en cada nivel empieza con 0 puntos
-    - puntos_nivel que son los puntos objetivo a lo que hay que llegar
-    - multiplicador este multiplicador es lo que aumenta cada nivel.</p>
+<p>Inicializa los atributos:</p>
+
+<ul>
+<li>nivel_actual a 1 ya que se empieza en el nivel 1</li>
+<li>puntos a 0 porque en cada nivel empieza con 0 puntos</li>
+<li>puntos_nivel que son los puntos objetivo a lo que hay que llegar</li>
+<li>multiplicador este multiplicador es lo que aumenta cada nivel.</li>
+</ul>
 </div>
 
 
@@ -366,19 +375,24 @@ multiplicando los puntos objetivo por el multiplicador y pone los puntos del jug
     </div>
     <a class="headerlink" href="#Niveles.check_boss"></a>
             <div class="pdoc-code codehilite"><pre><span></span><span id="Niveles.check_boss-56"><a href="#Niveles.check_boss-56"><span class="linenos">56</span></a>    <span class="k">def</span><span class="w"> </span><span class="nf">check_boss</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-</span><span id="Niveles.check_boss-57"><a href="#Niveles.check_boss-57"><span class="linenos">57</span></a>        <span class="k">if</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">nivel_actual</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="o">%</span> <span class="mi">3</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
-</span><span id="Niveles.check_boss-58"><a href="#Niveles.check_boss-58"><span class="linenos">58</span></a>            <span class="bp">self</span><span class="o">.</span><span class="n">es_boss</span> <span class="o">=</span> <span class="kc">True</span>
-</span><span id="Niveles.check_boss-59"><a href="#Niveles.check_boss-59"><span class="linenos">59</span></a>            <span class="bp">self</span><span class="o">.</span><span class="n">color_pantalla</span> <span class="o">=</span> <span class="n">random</span><span class="o">.</span><span class="n">choice</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">colores_boss</span><span class="p">)</span>
-</span><span id="Niveles.check_boss-60"><a href="#Niveles.check_boss-60"><span class="linenos">60</span></a>            <span class="bp">self</span><span class="o">.</span><span class="n">carta_invalida</span> <span class="o">=</span> <span class="n">random</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">12</span><span class="p">)</span>
-</span><span id="Niveles.check_boss-61"><a href="#Niveles.check_boss-61"><span class="linenos">61</span></a>            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;BOSS: </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">color_pantalla</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-</span><span id="Niveles.check_boss-62"><a href="#Niveles.check_boss-62"><span class="linenos">62</span></a>        <span class="k">else</span><span class="p">:</span>
-</span><span id="Niveles.check_boss-63"><a href="#Niveles.check_boss-63"><span class="linenos">63</span></a>            <span class="bp">self</span><span class="o">.</span><span class="n">es_boss</span> <span class="o">=</span> <span class="kc">False</span>
-</span><span id="Niveles.check_boss-64"><a href="#Niveles.check_boss-64"><span class="linenos">64</span></a>            <span class="bp">self</span><span class="o">.</span><span class="n">color_pantalla</span> <span class="o">=</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
-</span><span id="Niveles.check_boss-65"><a href="#Niveles.check_boss-65"><span class="linenos">65</span></a>            <span class="bp">self</span><span class="o">.</span><span class="n">carta_invalida</span> <span class="o">=</span> <span class="kc">None</span>
+</span><span id="Niveles.check_boss-57"><a href="#Niveles.check_boss-57"><span class="linenos">57</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;Funcion check_boss: comprueba que el nivel actual sea un boss para inhabilitar una carta y poner un</span>
+</span><span id="Niveles.check_boss-58"><a href="#Niveles.check_boss-58"><span class="linenos">58</span></a><span class="sd">        filtro a la pantalla.&quot;&quot;&quot;</span>
+</span><span id="Niveles.check_boss-59"><a href="#Niveles.check_boss-59"><span class="linenos">59</span></a>        <span class="k">if</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">nivel_actual</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="o">%</span> <span class="mi">3</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+</span><span id="Niveles.check_boss-60"><a href="#Niveles.check_boss-60"><span class="linenos">60</span></a>            <span class="bp">self</span><span class="o">.</span><span class="n">es_boss</span> <span class="o">=</span> <span class="kc">True</span>
+</span><span id="Niveles.check_boss-61"><a href="#Niveles.check_boss-61"><span class="linenos">61</span></a>            <span class="bp">self</span><span class="o">.</span><span class="n">color_pantalla</span> <span class="o">=</span> <span class="n">random</span><span class="o">.</span><span class="n">choice</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">colores_boss</span><span class="p">)</span>
+</span><span id="Niveles.check_boss-62"><a href="#Niveles.check_boss-62"><span class="linenos">62</span></a>            <span class="bp">self</span><span class="o">.</span><span class="n">carta_invalida</span> <span class="o">=</span> <span class="n">random</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">12</span><span class="p">)</span>
+</span><span id="Niveles.check_boss-63"><a href="#Niveles.check_boss-63"><span class="linenos">63</span></a>            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;BOSS: </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">color_pantalla</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</span><span id="Niveles.check_boss-64"><a href="#Niveles.check_boss-64"><span class="linenos">64</span></a>        <span class="k">else</span><span class="p">:</span>
+</span><span id="Niveles.check_boss-65"><a href="#Niveles.check_boss-65"><span class="linenos">65</span></a>            <span class="bp">self</span><span class="o">.</span><span class="n">es_boss</span> <span class="o">=</span> <span class="kc">False</span>
+</span><span id="Niveles.check_boss-66"><a href="#Niveles.check_boss-66"><span class="linenos">66</span></a>            <span class="bp">self</span><span class="o">.</span><span class="n">color_pantalla</span> <span class="o">=</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+</span><span id="Niveles.check_boss-67"><a href="#Niveles.check_boss-67"><span class="linenos">67</span></a>            <span class="bp">self</span><span class="o">.</span><span class="n">carta_invalida</span> <span class="o">=</span> <span class="kc">None</span>
 </span></pre></div>
 
 
-    
+            <div class="docstring"><p>Funcion check_boss: comprueba que el nivel actual sea un boss para inhabilitar una carta y poner un
+filtro a la pantalla.</p>
+</div>
+
 
                             </div>
                             <div id="Niveles.dibujar_filtro_pantalla" class="classattr">
@@ -392,13 +406,16 @@ multiplicando los puntos objetivo por el multiplicador y pone los puntos del jug
 
     </div>
     <a class="headerlink" href="#Niveles.dibujar_filtro_pantalla"></a>
-            <div class="pdoc-code codehilite"><pre><span></span><span id="Niveles.dibujar_filtro_pantalla-67"><a href="#Niveles.dibujar_filtro_pantalla-67"><span class="linenos">67</span></a>    <span class="k">def</span><span class="w"> </span><span class="nf">dibujar_filtro_pantalla</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">screen</span><span class="p">):</span>
-</span><span id="Niveles.dibujar_filtro_pantalla-68"><a href="#Niveles.dibujar_filtro_pantalla-68"><span class="linenos">68</span></a>        <span class="n">imagen</span> <span class="o">=</span> <span class="n">Niveles</span><span class="o">.</span><span class="n">_get_cache_filtro</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">color_pantalla</span><span class="p">)</span>
-</span><span id="Niveles.dibujar_filtro_pantalla-69"><a href="#Niveles.dibujar_filtro_pantalla-69"><span class="linenos">69</span></a>        <span class="n">screen</span><span class="o">.</span><span class="n">blit</span><span class="p">(</span><span class="n">imagen</span><span class="p">,</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">))</span>
+            <div class="pdoc-code codehilite"><pre><span></span><span id="Niveles.dibujar_filtro_pantalla-69"><a href="#Niveles.dibujar_filtro_pantalla-69"><span class="linenos">69</span></a>    <span class="k">def</span><span class="w"> </span><span class="nf">dibujar_filtro_pantalla</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">screen</span><span class="p">):</span>
+</span><span id="Niveles.dibujar_filtro_pantalla-70"><a href="#Niveles.dibujar_filtro_pantalla-70"><span class="linenos">70</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;Funcion dibujar_filtro_pantalla: pone una pantalla de color transparente en el fondo.&quot;&quot;&quot;</span>
+</span><span id="Niveles.dibujar_filtro_pantalla-71"><a href="#Niveles.dibujar_filtro_pantalla-71"><span class="linenos">71</span></a>        <span class="n">imagen</span> <span class="o">=</span> <span class="n">Niveles</span><span class="o">.</span><span class="n">_get_cache_filtro</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">color_pantalla</span><span class="p">)</span>
+</span><span id="Niveles.dibujar_filtro_pantalla-72"><a href="#Niveles.dibujar_filtro_pantalla-72"><span class="linenos">72</span></a>        <span class="n">screen</span><span class="o">.</span><span class="n">blit</span><span class="p">(</span><span class="n">imagen</span><span class="p">,</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">))</span>
 </span></pre></div>
 
 
-    
+            <div class="docstring"><p>Funcion dibujar_filtro_pantalla: pone una pantalla de color transparente en el fondo.</p>
+</div>
+
 
                             </div>
                 </section>

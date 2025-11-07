@@ -1,7 +1,7 @@
 import json
 import os
 from datetime import datetime
-from src._utilidades import *
+from src._utilidades import Texto
 
 
 class Guardado:
@@ -65,7 +65,7 @@ class Guardado:
         gris = (220, 220, 220)
         for slot in range(1, 4):
             datos = self.cargar_partida(slot)
-            mostrar_texto(
+            Texto.mostrar_texto(
                 screen,
                 f"Guardado {slot}",
                 x - 5,
@@ -83,21 +83,21 @@ class Guardado:
                     f"Objetivo: {datos["puntos_nivel"]}",
                 ]
                 for texto in textos:
-                    mostrar_texto(screen, texto, x, y, 20, gris)
+                    Texto.mostrar_texto(screen, texto, x, y, 20, gris)
                     y += 30
                 if datos["comodines"]:
-                    mostrar_texto(screen, "Comodines:", x, y, 20, gris)
+                    Texto.mostrar_texto(screen, "Comodines:", x, y, 20, gris)
                     x_copy = x - 5
                     y += 28
                     for n, comodin in enumerate(datos["comodines"], start=1):
-                        mostrar_texto(screen, comodin, x_copy, y, 15, gris)
+                        Texto.mostrar_texto(screen, comodin, x_copy, y, 15, gris)
                         y += 20
                         if n == 3:
                             x_copy += 100
                             y -= 60
                 else:
-                    mostrar_texto(screen, "Comodines: cero", x, y, 20, gris)
+                    Texto.mostrar_texto(screen, "Comodines: cero", x, y, 20, gris)
 
             else:
-                mostrar_texto(screen, "Vacio", x, 215, 20, gris)
+                Texto.mostrar_texto(screen, "Vacio", x, 215, 20, gris)
             x += 250

@@ -53,6 +53,8 @@ class Niveles:
         self.check_boss()
 
     def check_boss(self):
+        """Funcion check_boss: comprueba que el nivel actual sea un boss para inhabilitar una carta y poner un
+        filtro a la pantalla."""
         if (self.nivel_actual - 1) % 3 == 0:
             self.es_boss = True
             self.color_pantalla = random.choice(self.colores_boss)
@@ -64,5 +66,6 @@ class Niveles:
             self.carta_invalida = None
 
     def dibujar_filtro_pantalla(self, screen):
+        """Funcion dibujar_filtro_pantalla: pone una pantalla de color transparente en el fondo."""
         imagen = Niveles._get_cache_filtro(self.color_pantalla)
         screen.blit(imagen, (0, 0))

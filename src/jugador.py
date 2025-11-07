@@ -14,7 +14,7 @@ from src.comodines import Comodin
 class Jugador:
     """
     Clase Jugador: Se guardan los datos que se muestran en pantalla del jugador.
- 
+
     Inicializacion de variables:
     - Puntos que tiene obtiene el juagdor.
     - El dineroo que posee el juagdor.
@@ -64,7 +64,9 @@ class Jugador:
         puntos_formateados = f"{self.puntos_nivel:,}".replace(",", ".")
         Texto.mostrar_texto_centrado(screen, puntos_formateados, 400, 125, 50)
 
-        Texto.mostrar_texto_centrado(screen, f"{self.dinero}$", 412, 445, 25, color=(0,0,0))
+        Texto.mostrar_texto_centrado(
+            screen, f"{self.dinero}$", 412, 445, 25, color=(0, 0, 0)
+        )
 
         # Muestra los puntos obtenidos que se suman al total
         self.animador_texto.dibujar(screen)
@@ -122,7 +124,9 @@ class Jugador:
                 pos_x += 80
 
         # Mostrar num de cartas seleccionadas
-        Texto.mostrar_texto(screen, f"{len(self._cartas_seleccionadas)}/5", 1170, 500, 20)
+        Texto.mostrar_texto(
+            screen, f"{len(self._cartas_seleccionadas)}/5", 1170, 500, 20
+        )
 
         # Mostrar num de cartas en el mazo
         Texto.mostrar_texto_centrado(screen, f"{len(self.mazo.cartas)}", 1230, 600, 50)

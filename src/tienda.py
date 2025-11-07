@@ -4,6 +4,7 @@ from src.jugador import Jugador
 from src.comodines import Comodin
 from src._utilidades import Texto
 
+
 class Tienda:
     """Clase Tienda: Hace toda la funcionalidad de la tienda.
     Inicializa los atributos:

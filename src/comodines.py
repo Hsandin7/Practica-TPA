@@ -181,12 +181,6 @@ class Comodin(Boton):
         # Asignar precio basado en rareza
         self.precio = precio_map.get(self.rareza, 1)
 
-    def detectar_seleccion(self, eventos):
-        """
-        Funcion detectar seleccion: Detecta si esta seleccionado un comodin.
-        """
-        return self.detectar_click(eventos)
-
     def mover_comodines(self, eventos, lista_comodines, limite_rect=None):
         """
         Funcion mover comodines: Sirve para mover los comodines que tiene en mano el jugador.
