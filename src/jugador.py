@@ -15,10 +15,29 @@ class Jugador:
     """Clase Jugador: Se guardan los datos que se muestran en pantalla del jugador.
 
     Inicializacion de variables:
-    - Puntos que tiene obtiene el juagdor.
-    - El dineroo que posee el juagdor.
-    - Se muestra tambien el nivel en el que está.
-    - Y el multiplicador se trata de las funciones que le da los comodines.
+    - puntos: los puntos que tiene el juagdor.
+    - puntos_nivel: puntos que debe alcanzar el jugador.
+    - puntos_cartas: puntos de las cartas obtenidos al evaluarlas.
+    - multiplicador: factor de multiplicacion aplicado a los puntos segun la evaluacion o comodines.
+    - numero_nivel: nivel actual del jugador.
+    - nivel_completado: indica si el jugador ha alcanzado el objetivo del nivel.
+    - game_over: determina si el jugador ha perdido la partida.
+    - slot_seleccionado: posición de guardado usada para las partidas.
+    - mano: cartas que el jugador tiene actualmente.
+    - comodines_mano: lista de comodines activos del jugador.
+    - _cartas_seleccionadas: cartas seleccionadas por el jugador para jugar o descartar.
+    - _cartas_jugadas: cartas que ya han sido jugadas y evaluadas.
+    - _cartas_descartadas: cartas eliminadas de la mano.
+    - limite_seleccion: número máximo de cartas que pueden seleccionarse.
+    - limite_jugar: número de veces que se pueden jugar cartas por ronda.
+    - limite_descartar: número de veces que se pueden descartar cartas por ronda.
+
+    Además, se inicializan los objetos auxiliares que gestionan:
+    - Evaluación de cartas (Evaluador_Cartas)
+    - Animaciones de texto (Animador_Texto)
+    - Niveles y progresión (Niveles)
+    - Guardado y carga de partidas (Guardado)
+    - Mazo de cartas (Mazo)
     """
 
     def __init__(self):
@@ -50,10 +69,7 @@ class Jugador:
         self.limite_descartar = 3
 
     def mostrar_puntos(self, screen):
-        """
-        La funcion mostrar puntos:
-            Muestra por pantalla los puntos conseguidos.
-        """
+        """Funcion mostrar puntos: Muestra por pantalla los puntos y otra informacion."""
         puntos_formateados = f"{self.puntos:,}".replace(",", ".")
         Texto.mostrar_texto_centrado(screen, puntos_formateados, 900, 125, 50)
         Texto.mostrar_texto_centrado(screen, f"{self.multiplicador}", 950, 190)
@@ -81,10 +97,7 @@ class Jugador:
         )
 
     def mostrar_cartas(self, screen):
-        """
-        La funcion mostrar cartas:
-            Muestra por pantalla las cartas en mano.
-        """
+        """Funcion mostrar cartas: Muestra por pantalla las cartas en mano y comodines."""
         # Mostrar cartas de la mano / Animacion de seleccion de carta
         pos_x = 535
         for carta in self.mano:
@@ -130,13 +143,8 @@ class Jugador:
         # Mostrar num de cartas en el mazo
         Texto.mostrar_texto_centrado(screen, f"{len(self.mazo.cartas)}", 1230, 600, 50)
 
-    def actualizar(
-        self, eventos
-    ):  # Comprueba si alguna carta es seleccionada, si esto se cumple, se anade a self._cartas_seleccionadas
-        """
-        Funcion actualizar:
-            Actualiza los comodines que tiene en mano el jugador.
-        """
+    def actualizar(self, eventos):
+        """Funcion actualizar: Comprueba la seleccion de cartas y actualiza la posicion de los comodines."""
         area_comodines = pygame.Rect(50, 520, 425, 145)
         for c in self.comodines_mano:
             c.mover_comodines(eventos, self.comodines_mano, limite_rect=area_comodines)
@@ -150,10 +158,7 @@ class Jugador:
                     continue
 
     def jugar_cartas(self):
-        """
-        Funcion jugar cartas:
-            Comprueba si hay cartas seleccionadas y las juega o las descarta.
-        """
+        """Funcion jugar cartas: Evalua las cartas seleccionadas, aplica comodines y actualiza los puntos."""
         if (
             len(self._cartas_seleccionadas) <= self.limite_seleccion
             and self._cartas_seleccionadas
@@ -202,10 +207,7 @@ class Jugador:
                 self.game_over = True
 
     def descartar_cartas(self, origen):
-        """
-        Funcion descartar cartas:
-            Descarta las cartas del mazo.
-        """
+        """Funcion descartar cartas: Descarta las cartas del mazo."""
         if origen == "boton" and self.limite_descartar > 0:
             self.limite_descartar -= 1
         elif not origen == "jugar_cartas":
@@ -225,10 +227,7 @@ class Jugador:
 
     # Manejo de partidas guardadas
     def guardar_partida(self):
-        """
-        Funcion guardar partida:
-            Se guarda la partida.
-        """
+        """Funcion guardar partida: Guarda la partida actual."""
         # mazo y mano se guardan como listas de strings con el valor y el palo concatenados
         datos = {
             "puntos": self.puntos,
@@ -251,10 +250,7 @@ class Jugador:
         self.guardado.guardar_partida(self.slot_seleccionado, datos)
 
     def cargar_partida(self):
-        """
-        Funcion cargar partida:
-            Se carga la partida guardada.
-        """
+        """Funcion cargar partida: Se carga la partida del guardado seleccionado."""
         datos = self.guardado.cargar_partida(self.slot_seleccionado)
         if datos:
             self.puntos = datos["puntos"]
@@ -284,17 +280,11 @@ class Jugador:
             return None
 
     def borrar_partida(self):
-        """
-        Funcion borrar partida:
-            Se borra la partida.
-        """
+        """Funcion borrar partida: Se borra la partida seleccionada."""
         self.guardado.borrar_partida(self.slot_seleccionado)
 
     def siguiente_ronda(self):
-        """
-        Funcion siguiente ronda:
-            Pasa a la siguiente ronda, ademas de que si llega a un determinado nivel salta un boss.
-        """
+        """Funcion siguiente ronda: Avanza al siguiente nivel y reinicia los parametros de la ronda."""
         self.niveles.siguente_nivel()
 
         self.puntos = 0
