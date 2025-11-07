@@ -4,3 +4,5 @@ MarkupSafe==3.0.3
 pdoc==16.0.0
 pygame==2.6.1
 Pygments==2.19.2
+pytest==8.4.2
+pytest-cov==7.0.0
