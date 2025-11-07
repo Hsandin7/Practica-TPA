@@ -24,10 +24,10 @@ def jugada(condicion, base, multiplicador):
 
 
 class Evaluador_Cartas:
-    """Clase Evaluador_Cartas: Comprueba si las cartas jugadas tienen alguna puntuación
+    """Clase Evaluador_Cartas: Comprueba si las cartas jugadas tienen alguna puntuación.
     
         Inicializa los atributos:
-        - cartas es la lista de las cartas jugadas
+        - cartas es la lista de las cartas jugadas.
         - resultado lo que se devulve al acabar la evaluacion.
         
     """

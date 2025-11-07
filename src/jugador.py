@@ -11,17 +11,26 @@ from src.niveles import Niveles
 from src.comodines import Comodin
 
 class Jugador:
+    """
+        Clase Jugador:
+            Se guardan los datos que se muestran en pantalla del jugador.
+            
+            Inicializacion de variables:
+            - Puntos que tiene obtiene el juagdor.
+            - El dineroo que posee el juagdor.
+            - Se muestra tambien el nivel en el que está.
+            - Y el multiplicador se trata de las funciones que le da los comodines.
+    """
     def __init__(self):
         self.puntos = 0
         self.puntos_nivel = 100
         self.puntos_cartas = 0
         self.multiplicador = 0
-        self.slot_seleccionado = 0
-        self.sig_nivel = False
+        self.slot_seleccionado = None
+        self.nivel_completado = False
         self.game_over = False
         self.numero_nivel = 1
         self.dinero=0
-        self.carta_inhabilitada = None
         
         self.evaluador =        Evaluador_Cartas()
         self.animador_texto =   Animador_Texto()
@@ -30,13 +39,7 @@ class Jugador:
         self.guardado =         Guardado()
         
         self.mano = [self.mazo.robar() for _ in range(0,8)]
-        self.comodines_mano=[
-            # Comodin("gloton"),
-            # Comodin("gloton"),
-            # Comodin("gloton"),
-            # Comodin("gloton"),
-            # Comodin("gloton")
-        ]
+        self.comodines_mano = []
         
         self._cartas_seleccionadas =    list()
         self._cartas_jugadas =          list()
@@ -48,6 +51,10 @@ class Jugador:
 
     
     def mostrar_puntos(self, screen):
+        """
+        La funcion mostrar puntos:
+            Muestra por pantalla los puntos conseguidos.
+        """
         puntos_formateados = f"{self.puntos:,}".replace(",", ".")
         mostrar_texto_centrado(screen, puntos_formateados, 900, 125, 50)
         mostrar_texto_centrado(screen, f"{self.multiplicador}", 950, 190)
@@ -68,6 +75,10 @@ class Jugador:
         mostrar_texto_centrado(screen, str(self.limite_jugar), 264, 437, 30, color = (0, 0, 0))
 
     def mostrar_cartas(self, screen):
+        """
+        La funcion mostrar cartas:
+            Muestra por pantalla las cartas en mano.
+        """
         # Mostrar cartas de la mano / Animacion de seleccion de carta
         pos_x = 535
         for carta in self.mano:
@@ -108,11 +119,15 @@ class Jugador:
         # Mostrar num de cartas seleccionadas
         mostrar_texto(screen, f"{len(self._cartas_seleccionadas)}/5", 1170, 500, 20)
 
-        # Temporal?
+        # Mostrar num de cartas en el mazo
         mostrar_texto_centrado(screen, f"{len(self.mazo.cartas)}", 1230, 600, 50)
 
 
     def actualizar(self, eventos):      # Comprueba si alguna carta es seleccionada, si esto se cumple, se anade a self._cartas_seleccionadas
+        """
+        Funcion actualizar:
+            Actualiza los comodines que tiene en mano el jugador.
+        """
         area_comodines=pygame.Rect(50,520,425,145)
         for c in self.comodines_mano:
             c.mover_comodines(eventos,self.comodines_mano,limite_rect=area_comodines)
@@ -127,6 +142,11 @@ class Jugador:
             
 
     def jugar_cartas(self):
+        
+        """
+            Funcion jugar cartas:
+                Comprueba si hay cartas seleccionadas y las juega o las descarta.
+        """
         if len(self._cartas_seleccionadas) <= self.limite_seleccion and self._cartas_seleccionadas:    # Comprueba que haya cartas seleccionadas
             self.limite_jugar -= 1
 
@@ -139,7 +159,7 @@ class Jugador:
                 for comodin in self.comodines_mano:
                     self.puntos_cartas, self.multiplicador, self.dinero = comodin.aplicar(self.mano, self.puntos_cartas, self.multiplicador, self.dinero, self._cartas_jugadas, self.comodines_mano)
 
-                print(f"Operacion despues: {self.puntos_cartas} * {self.multiplicador} = {self.puntos}")
+                # print(f"Operacion despues: {self.puntos_cartas} * {self.multiplicador} = {self.puntos}")
 
             self.puntos += self.puntos_cartas * self.multiplicador
 
@@ -150,12 +170,16 @@ class Jugador:
             self.animador_texto.iniciar(f"{self.puntos_cartas * self.multiplicador}", 1100, 150,y_final=90)
 
             if self.puntos >= self.puntos_nivel:
-                self.siguente_ronda()
+                self.siguiente_ronda()
             elif self.limite_jugar <= 0:
                 self.game_over = True
 
 
     def descartar_cartas(self, origen):
+        """
+            Funcion descartar cartas:
+                Descarta las cartas del mazo.
+        """
         if (origen == "boton" and self.limite_descartar > 0):
             self.limite_descartar -= 1
         elif not origen == "jugar_cartas":
@@ -167,12 +191,16 @@ class Jugador:
                 self._cartas_descartadas.append(carta)
                 self.mano.remove(carta)
             self._cartas_seleccionadas.clear()
-        while len(self.mano) is not 8:
+        while len(self.mano) != 8:
             self.mano.append(self.mazo.robar())
 
 
     # Manejo de partidas guardadas
     def guardar_partida(self):
+        """
+            Funcion guardar partida:
+                Se guarda la partida.
+        """
         # mazo y mano se guardan como listas de strings con el valor y el palo concatenados
         datos = {
             "puntos":           self.puntos,
@@ -193,6 +221,10 @@ class Jugador:
         self.guardado.guardar_partida(self.slot_seleccionado, datos)
     
     def cargar_partida(self):
+        """
+            Funcion cargar partida:
+                Se carga la partida guardada.
+        """
         datos = self.guardado.cargar_partida(self.slot_seleccionado)
         if datos:
             self.puntos =           datos["puntos"]
@@ -205,7 +237,7 @@ class Jugador:
             self.limite_descartar = datos["limite_descartar"]
             self.limite_jugar =     datos["limite_jugar"]
 
-            self.comodines_mano =   [Comodin(nombre) for nombre in datos["comodines"]] if datos["comodines"] else None
+            self.comodines_mano =   [Comodin(nombre) for nombre in datos["comodines"]] if datos["comodines"] else []
             self.mano =             [Carta(c[0], c[1]) for c in datos["mano"]]
             self.mazo.cartas =      [Carta(c[0], c[1]) for c in datos["mazo"]]
             self._cartas_jugadas =  [Carta(c[0], c[1]) for c in datos["cartas_jugadas"]] if datos["cartas_jugadas"] else None
@@ -214,30 +246,36 @@ class Jugador:
             return None
     
     def borrar_partida(self):
+        """
+            Funcion borrar partida:
+                Se borra la partida.
+        """
         self.guardado.borrar_partida(self.slot_seleccionado)
 
-    def siguente_ronda (self):
+    def siguiente_ronda (self):
+        """
+        Funcion siguiente ronda:
+            Pasa a la siguiente ronda, ademas de que si llega a un determinado nivel salta un boss.
+        """
         self.niveles.siguente_nivel()
         
         self.puntos = 0
         self.dinero += 2
         self.puntos_nivel = self.niveles.puntos_nivel
-        self.carta_inhabilitada = self.niveles.carta_invalida
         
         self.mazo = Mazo()
-        if self.carta_inhabilitada:
+        if self.niveles.carta_invalida:
             for carta in self.mazo.cartas:
-                if carta.valor == self.carta_inhabilitada:
+                if carta.valor == self.niveles.carta_invalida:
                     carta.habilitada = False
-        print(f"Carta inhabilitada por BOSS: {self.carta_inhabilitada}")
+        # print(f"Carta inhabilitada por BOSS: {self.niveles.carta_invalida}")
         self.mano = [self.mazo.robar() for _ in range(0,8)]
 
-        self.sig_nivel = True
+        self.nivel_completado = True
         self._cartas_jugadas = None
         self.limite_jugar = 4
         self.limite_descartar = 3
         self.numero_nivel += 1
-        self.carta_inhabilitada = None
 
         if not self.niveles.es_boss:
             self.niveles.color_pantalla = (0, 0, 0)

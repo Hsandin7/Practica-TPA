@@ -68,7 +68,7 @@ class Carta(Boton):
 
     def detectar_seleccion(self, eventos):
         """Funcion deterctar_seleccion: detecta si se le ha dado click a la carta y 
-            devuelve true o false"""
+            devuelve true o false."""
             
         if self.detectar_click(eventos):
             self.seleccionada = not self.seleccionada
