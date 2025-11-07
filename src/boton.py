@@ -78,7 +78,9 @@ class Boton:
         if self.rect.collidepoint(mouse_pos):
             for event in eventos:
                 if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
-                    sonido = self._get_cache_sonido(self._sonido_click)  # Reproducir sonido
+                    sonido = self._get_cache_sonido(
+                        self._sonido_click
+                    )  # Reproducir sonido
                     sonido.play()
                     return True
         return False

@@ -101,89 +101,90 @@
 </span><span id="L-3"><a href="#L-3"><span class="linenos"> 3</span></a>
 </span><span id="L-4"><a href="#L-4"><span class="linenos"> 4</span></a>
 </span><span id="L-5"><a href="#L-5"><span class="linenos"> 5</span></a><span class="k">class</span><span class="w"> </span><span class="nc">Carta</span><span class="p">(</span><span class="n">Boton</span><span class="p">):</span>
-</span><span id="L-6"><a href="#L-6"><span class="linenos"> 6</span></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;Clase Carta: Guarda la informacion de cada carta y hereda de la clase Boton.</span>
+</span><span id="L-6"><a href="#L-6"><span class="linenos"> 6</span></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;Clase Carta: Guarda la informacion y funcionalidad de una carta heredando de la clase Boton.</span>
 </span><span id="L-7"><a href="#L-7"><span class="linenos"> 7</span></a>
 </span><span id="L-8"><a href="#L-8"><span class="linenos"> 8</span></a><span class="sd">    Inicializa los atributos:</span>
-</span><span id="L-9"><a href="#L-9"><span class="linenos"> 9</span></a><span class="sd">    - _valor el cual es el numero de la carta</span>
-</span><span id="L-10"><a href="#L-10"><span class="linenos">10</span></a><span class="sd">    - _palo es la figura de la carta</span>
-</span><span id="L-11"><a href="#L-11"><span class="linenos">11</span></a><span class="sd">    - x_final sirven para las animaciones</span>
-</span><span id="L-12"><a href="#L-12"><span class="linenos">12</span></a><span class="sd">    - y_final sirven para las animaciones</span>
-</span><span id="L-13"><a href="#L-13"><span class="linenos">13</span></a><span class="sd">    - velodidad sirve para la velocidad de las animaciones</span>
-</span><span id="L-14"><a href="#L-14"><span class="linenos">14</span></a><span class="sd">    - seleccionada devuelve si esta seleccionada la carta.</span>
-</span><span id="L-15"><a href="#L-15"><span class="linenos">15</span></a>
-</span><span id="L-16"><a href="#L-16"><span class="linenos">16</span></a><span class="sd">    &quot;&quot;&quot;</span>
-</span><span id="L-17"><a href="#L-17"><span class="linenos">17</span></a>
-</span><span id="L-18"><a href="#L-18"><span class="linenos">18</span></a>    <span class="n">PALOS</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;o&quot;</span><span class="p">,</span> <span class="s2">&quot;c&quot;</span><span class="p">,</span> <span class="s2">&quot;e&quot;</span><span class="p">,</span> <span class="s2">&quot;b&quot;</span><span class="p">]</span>  <span class="c1"># Oros(o), Copas(c), Espadas(e), Bastos(b)</span>
-</span><span id="L-19"><a href="#L-19"><span class="linenos">19</span></a>    <span class="n">VALORES</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">13</span><span class="p">))</span>
-</span><span id="L-20"><a href="#L-20"><span class="linenos">20</span></a>
-</span><span id="L-21"><a href="#L-21"><span class="linenos">21</span></a>    <span class="n">_cache_filtros</span> <span class="o">=</span> <span class="p">{}</span>
-</span><span id="L-22"><a href="#L-22"><span class="linenos">22</span></a>
-</span><span id="L-23"><a href="#L-23"><span class="linenos">23</span></a>    <span class="nd">@classmethod</span>
-</span><span id="L-24"><a href="#L-24"><span class="linenos">24</span></a>    <span class="k">def</span><span class="w"> </span><span class="nf">_get_cache_filtro</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">valor</span><span class="p">,</span> <span class="n">palo</span><span class="p">):</span>
-</span><span id="L-25"><a href="#L-25"><span class="linenos">25</span></a>        <span class="n">carta</span> <span class="o">=</span> <span class="p">(</span><span class="n">valor</span><span class="p">,</span> <span class="n">palo</span><span class="p">)</span>
-</span><span id="L-26"><a href="#L-26"><span class="linenos">26</span></a>        <span class="k">if</span> <span class="n">carta</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">cls</span><span class="o">.</span><span class="n">_cache_filtros</span><span class="p">:</span>
-</span><span id="L-27"><a href="#L-27"><span class="linenos">27</span></a>            <span class="n">imagen</span> <span class="o">=</span> <span class="n">pygame</span><span class="o">.</span><span class="n">image</span><span class="o">.</span><span class="n">load</span><span class="p">(</span>
-</span><span id="L-28"><a href="#L-28"><span class="linenos">28</span></a>                <span class="sa">f</span><span class="s2">&quot;Graficos/cartas/</span><span class="si">{</span><span class="n">valor</span><span class="si">}{</span><span class="n">palo</span><span class="si">}</span><span class="s2">.png&quot;</span>
-</span><span id="L-29"><a href="#L-29"><span class="linenos">29</span></a>            <span class="p">)</span><span class="o">.</span><span class="n">convert_alpha</span><span class="p">()</span>
-</span><span id="L-30"><a href="#L-30"><span class="linenos">30</span></a>            <span class="n">filtro</span> <span class="o">=</span> <span class="n">pygame</span><span class="o">.</span><span class="n">Surface</span><span class="p">(</span><span class="n">imagen</span><span class="o">.</span><span class="n">get_size</span><span class="p">(),</span> <span class="n">pygame</span><span class="o">.</span><span class="n">SRCALPHA</span><span class="p">)</span>
-</span><span id="L-31"><a href="#L-31"><span class="linenos">31</span></a>            <span class="n">filtro</span><span class="o">.</span><span class="n">fill</span><span class="p">((</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">60</span><span class="p">,</span> <span class="mi">180</span><span class="p">))</span>
-</span><span id="L-32"><a href="#L-32"><span class="linenos">32</span></a>            <span class="n">imagen</span><span class="o">.</span><span class="n">blit</span><span class="p">(</span><span class="n">filtro</span><span class="p">,</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span> <span class="n">special_flags</span><span class="o">=</span><span class="n">pygame</span><span class="o">.</span><span class="n">BLEND_RGBA_MULT</span><span class="p">)</span>
-</span><span id="L-33"><a href="#L-33"><span class="linenos">33</span></a>            <span class="bp">cls</span><span class="o">.</span><span class="n">_cache_filtros</span><span class="p">[</span><span class="n">carta</span><span class="p">]</span> <span class="o">=</span> <span class="n">imagen</span>
-</span><span id="L-34"><a href="#L-34"><span class="linenos">34</span></a>        <span class="k">return</span> <span class="bp">cls</span><span class="o">.</span><span class="n">_cache_filtros</span><span class="p">[</span><span class="n">carta</span><span class="p">]</span>
-</span><span id="L-35"><a href="#L-35"><span class="linenos">35</span></a>
-</span><span id="L-36"><a href="#L-36"><span class="linenos">36</span></a>    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">valor</span><span class="p">,</span> <span class="n">palo</span><span class="p">):</span>
-</span><span id="L-37"><a href="#L-37"><span class="linenos">37</span></a>        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span>
-</span><span id="L-38"><a href="#L-38"><span class="linenos">38</span></a>            <span class="sa">f</span><span class="s2">&quot;Graficos/cartas/</span><span class="si">{</span><span class="n">valor</span><span class="si">}{</span><span class="n">palo</span><span class="si">}</span><span class="s2">.png&quot;</span><span class="p">,</span>
-</span><span id="L-39"><a href="#L-39"><span class="linenos">39</span></a>            <span class="mi">1200</span><span class="p">,</span>
-</span><span id="L-40"><a href="#L-40"><span class="linenos">40</span></a>            <span class="mi">600</span><span class="p">,</span>
-</span><span id="L-41"><a href="#L-41"><span class="linenos">41</span></a>            <span class="s2">&quot;Sonidos/sonido_seleccionar_cartas.mp3&quot;</span><span class="p">,</span>
-</span><span id="L-42"><a href="#L-42"><span class="linenos">42</span></a>        <span class="p">)</span>
-</span><span id="L-43"><a href="#L-43"><span class="linenos">43</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">_valor</span> <span class="o">=</span> <span class="n">valor</span>
-</span><span id="L-44"><a href="#L-44"><span class="linenos">44</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">_palo</span> <span class="o">=</span> <span class="n">palo</span>
-</span><span id="L-45"><a href="#L-45"><span class="linenos">45</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">x_final</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">x</span>
-</span><span id="L-46"><a href="#L-46"><span class="linenos">46</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">y_final</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">y</span>
-</span><span id="L-47"><a href="#L-47"><span class="linenos">47</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">velocidad</span> <span class="o">=</span> <span class="mf">0.2</span>
-</span><span id="L-48"><a href="#L-48"><span class="linenos">48</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">seleccionada</span> <span class="o">=</span> <span class="kc">False</span>
-</span><span id="L-49"><a href="#L-49"><span class="linenos">49</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">habilitada</span> <span class="o">=</span> <span class="kc">True</span>
-</span><span id="L-50"><a href="#L-50"><span class="linenos">50</span></a>
-</span><span id="L-51"><a href="#L-51"><span class="linenos">51</span></a>    <span class="nd">@property</span>
-</span><span id="L-52"><a href="#L-52"><span class="linenos">52</span></a>    <span class="k">def</span><span class="w"> </span><span class="nf">valor</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-</span><span id="L-53"><a href="#L-53"><span class="linenos">53</span></a>        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">habilitada</span><span class="p">:</span>
-</span><span id="L-54"><a href="#L-54"><span class="linenos">54</span></a>            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_valor</span>
-</span><span id="L-55"><a href="#L-55"><span class="linenos">55</span></a>        <span class="k">else</span><span class="p">:</span>
-</span><span id="L-56"><a href="#L-56"><span class="linenos">56</span></a>            <span class="k">return</span> <span class="mi">0</span>
-</span><span id="L-57"><a href="#L-57"><span class="linenos">57</span></a>
-</span><span id="L-58"><a href="#L-58"><span class="linenos">58</span></a>    <span class="nd">@property</span>
-</span><span id="L-59"><a href="#L-59"><span class="linenos">59</span></a>    <span class="k">def</span><span class="w"> </span><span class="nf">palo</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-</span><span id="L-60"><a href="#L-60"><span class="linenos">60</span></a>        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_palo</span>
-</span><span id="L-61"><a href="#L-61"><span class="linenos">61</span></a>
-</span><span id="L-62"><a href="#L-62"><span class="linenos">62</span></a>    <span class="k">def</span><span class="w"> </span><span class="nf">mover_hacia_destino</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-</span><span id="L-63"><a href="#L-63"><span class="linenos">63</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;Funcion mover_hacia_destino: cambia la posicion actual de la carta hasta</span>
-</span><span id="L-64"><a href="#L-64"><span class="linenos">64</span></a><span class="sd">        llegar a la posicion final, para la animacion.&quot;&quot;&quot;</span>
-</span><span id="L-65"><a href="#L-65"><span class="linenos">65</span></a>        <span class="n">x</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">x</span>
-</span><span id="L-66"><a href="#L-66"><span class="linenos">66</span></a>        <span class="n">y</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">y</span>
-</span><span id="L-67"><a href="#L-67"><span class="linenos">67</span></a>        <span class="n">x</span> <span class="o">+=</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">x_final</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">x</span><span class="p">)</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">velocidad</span>
-</span><span id="L-68"><a href="#L-68"><span class="linenos">68</span></a>        <span class="n">y</span> <span class="o">+=</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">y_final</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">y</span><span class="p">)</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">velocidad</span>
-</span><span id="L-69"><a href="#L-69"><span class="linenos">69</span></a>        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">asignar_posicion</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
-</span><span id="L-70"><a href="#L-70"><span class="linenos">70</span></a>
-</span><span id="L-71"><a href="#L-71"><span class="linenos">71</span></a>    <span class="k">def</span><span class="w"> </span><span class="nf">dibujar</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">screen</span><span class="p">):</span>
-</span><span id="L-72"><a href="#L-72"><span class="linenos">72</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;Funcion dibujar: accede a la funcion mover_hacia_destino y muestra la carta.&quot;&quot;&quot;</span>
-</span><span id="L-73"><a href="#L-73"><span class="linenos">73</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">mover_hacia_destino</span><span class="p">()</span>
-</span><span id="L-74"><a href="#L-74"><span class="linenos">74</span></a>        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">dibujar</span><span class="p">(</span><span class="n">screen</span><span class="p">)</span>
-</span><span id="L-75"><a href="#L-75"><span class="linenos">75</span></a>        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">habilitada</span><span class="p">:</span>
-</span><span id="L-76"><a href="#L-76"><span class="linenos">76</span></a>            <span class="n">imagen</span> <span class="o">=</span> <span class="n">Carta</span><span class="o">.</span><span class="n">_get_cache_filtro</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_valor</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_palo</span><span class="p">)</span>
-</span><span id="L-77"><a href="#L-77"><span class="linenos">77</span></a>            <span class="n">screen</span><span class="o">.</span><span class="n">blit</span><span class="p">(</span><span class="n">imagen</span><span class="p">,</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">x</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">y</span><span class="p">))</span>
-</span><span id="L-78"><a href="#L-78"><span class="linenos">78</span></a>
-</span><span id="L-79"><a href="#L-79"><span class="linenos">79</span></a>    <span class="k">def</span><span class="w"> </span><span class="nf">detectar_seleccion</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">eventos</span><span class="p">):</span>
-</span><span id="L-80"><a href="#L-80"><span class="linenos">80</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;Funcion deterctar_seleccion: detecta si se le ha dado click a la carta y</span>
-</span><span id="L-81"><a href="#L-81"><span class="linenos">81</span></a><span class="sd">        devuelve true o false.&quot;&quot;&quot;</span>
-</span><span id="L-82"><a href="#L-82"><span class="linenos">82</span></a>
-</span><span id="L-83"><a href="#L-83"><span class="linenos">83</span></a>        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">detectar_click</span><span class="p">(</span><span class="n">eventos</span><span class="p">):</span>
-</span><span id="L-84"><a href="#L-84"><span class="linenos">84</span></a>            <span class="bp">self</span><span class="o">.</span><span class="n">seleccionada</span> <span class="o">=</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">seleccionada</span>
-</span><span id="L-85"><a href="#L-85"><span class="linenos">85</span></a>            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">seleccionada</span><span class="p">:</span>
-</span><span id="L-86"><a href="#L-86"><span class="linenos">86</span></a>                <span class="k">return</span> <span class="kc">True</span>
-</span><span id="L-87"><a href="#L-87"><span class="linenos">87</span></a>            <span class="k">else</span><span class="p">:</span>
-</span><span id="L-88"><a href="#L-88"><span class="linenos">88</span></a>                <span class="k">return</span> <span class="kc">False</span>
+</span><span id="L-9"><a href="#L-9"><span class="linenos"> 9</span></a><span class="sd">    - _valor: numero de la carta.</span>
+</span><span id="L-10"><a href="#L-10"><span class="linenos">10</span></a><span class="sd">    - _palo: figura de la carta.</span>
+</span><span id="L-11"><a href="#L-11"><span class="linenos">11</span></a><span class="sd">    - x_final: para la animacion de movimiento.</span>
+</span><span id="L-12"><a href="#L-12"><span class="linenos">12</span></a><span class="sd">    - y_final: para la animacion de movimiento.</span>
+</span><span id="L-13"><a href="#L-13"><span class="linenos">13</span></a><span class="sd">    - velodidad: velocidad de la animacion de movimiento.</span>
+</span><span id="L-14"><a href="#L-14"><span class="linenos">14</span></a><span class="sd">    - seleccionada: booleano para determinar si esta seleccionada o no la carta.</span>
+</span><span id="L-15"><a href="#L-15"><span class="linenos">15</span></a><span class="sd">    &quot;&quot;&quot;</span>
+</span><span id="L-16"><a href="#L-16"><span class="linenos">16</span></a>
+</span><span id="L-17"><a href="#L-17"><span class="linenos">17</span></a>    <span class="n">PALOS</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;o&quot;</span><span class="p">,</span> <span class="s2">&quot;c&quot;</span><span class="p">,</span> <span class="s2">&quot;e&quot;</span><span class="p">,</span> <span class="s2">&quot;b&quot;</span><span class="p">]</span>  <span class="c1"># Oros(o), Copas(c), Espadas(e), Bastos(b)</span>
+</span><span id="L-18"><a href="#L-18"><span class="linenos">18</span></a>    <span class="n">VALORES</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">13</span><span class="p">))</span>
+</span><span id="L-19"><a href="#L-19"><span class="linenos">19</span></a>
+</span><span id="L-20"><a href="#L-20"><span class="linenos">20</span></a>    <span class="n">_cache_filtros</span> <span class="o">=</span> <span class="p">{}</span>
+</span><span id="L-21"><a href="#L-21"><span class="linenos">21</span></a>
+</span><span id="L-22"><a href="#L-22"><span class="linenos">22</span></a>    <span class="nd">@classmethod</span>
+</span><span id="L-23"><a href="#L-23"><span class="linenos">23</span></a>    <span class="k">def</span><span class="w"> </span><span class="nf">_get_cache_filtro</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">valor</span><span class="p">,</span> <span class="n">palo</span><span class="p">):</span>
+</span><span id="L-24"><a href="#L-24"><span class="linenos">24</span></a>        <span class="n">carta</span> <span class="o">=</span> <span class="p">(</span><span class="n">valor</span><span class="p">,</span> <span class="n">palo</span><span class="p">)</span>
+</span><span id="L-25"><a href="#L-25"><span class="linenos">25</span></a>        <span class="k">if</span> <span class="n">carta</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">cls</span><span class="o">.</span><span class="n">_cache_filtros</span><span class="p">:</span>
+</span><span id="L-26"><a href="#L-26"><span class="linenos">26</span></a>            <span class="n">imagen</span> <span class="o">=</span> <span class="n">pygame</span><span class="o">.</span><span class="n">image</span><span class="o">.</span><span class="n">load</span><span class="p">(</span>
+</span><span id="L-27"><a href="#L-27"><span class="linenos">27</span></a>                <span class="sa">f</span><span class="s2">&quot;Graficos/cartas/</span><span class="si">{</span><span class="n">valor</span><span class="si">}{</span><span class="n">palo</span><span class="si">}</span><span class="s2">.png&quot;</span>
+</span><span id="L-28"><a href="#L-28"><span class="linenos">28</span></a>            <span class="p">)</span><span class="o">.</span><span class="n">convert_alpha</span><span class="p">()</span>
+</span><span id="L-29"><a href="#L-29"><span class="linenos">29</span></a>            <span class="n">filtro</span> <span class="o">=</span> <span class="n">pygame</span><span class="o">.</span><span class="n">Surface</span><span class="p">(</span><span class="n">imagen</span><span class="o">.</span><span class="n">get_size</span><span class="p">(),</span> <span class="n">pygame</span><span class="o">.</span><span class="n">SRCALPHA</span><span class="p">)</span>
+</span><span id="L-30"><a href="#L-30"><span class="linenos">30</span></a>            <span class="n">filtro</span><span class="o">.</span><span class="n">fill</span><span class="p">((</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">60</span><span class="p">,</span> <span class="mi">180</span><span class="p">))</span>
+</span><span id="L-31"><a href="#L-31"><span class="linenos">31</span></a>            <span class="n">imagen</span><span class="o">.</span><span class="n">blit</span><span class="p">(</span><span class="n">filtro</span><span class="p">,</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span> <span class="n">special_flags</span><span class="o">=</span><span class="n">pygame</span><span class="o">.</span><span class="n">BLEND_RGBA_MULT</span><span class="p">)</span>
+</span><span id="L-32"><a href="#L-32"><span class="linenos">32</span></a>            <span class="bp">cls</span><span class="o">.</span><span class="n">_cache_filtros</span><span class="p">[</span><span class="n">carta</span><span class="p">]</span> <span class="o">=</span> <span class="n">imagen</span>
+</span><span id="L-33"><a href="#L-33"><span class="linenos">33</span></a>        <span class="k">return</span> <span class="bp">cls</span><span class="o">.</span><span class="n">_cache_filtros</span><span class="p">[</span><span class="n">carta</span><span class="p">]</span>
+</span><span id="L-34"><a href="#L-34"><span class="linenos">34</span></a>
+</span><span id="L-35"><a href="#L-35"><span class="linenos">35</span></a>    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">valor</span><span class="p">,</span> <span class="n">palo</span><span class="p">):</span>
+</span><span id="L-36"><a href="#L-36"><span class="linenos">36</span></a>        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span>
+</span><span id="L-37"><a href="#L-37"><span class="linenos">37</span></a>            <span class="sa">f</span><span class="s2">&quot;Graficos/cartas/</span><span class="si">{</span><span class="n">valor</span><span class="si">}{</span><span class="n">palo</span><span class="si">}</span><span class="s2">.png&quot;</span><span class="p">,</span>
+</span><span id="L-38"><a href="#L-38"><span class="linenos">38</span></a>            <span class="mi">1200</span><span class="p">,</span>
+</span><span id="L-39"><a href="#L-39"><span class="linenos">39</span></a>            <span class="mi">600</span><span class="p">,</span>
+</span><span id="L-40"><a href="#L-40"><span class="linenos">40</span></a>            <span class="s2">&quot;Sonidos/sonido_seleccionar_cartas.mp3&quot;</span><span class="p">,</span>
+</span><span id="L-41"><a href="#L-41"><span class="linenos">41</span></a>        <span class="p">)</span>
+</span><span id="L-42"><a href="#L-42"><span class="linenos">42</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">_valor</span> <span class="o">=</span> <span class="n">valor</span>
+</span><span id="L-43"><a href="#L-43"><span class="linenos">43</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">_palo</span> <span class="o">=</span> <span class="n">palo</span>
+</span><span id="L-44"><a href="#L-44"><span class="linenos">44</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">x_final</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">x</span>
+</span><span id="L-45"><a href="#L-45"><span class="linenos">45</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">y_final</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">y</span>
+</span><span id="L-46"><a href="#L-46"><span class="linenos">46</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">velocidad</span> <span class="o">=</span> <span class="mf">0.2</span>
+</span><span id="L-47"><a href="#L-47"><span class="linenos">47</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">seleccionada</span> <span class="o">=</span> <span class="kc">False</span>
+</span><span id="L-48"><a href="#L-48"><span class="linenos">48</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">habilitada</span> <span class="o">=</span> <span class="kc">True</span>
+</span><span id="L-49"><a href="#L-49"><span class="linenos">49</span></a>
+</span><span id="L-50"><a href="#L-50"><span class="linenos">50</span></a>    <span class="nd">@property</span>
+</span><span id="L-51"><a href="#L-51"><span class="linenos">51</span></a>    <span class="k">def</span><span class="w"> </span><span class="nf">valor</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+</span><span id="L-52"><a href="#L-52"><span class="linenos">52</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;Getter valor: Solo si esta habilitada devuelve el valor de la carta,</span>
+</span><span id="L-53"><a href="#L-53"><span class="linenos">53</span></a><span class="sd">        impidiendo que se cambie.&quot;&quot;&quot;</span>
+</span><span id="L-54"><a href="#L-54"><span class="linenos">54</span></a>        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">habilitada</span><span class="p">:</span>
+</span><span id="L-55"><a href="#L-55"><span class="linenos">55</span></a>            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_valor</span>
+</span><span id="L-56"><a href="#L-56"><span class="linenos">56</span></a>        <span class="k">else</span><span class="p">:</span>
+</span><span id="L-57"><a href="#L-57"><span class="linenos">57</span></a>            <span class="k">return</span> <span class="mi">0</span>
+</span><span id="L-58"><a href="#L-58"><span class="linenos">58</span></a>
+</span><span id="L-59"><a href="#L-59"><span class="linenos">59</span></a>    <span class="nd">@property</span>
+</span><span id="L-60"><a href="#L-60"><span class="linenos">60</span></a>    <span class="k">def</span><span class="w"> </span><span class="nf">palo</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+</span><span id="L-61"><a href="#L-61"><span class="linenos">61</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;Getter palo: Devuelve la figura de la carta, impidiendo que se cambie.&quot;&quot;&quot;</span>
+</span><span id="L-62"><a href="#L-62"><span class="linenos">62</span></a>        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_palo</span>
+</span><span id="L-63"><a href="#L-63"><span class="linenos">63</span></a>
+</span><span id="L-64"><a href="#L-64"><span class="linenos">64</span></a>    <span class="k">def</span><span class="w"> </span><span class="nf">mover_hacia_destino</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+</span><span id="L-65"><a href="#L-65"><span class="linenos">65</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;Funcion mover_hacia_destino: Cambia la posicion actual segun la velocidad de la</span>
+</span><span id="L-66"><a href="#L-66"><span class="linenos">66</span></a><span class="sd">        carta hasta llegar a la posicion final. Es la animacion de movimiento.&quot;&quot;&quot;</span>
+</span><span id="L-67"><a href="#L-67"><span class="linenos">67</span></a>        <span class="n">x</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">x</span>
+</span><span id="L-68"><a href="#L-68"><span class="linenos">68</span></a>        <span class="n">y</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">y</span>
+</span><span id="L-69"><a href="#L-69"><span class="linenos">69</span></a>        <span class="n">x</span> <span class="o">+=</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">x_final</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">x</span><span class="p">)</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">velocidad</span>
+</span><span id="L-70"><a href="#L-70"><span class="linenos">70</span></a>        <span class="n">y</span> <span class="o">+=</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">y_final</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">y</span><span class="p">)</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">velocidad</span>
+</span><span id="L-71"><a href="#L-71"><span class="linenos">71</span></a>        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">asignar_posicion</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+</span><span id="L-72"><a href="#L-72"><span class="linenos">72</span></a>
+</span><span id="L-73"><a href="#L-73"><span class="linenos">73</span></a>    <span class="k">def</span><span class="w"> </span><span class="nf">dibujar</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">screen</span><span class="p">):</span>
+</span><span id="L-74"><a href="#L-74"><span class="linenos">74</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;Funcion dibujar: Actualiza la funcion mover_hacia_destino y muestra la carta.&quot;&quot;&quot;</span>
+</span><span id="L-75"><a href="#L-75"><span class="linenos">75</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">mover_hacia_destino</span><span class="p">()</span>
+</span><span id="L-76"><a href="#L-76"><span class="linenos">76</span></a>        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">dibujar</span><span class="p">(</span><span class="n">screen</span><span class="p">)</span>
+</span><span id="L-77"><a href="#L-77"><span class="linenos">77</span></a>        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">habilitada</span><span class="p">:</span>
+</span><span id="L-78"><a href="#L-78"><span class="linenos">78</span></a>            <span class="n">imagen</span> <span class="o">=</span> <span class="n">Carta</span><span class="o">.</span><span class="n">_get_cache_filtro</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_valor</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_palo</span><span class="p">)</span>
+</span><span id="L-79"><a href="#L-79"><span class="linenos">79</span></a>            <span class="n">screen</span><span class="o">.</span><span class="n">blit</span><span class="p">(</span><span class="n">imagen</span><span class="p">,</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">x</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">y</span><span class="p">))</span>
+</span><span id="L-80"><a href="#L-80"><span class="linenos">80</span></a>
+</span><span id="L-81"><a href="#L-81"><span class="linenos">81</span></a>    <span class="k">def</span><span class="w"> </span><span class="nf">detectar_seleccion</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">eventos</span><span class="p">):</span>
+</span><span id="L-82"><a href="#L-82"><span class="linenos">82</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;Funcion deterctar_seleccion: Detecta si se le ha dado click a la carta y</span>
+</span><span id="L-83"><a href="#L-83"><span class="linenos">83</span></a><span class="sd">        devuelve true o false.&quot;&quot;&quot;</span>
+</span><span id="L-84"><a href="#L-84"><span class="linenos">84</span></a>        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">detectar_click</span><span class="p">(</span><span class="n">eventos</span><span class="p">):</span>
+</span><span id="L-85"><a href="#L-85"><span class="linenos">85</span></a>            <span class="bp">self</span><span class="o">.</span><span class="n">seleccionada</span> <span class="o">=</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">seleccionada</span>
+</span><span id="L-86"><a href="#L-86"><span class="linenos">86</span></a>            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">seleccionada</span><span class="p">:</span>
+</span><span id="L-87"><a href="#L-87"><span class="linenos">87</span></a>                <span class="k">return</span> <span class="kc">True</span>
+</span><span id="L-88"><a href="#L-88"><span class="linenos">88</span></a>            <span class="k">else</span><span class="p">:</span>
+</span><span id="L-89"><a href="#L-89"><span class="linenos">89</span></a>                <span class="k">return</span> <span class="kc">False</span>
 </span></pre></div>
 
 
@@ -200,103 +201,104 @@
     </div>
     <a class="headerlink" href="#Carta"></a>
             <div class="pdoc-code codehilite"><pre><span></span><span id="Carta-6"><a href="#Carta-6"><span class="linenos"> 6</span></a><span class="k">class</span><span class="w"> </span><span class="nc">Carta</span><span class="p">(</span><span class="n">Boton</span><span class="p">):</span>
-</span><span id="Carta-7"><a href="#Carta-7"><span class="linenos"> 7</span></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;Clase Carta: Guarda la informacion de cada carta y hereda de la clase Boton.</span>
+</span><span id="Carta-7"><a href="#Carta-7"><span class="linenos"> 7</span></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;Clase Carta: Guarda la informacion y funcionalidad de una carta heredando de la clase Boton.</span>
 </span><span id="Carta-8"><a href="#Carta-8"><span class="linenos"> 8</span></a>
 </span><span id="Carta-9"><a href="#Carta-9"><span class="linenos"> 9</span></a><span class="sd">    Inicializa los atributos:</span>
-</span><span id="Carta-10"><a href="#Carta-10"><span class="linenos">10</span></a><span class="sd">    - _valor el cual es el numero de la carta</span>
-</span><span id="Carta-11"><a href="#Carta-11"><span class="linenos">11</span></a><span class="sd">    - _palo es la figura de la carta</span>
-</span><span id="Carta-12"><a href="#Carta-12"><span class="linenos">12</span></a><span class="sd">    - x_final sirven para las animaciones</span>
-</span><span id="Carta-13"><a href="#Carta-13"><span class="linenos">13</span></a><span class="sd">    - y_final sirven para las animaciones</span>
-</span><span id="Carta-14"><a href="#Carta-14"><span class="linenos">14</span></a><span class="sd">    - velodidad sirve para la velocidad de las animaciones</span>
-</span><span id="Carta-15"><a href="#Carta-15"><span class="linenos">15</span></a><span class="sd">    - seleccionada devuelve si esta seleccionada la carta.</span>
-</span><span id="Carta-16"><a href="#Carta-16"><span class="linenos">16</span></a>
-</span><span id="Carta-17"><a href="#Carta-17"><span class="linenos">17</span></a><span class="sd">    &quot;&quot;&quot;</span>
-</span><span id="Carta-18"><a href="#Carta-18"><span class="linenos">18</span></a>
-</span><span id="Carta-19"><a href="#Carta-19"><span class="linenos">19</span></a>    <span class="n">PALOS</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;o&quot;</span><span class="p">,</span> <span class="s2">&quot;c&quot;</span><span class="p">,</span> <span class="s2">&quot;e&quot;</span><span class="p">,</span> <span class="s2">&quot;b&quot;</span><span class="p">]</span>  <span class="c1"># Oros(o), Copas(c), Espadas(e), Bastos(b)</span>
-</span><span id="Carta-20"><a href="#Carta-20"><span class="linenos">20</span></a>    <span class="n">VALORES</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">13</span><span class="p">))</span>
-</span><span id="Carta-21"><a href="#Carta-21"><span class="linenos">21</span></a>
-</span><span id="Carta-22"><a href="#Carta-22"><span class="linenos">22</span></a>    <span class="n">_cache_filtros</span> <span class="o">=</span> <span class="p">{}</span>
-</span><span id="Carta-23"><a href="#Carta-23"><span class="linenos">23</span></a>
-</span><span id="Carta-24"><a href="#Carta-24"><span class="linenos">24</span></a>    <span class="nd">@classmethod</span>
-</span><span id="Carta-25"><a href="#Carta-25"><span class="linenos">25</span></a>    <span class="k">def</span><span class="w"> </span><span class="nf">_get_cache_filtro</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">valor</span><span class="p">,</span> <span class="n">palo</span><span class="p">):</span>
-</span><span id="Carta-26"><a href="#Carta-26"><span class="linenos">26</span></a>        <span class="n">carta</span> <span class="o">=</span> <span class="p">(</span><span class="n">valor</span><span class="p">,</span> <span class="n">palo</span><span class="p">)</span>
-</span><span id="Carta-27"><a href="#Carta-27"><span class="linenos">27</span></a>        <span class="k">if</span> <span class="n">carta</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">cls</span><span class="o">.</span><span class="n">_cache_filtros</span><span class="p">:</span>
-</span><span id="Carta-28"><a href="#Carta-28"><span class="linenos">28</span></a>            <span class="n">imagen</span> <span class="o">=</span> <span class="n">pygame</span><span class="o">.</span><span class="n">image</span><span class="o">.</span><span class="n">load</span><span class="p">(</span>
-</span><span id="Carta-29"><a href="#Carta-29"><span class="linenos">29</span></a>                <span class="sa">f</span><span class="s2">&quot;Graficos/cartas/</span><span class="si">{</span><span class="n">valor</span><span class="si">}{</span><span class="n">palo</span><span class="si">}</span><span class="s2">.png&quot;</span>
-</span><span id="Carta-30"><a href="#Carta-30"><span class="linenos">30</span></a>            <span class="p">)</span><span class="o">.</span><span class="n">convert_alpha</span><span class="p">()</span>
-</span><span id="Carta-31"><a href="#Carta-31"><span class="linenos">31</span></a>            <span class="n">filtro</span> <span class="o">=</span> <span class="n">pygame</span><span class="o">.</span><span class="n">Surface</span><span class="p">(</span><span class="n">imagen</span><span class="o">.</span><span class="n">get_size</span><span class="p">(),</span> <span class="n">pygame</span><span class="o">.</span><span class="n">SRCALPHA</span><span class="p">)</span>
-</span><span id="Carta-32"><a href="#Carta-32"><span class="linenos">32</span></a>            <span class="n">filtro</span><span class="o">.</span><span class="n">fill</span><span class="p">((</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">60</span><span class="p">,</span> <span class="mi">180</span><span class="p">))</span>
-</span><span id="Carta-33"><a href="#Carta-33"><span class="linenos">33</span></a>            <span class="n">imagen</span><span class="o">.</span><span class="n">blit</span><span class="p">(</span><span class="n">filtro</span><span class="p">,</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span> <span class="n">special_flags</span><span class="o">=</span><span class="n">pygame</span><span class="o">.</span><span class="n">BLEND_RGBA_MULT</span><span class="p">)</span>
-</span><span id="Carta-34"><a href="#Carta-34"><span class="linenos">34</span></a>            <span class="bp">cls</span><span class="o">.</span><span class="n">_cache_filtros</span><span class="p">[</span><span class="n">carta</span><span class="p">]</span> <span class="o">=</span> <span class="n">imagen</span>
-</span><span id="Carta-35"><a href="#Carta-35"><span class="linenos">35</span></a>        <span class="k">return</span> <span class="bp">cls</span><span class="o">.</span><span class="n">_cache_filtros</span><span class="p">[</span><span class="n">carta</span><span class="p">]</span>
-</span><span id="Carta-36"><a href="#Carta-36"><span class="linenos">36</span></a>
-</span><span id="Carta-37"><a href="#Carta-37"><span class="linenos">37</span></a>    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">valor</span><span class="p">,</span> <span class="n">palo</span><span class="p">):</span>
-</span><span id="Carta-38"><a href="#Carta-38"><span class="linenos">38</span></a>        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span>
-</span><span id="Carta-39"><a href="#Carta-39"><span class="linenos">39</span></a>            <span class="sa">f</span><span class="s2">&quot;Graficos/cartas/</span><span class="si">{</span><span class="n">valor</span><span class="si">}{</span><span class="n">palo</span><span class="si">}</span><span class="s2">.png&quot;</span><span class="p">,</span>
-</span><span id="Carta-40"><a href="#Carta-40"><span class="linenos">40</span></a>            <span class="mi">1200</span><span class="p">,</span>
-</span><span id="Carta-41"><a href="#Carta-41"><span class="linenos">41</span></a>            <span class="mi">600</span><span class="p">,</span>
-</span><span id="Carta-42"><a href="#Carta-42"><span class="linenos">42</span></a>            <span class="s2">&quot;Sonidos/sonido_seleccionar_cartas.mp3&quot;</span><span class="p">,</span>
-</span><span id="Carta-43"><a href="#Carta-43"><span class="linenos">43</span></a>        <span class="p">)</span>
-</span><span id="Carta-44"><a href="#Carta-44"><span class="linenos">44</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">_valor</span> <span class="o">=</span> <span class="n">valor</span>
-</span><span id="Carta-45"><a href="#Carta-45"><span class="linenos">45</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">_palo</span> <span class="o">=</span> <span class="n">palo</span>
-</span><span id="Carta-46"><a href="#Carta-46"><span class="linenos">46</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">x_final</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">x</span>
-</span><span id="Carta-47"><a href="#Carta-47"><span class="linenos">47</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">y_final</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">y</span>
-</span><span id="Carta-48"><a href="#Carta-48"><span class="linenos">48</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">velocidad</span> <span class="o">=</span> <span class="mf">0.2</span>
-</span><span id="Carta-49"><a href="#Carta-49"><span class="linenos">49</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">seleccionada</span> <span class="o">=</span> <span class="kc">False</span>
-</span><span id="Carta-50"><a href="#Carta-50"><span class="linenos">50</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">habilitada</span> <span class="o">=</span> <span class="kc">True</span>
-</span><span id="Carta-51"><a href="#Carta-51"><span class="linenos">51</span></a>
-</span><span id="Carta-52"><a href="#Carta-52"><span class="linenos">52</span></a>    <span class="nd">@property</span>
-</span><span id="Carta-53"><a href="#Carta-53"><span class="linenos">53</span></a>    <span class="k">def</span><span class="w"> </span><span class="nf">valor</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-</span><span id="Carta-54"><a href="#Carta-54"><span class="linenos">54</span></a>        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">habilitada</span><span class="p">:</span>
-</span><span id="Carta-55"><a href="#Carta-55"><span class="linenos">55</span></a>            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_valor</span>
-</span><span id="Carta-56"><a href="#Carta-56"><span class="linenos">56</span></a>        <span class="k">else</span><span class="p">:</span>
-</span><span id="Carta-57"><a href="#Carta-57"><span class="linenos">57</span></a>            <span class="k">return</span> <span class="mi">0</span>
-</span><span id="Carta-58"><a href="#Carta-58"><span class="linenos">58</span></a>
-</span><span id="Carta-59"><a href="#Carta-59"><span class="linenos">59</span></a>    <span class="nd">@property</span>
-</span><span id="Carta-60"><a href="#Carta-60"><span class="linenos">60</span></a>    <span class="k">def</span><span class="w"> </span><span class="nf">palo</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-</span><span id="Carta-61"><a href="#Carta-61"><span class="linenos">61</span></a>        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_palo</span>
-</span><span id="Carta-62"><a href="#Carta-62"><span class="linenos">62</span></a>
-</span><span id="Carta-63"><a href="#Carta-63"><span class="linenos">63</span></a>    <span class="k">def</span><span class="w"> </span><span class="nf">mover_hacia_destino</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-</span><span id="Carta-64"><a href="#Carta-64"><span class="linenos">64</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;Funcion mover_hacia_destino: cambia la posicion actual de la carta hasta</span>
-</span><span id="Carta-65"><a href="#Carta-65"><span class="linenos">65</span></a><span class="sd">        llegar a la posicion final, para la animacion.&quot;&quot;&quot;</span>
-</span><span id="Carta-66"><a href="#Carta-66"><span class="linenos">66</span></a>        <span class="n">x</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">x</span>
-</span><span id="Carta-67"><a href="#Carta-67"><span class="linenos">67</span></a>        <span class="n">y</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">y</span>
-</span><span id="Carta-68"><a href="#Carta-68"><span class="linenos">68</span></a>        <span class="n">x</span> <span class="o">+=</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">x_final</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">x</span><span class="p">)</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">velocidad</span>
-</span><span id="Carta-69"><a href="#Carta-69"><span class="linenos">69</span></a>        <span class="n">y</span> <span class="o">+=</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">y_final</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">y</span><span class="p">)</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">velocidad</span>
-</span><span id="Carta-70"><a href="#Carta-70"><span class="linenos">70</span></a>        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">asignar_posicion</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
-</span><span id="Carta-71"><a href="#Carta-71"><span class="linenos">71</span></a>
-</span><span id="Carta-72"><a href="#Carta-72"><span class="linenos">72</span></a>    <span class="k">def</span><span class="w"> </span><span class="nf">dibujar</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">screen</span><span class="p">):</span>
-</span><span id="Carta-73"><a href="#Carta-73"><span class="linenos">73</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;Funcion dibujar: accede a la funcion mover_hacia_destino y muestra la carta.&quot;&quot;&quot;</span>
-</span><span id="Carta-74"><a href="#Carta-74"><span class="linenos">74</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">mover_hacia_destino</span><span class="p">()</span>
-</span><span id="Carta-75"><a href="#Carta-75"><span class="linenos">75</span></a>        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">dibujar</span><span class="p">(</span><span class="n">screen</span><span class="p">)</span>
-</span><span id="Carta-76"><a href="#Carta-76"><span class="linenos">76</span></a>        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">habilitada</span><span class="p">:</span>
-</span><span id="Carta-77"><a href="#Carta-77"><span class="linenos">77</span></a>            <span class="n">imagen</span> <span class="o">=</span> <span class="n">Carta</span><span class="o">.</span><span class="n">_get_cache_filtro</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_valor</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_palo</span><span class="p">)</span>
-</span><span id="Carta-78"><a href="#Carta-78"><span class="linenos">78</span></a>            <span class="n">screen</span><span class="o">.</span><span class="n">blit</span><span class="p">(</span><span class="n">imagen</span><span class="p">,</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">x</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">y</span><span class="p">))</span>
-</span><span id="Carta-79"><a href="#Carta-79"><span class="linenos">79</span></a>
-</span><span id="Carta-80"><a href="#Carta-80"><span class="linenos">80</span></a>    <span class="k">def</span><span class="w"> </span><span class="nf">detectar_seleccion</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">eventos</span><span class="p">):</span>
-</span><span id="Carta-81"><a href="#Carta-81"><span class="linenos">81</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;Funcion deterctar_seleccion: detecta si se le ha dado click a la carta y</span>
-</span><span id="Carta-82"><a href="#Carta-82"><span class="linenos">82</span></a><span class="sd">        devuelve true o false.&quot;&quot;&quot;</span>
-</span><span id="Carta-83"><a href="#Carta-83"><span class="linenos">83</span></a>
-</span><span id="Carta-84"><a href="#Carta-84"><span class="linenos">84</span></a>        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">detectar_click</span><span class="p">(</span><span class="n">eventos</span><span class="p">):</span>
-</span><span id="Carta-85"><a href="#Carta-85"><span class="linenos">85</span></a>            <span class="bp">self</span><span class="o">.</span><span class="n">seleccionada</span> <span class="o">=</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">seleccionada</span>
-</span><span id="Carta-86"><a href="#Carta-86"><span class="linenos">86</span></a>            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">seleccionada</span><span class="p">:</span>
-</span><span id="Carta-87"><a href="#Carta-87"><span class="linenos">87</span></a>                <span class="k">return</span> <span class="kc">True</span>
-</span><span id="Carta-88"><a href="#Carta-88"><span class="linenos">88</span></a>            <span class="k">else</span><span class="p">:</span>
-</span><span id="Carta-89"><a href="#Carta-89"><span class="linenos">89</span></a>                <span class="k">return</span> <span class="kc">False</span>
+</span><span id="Carta-10"><a href="#Carta-10"><span class="linenos">10</span></a><span class="sd">    - _valor: numero de la carta.</span>
+</span><span id="Carta-11"><a href="#Carta-11"><span class="linenos">11</span></a><span class="sd">    - _palo: figura de la carta.</span>
+</span><span id="Carta-12"><a href="#Carta-12"><span class="linenos">12</span></a><span class="sd">    - x_final: para la animacion de movimiento.</span>
+</span><span id="Carta-13"><a href="#Carta-13"><span class="linenos">13</span></a><span class="sd">    - y_final: para la animacion de movimiento.</span>
+</span><span id="Carta-14"><a href="#Carta-14"><span class="linenos">14</span></a><span class="sd">    - velodidad: velocidad de la animacion de movimiento.</span>
+</span><span id="Carta-15"><a href="#Carta-15"><span class="linenos">15</span></a><span class="sd">    - seleccionada: booleano para determinar si esta seleccionada o no la carta.</span>
+</span><span id="Carta-16"><a href="#Carta-16"><span class="linenos">16</span></a><span class="sd">    &quot;&quot;&quot;</span>
+</span><span id="Carta-17"><a href="#Carta-17"><span class="linenos">17</span></a>
+</span><span id="Carta-18"><a href="#Carta-18"><span class="linenos">18</span></a>    <span class="n">PALOS</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;o&quot;</span><span class="p">,</span> <span class="s2">&quot;c&quot;</span><span class="p">,</span> <span class="s2">&quot;e&quot;</span><span class="p">,</span> <span class="s2">&quot;b&quot;</span><span class="p">]</span>  <span class="c1"># Oros(o), Copas(c), Espadas(e), Bastos(b)</span>
+</span><span id="Carta-19"><a href="#Carta-19"><span class="linenos">19</span></a>    <span class="n">VALORES</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">13</span><span class="p">))</span>
+</span><span id="Carta-20"><a href="#Carta-20"><span class="linenos">20</span></a>
+</span><span id="Carta-21"><a href="#Carta-21"><span class="linenos">21</span></a>    <span class="n">_cache_filtros</span> <span class="o">=</span> <span class="p">{}</span>
+</span><span id="Carta-22"><a href="#Carta-22"><span class="linenos">22</span></a>
+</span><span id="Carta-23"><a href="#Carta-23"><span class="linenos">23</span></a>    <span class="nd">@classmethod</span>
+</span><span id="Carta-24"><a href="#Carta-24"><span class="linenos">24</span></a>    <span class="k">def</span><span class="w"> </span><span class="nf">_get_cache_filtro</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">valor</span><span class="p">,</span> <span class="n">palo</span><span class="p">):</span>
+</span><span id="Carta-25"><a href="#Carta-25"><span class="linenos">25</span></a>        <span class="n">carta</span> <span class="o">=</span> <span class="p">(</span><span class="n">valor</span><span class="p">,</span> <span class="n">palo</span><span class="p">)</span>
+</span><span id="Carta-26"><a href="#Carta-26"><span class="linenos">26</span></a>        <span class="k">if</span> <span class="n">carta</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">cls</span><span class="o">.</span><span class="n">_cache_filtros</span><span class="p">:</span>
+</span><span id="Carta-27"><a href="#Carta-27"><span class="linenos">27</span></a>            <span class="n">imagen</span> <span class="o">=</span> <span class="n">pygame</span><span class="o">.</span><span class="n">image</span><span class="o">.</span><span class="n">load</span><span class="p">(</span>
+</span><span id="Carta-28"><a href="#Carta-28"><span class="linenos">28</span></a>                <span class="sa">f</span><span class="s2">&quot;Graficos/cartas/</span><span class="si">{</span><span class="n">valor</span><span class="si">}{</span><span class="n">palo</span><span class="si">}</span><span class="s2">.png&quot;</span>
+</span><span id="Carta-29"><a href="#Carta-29"><span class="linenos">29</span></a>            <span class="p">)</span><span class="o">.</span><span class="n">convert_alpha</span><span class="p">()</span>
+</span><span id="Carta-30"><a href="#Carta-30"><span class="linenos">30</span></a>            <span class="n">filtro</span> <span class="o">=</span> <span class="n">pygame</span><span class="o">.</span><span class="n">Surface</span><span class="p">(</span><span class="n">imagen</span><span class="o">.</span><span class="n">get_size</span><span class="p">(),</span> <span class="n">pygame</span><span class="o">.</span><span class="n">SRCALPHA</span><span class="p">)</span>
+</span><span id="Carta-31"><a href="#Carta-31"><span class="linenos">31</span></a>            <span class="n">filtro</span><span class="o">.</span><span class="n">fill</span><span class="p">((</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">60</span><span class="p">,</span> <span class="mi">180</span><span class="p">))</span>
+</span><span id="Carta-32"><a href="#Carta-32"><span class="linenos">32</span></a>            <span class="n">imagen</span><span class="o">.</span><span class="n">blit</span><span class="p">(</span><span class="n">filtro</span><span class="p">,</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span> <span class="n">special_flags</span><span class="o">=</span><span class="n">pygame</span><span class="o">.</span><span class="n">BLEND_RGBA_MULT</span><span class="p">)</span>
+</span><span id="Carta-33"><a href="#Carta-33"><span class="linenos">33</span></a>            <span class="bp">cls</span><span class="o">.</span><span class="n">_cache_filtros</span><span class="p">[</span><span class="n">carta</span><span class="p">]</span> <span class="o">=</span> <span class="n">imagen</span>
+</span><span id="Carta-34"><a href="#Carta-34"><span class="linenos">34</span></a>        <span class="k">return</span> <span class="bp">cls</span><span class="o">.</span><span class="n">_cache_filtros</span><span class="p">[</span><span class="n">carta</span><span class="p">]</span>
+</span><span id="Carta-35"><a href="#Carta-35"><span class="linenos">35</span></a>
+</span><span id="Carta-36"><a href="#Carta-36"><span class="linenos">36</span></a>    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">valor</span><span class="p">,</span> <span class="n">palo</span><span class="p">):</span>
+</span><span id="Carta-37"><a href="#Carta-37"><span class="linenos">37</span></a>        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span>
+</span><span id="Carta-38"><a href="#Carta-38"><span class="linenos">38</span></a>            <span class="sa">f</span><span class="s2">&quot;Graficos/cartas/</span><span class="si">{</span><span class="n">valor</span><span class="si">}{</span><span class="n">palo</span><span class="si">}</span><span class="s2">.png&quot;</span><span class="p">,</span>
+</span><span id="Carta-39"><a href="#Carta-39"><span class="linenos">39</span></a>            <span class="mi">1200</span><span class="p">,</span>
+</span><span id="Carta-40"><a href="#Carta-40"><span class="linenos">40</span></a>            <span class="mi">600</span><span class="p">,</span>
+</span><span id="Carta-41"><a href="#Carta-41"><span class="linenos">41</span></a>            <span class="s2">&quot;Sonidos/sonido_seleccionar_cartas.mp3&quot;</span><span class="p">,</span>
+</span><span id="Carta-42"><a href="#Carta-42"><span class="linenos">42</span></a>        <span class="p">)</span>
+</span><span id="Carta-43"><a href="#Carta-43"><span class="linenos">43</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">_valor</span> <span class="o">=</span> <span class="n">valor</span>
+</span><span id="Carta-44"><a href="#Carta-44"><span class="linenos">44</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">_palo</span> <span class="o">=</span> <span class="n">palo</span>
+</span><span id="Carta-45"><a href="#Carta-45"><span class="linenos">45</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">x_final</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">x</span>
+</span><span id="Carta-46"><a href="#Carta-46"><span class="linenos">46</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">y_final</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">y</span>
+</span><span id="Carta-47"><a href="#Carta-47"><span class="linenos">47</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">velocidad</span> <span class="o">=</span> <span class="mf">0.2</span>
+</span><span id="Carta-48"><a href="#Carta-48"><span class="linenos">48</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">seleccionada</span> <span class="o">=</span> <span class="kc">False</span>
+</span><span id="Carta-49"><a href="#Carta-49"><span class="linenos">49</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">habilitada</span> <span class="o">=</span> <span class="kc">True</span>
+</span><span id="Carta-50"><a href="#Carta-50"><span class="linenos">50</span></a>
+</span><span id="Carta-51"><a href="#Carta-51"><span class="linenos">51</span></a>    <span class="nd">@property</span>
+</span><span id="Carta-52"><a href="#Carta-52"><span class="linenos">52</span></a>    <span class="k">def</span><span class="w"> </span><span class="nf">valor</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+</span><span id="Carta-53"><a href="#Carta-53"><span class="linenos">53</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;Getter valor: Solo si esta habilitada devuelve el valor de la carta,</span>
+</span><span id="Carta-54"><a href="#Carta-54"><span class="linenos">54</span></a><span class="sd">        impidiendo que se cambie.&quot;&quot;&quot;</span>
+</span><span id="Carta-55"><a href="#Carta-55"><span class="linenos">55</span></a>        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">habilitada</span><span class="p">:</span>
+</span><span id="Carta-56"><a href="#Carta-56"><span class="linenos">56</span></a>            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_valor</span>
+</span><span id="Carta-57"><a href="#Carta-57"><span class="linenos">57</span></a>        <span class="k">else</span><span class="p">:</span>
+</span><span id="Carta-58"><a href="#Carta-58"><span class="linenos">58</span></a>            <span class="k">return</span> <span class="mi">0</span>
+</span><span id="Carta-59"><a href="#Carta-59"><span class="linenos">59</span></a>
+</span><span id="Carta-60"><a href="#Carta-60"><span class="linenos">60</span></a>    <span class="nd">@property</span>
+</span><span id="Carta-61"><a href="#Carta-61"><span class="linenos">61</span></a>    <span class="k">def</span><span class="w"> </span><span class="nf">palo</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+</span><span id="Carta-62"><a href="#Carta-62"><span class="linenos">62</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;Getter palo: Devuelve la figura de la carta, impidiendo que se cambie.&quot;&quot;&quot;</span>
+</span><span id="Carta-63"><a href="#Carta-63"><span class="linenos">63</span></a>        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_palo</span>
+</span><span id="Carta-64"><a href="#Carta-64"><span class="linenos">64</span></a>
+</span><span id="Carta-65"><a href="#Carta-65"><span class="linenos">65</span></a>    <span class="k">def</span><span class="w"> </span><span class="nf">mover_hacia_destino</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+</span><span id="Carta-66"><a href="#Carta-66"><span class="linenos">66</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;Funcion mover_hacia_destino: Cambia la posicion actual segun la velocidad de la</span>
+</span><span id="Carta-67"><a href="#Carta-67"><span class="linenos">67</span></a><span class="sd">        carta hasta llegar a la posicion final. Es la animacion de movimiento.&quot;&quot;&quot;</span>
+</span><span id="Carta-68"><a href="#Carta-68"><span class="linenos">68</span></a>        <span class="n">x</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">x</span>
+</span><span id="Carta-69"><a href="#Carta-69"><span class="linenos">69</span></a>        <span class="n">y</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">y</span>
+</span><span id="Carta-70"><a href="#Carta-70"><span class="linenos">70</span></a>        <span class="n">x</span> <span class="o">+=</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">x_final</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">x</span><span class="p">)</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">velocidad</span>
+</span><span id="Carta-71"><a href="#Carta-71"><span class="linenos">71</span></a>        <span class="n">y</span> <span class="o">+=</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">y_final</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">y</span><span class="p">)</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">velocidad</span>
+</span><span id="Carta-72"><a href="#Carta-72"><span class="linenos">72</span></a>        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">asignar_posicion</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+</span><span id="Carta-73"><a href="#Carta-73"><span class="linenos">73</span></a>
+</span><span id="Carta-74"><a href="#Carta-74"><span class="linenos">74</span></a>    <span class="k">def</span><span class="w"> </span><span class="nf">dibujar</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">screen</span><span class="p">):</span>
+</span><span id="Carta-75"><a href="#Carta-75"><span class="linenos">75</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;Funcion dibujar: Actualiza la funcion mover_hacia_destino y muestra la carta.&quot;&quot;&quot;</span>
+</span><span id="Carta-76"><a href="#Carta-76"><span class="linenos">76</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">mover_hacia_destino</span><span class="p">()</span>
+</span><span id="Carta-77"><a href="#Carta-77"><span class="linenos">77</span></a>        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">dibujar</span><span class="p">(</span><span class="n">screen</span><span class="p">)</span>
+</span><span id="Carta-78"><a href="#Carta-78"><span class="linenos">78</span></a>        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">habilitada</span><span class="p">:</span>
+</span><span id="Carta-79"><a href="#Carta-79"><span class="linenos">79</span></a>            <span class="n">imagen</span> <span class="o">=</span> <span class="n">Carta</span><span class="o">.</span><span class="n">_get_cache_filtro</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_valor</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_palo</span><span class="p">)</span>
+</span><span id="Carta-80"><a href="#Carta-80"><span class="linenos">80</span></a>            <span class="n">screen</span><span class="o">.</span><span class="n">blit</span><span class="p">(</span><span class="n">imagen</span><span class="p">,</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">x</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">y</span><span class="p">))</span>
+</span><span id="Carta-81"><a href="#Carta-81"><span class="linenos">81</span></a>
+</span><span id="Carta-82"><a href="#Carta-82"><span class="linenos">82</span></a>    <span class="k">def</span><span class="w"> </span><span class="nf">detectar_seleccion</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">eventos</span><span class="p">):</span>
+</span><span id="Carta-83"><a href="#Carta-83"><span class="linenos">83</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;Funcion deterctar_seleccion: Detecta si se le ha dado click a la carta y</span>
+</span><span id="Carta-84"><a href="#Carta-84"><span class="linenos">84</span></a><span class="sd">        devuelve true o false.&quot;&quot;&quot;</span>
+</span><span id="Carta-85"><a href="#Carta-85"><span class="linenos">85</span></a>        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">detectar_click</span><span class="p">(</span><span class="n">eventos</span><span class="p">):</span>
+</span><span id="Carta-86"><a href="#Carta-86"><span class="linenos">86</span></a>            <span class="bp">self</span><span class="o">.</span><span class="n">seleccionada</span> <span class="o">=</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">seleccionada</span>
+</span><span id="Carta-87"><a href="#Carta-87"><span class="linenos">87</span></a>            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">seleccionada</span><span class="p">:</span>
+</span><span id="Carta-88"><a href="#Carta-88"><span class="linenos">88</span></a>                <span class="k">return</span> <span class="kc">True</span>
+</span><span id="Carta-89"><a href="#Carta-89"><span class="linenos">89</span></a>            <span class="k">else</span><span class="p">:</span>
+</span><span id="Carta-90"><a href="#Carta-90"><span class="linenos">90</span></a>                <span class="k">return</span> <span class="kc">False</span>
 </span></pre></div>
 
 
-            <div class="docstring"><p>Clase Carta: Guarda la informacion de cada carta y hereda de la clase Boton.</p>
+            <div class="docstring"><p>Clase Carta: Guarda la informacion y funcionalidad de una carta heredando de la clase Boton.</p>
 
 <p>Inicializa los atributos:</p>
 
 <ul>
-<li>_valor el cual es el numero de la carta</li>
-<li>_palo es la figura de la carta</li>
-<li>x_final sirven para las animaciones</li>
-<li>y_final sirven para las animaciones</li>
-<li>velodidad sirve para la velocidad de las animaciones</li>
-<li>seleccionada devuelve si esta seleccionada la carta.</li>
+<li>_valor: numero de la carta.</li>
+<li>_palo: figura de la carta.</li>
+<li>x_final: para la animacion de movimiento.</li>
+<li>y_final: para la animacion de movimiento.</li>
+<li>velodidad: velocidad de la animacion de movimiento.</li>
+<li>seleccionada: booleano para determinar si esta seleccionada o no la carta.</li>
 </ul>
 </div>
 
@@ -311,20 +313,20 @@
 
     </div>
     <a class="headerlink" href="#Carta.__init__"></a>
-            <div class="pdoc-code codehilite"><pre><span></span><span id="Carta.__init__-37"><a href="#Carta.__init__-37"><span class="linenos">37</span></a>    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">valor</span><span class="p">,</span> <span class="n">palo</span><span class="p">):</span>
-</span><span id="Carta.__init__-38"><a href="#Carta.__init__-38"><span class="linenos">38</span></a>        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span>
-</span><span id="Carta.__init__-39"><a href="#Carta.__init__-39"><span class="linenos">39</span></a>            <span class="sa">f</span><span class="s2">&quot;Graficos/cartas/</span><span class="si">{</span><span class="n">valor</span><span class="si">}{</span><span class="n">palo</span><span class="si">}</span><span class="s2">.png&quot;</span><span class="p">,</span>
-</span><span id="Carta.__init__-40"><a href="#Carta.__init__-40"><span class="linenos">40</span></a>            <span class="mi">1200</span><span class="p">,</span>
-</span><span id="Carta.__init__-41"><a href="#Carta.__init__-41"><span class="linenos">41</span></a>            <span class="mi">600</span><span class="p">,</span>
-</span><span id="Carta.__init__-42"><a href="#Carta.__init__-42"><span class="linenos">42</span></a>            <span class="s2">&quot;Sonidos/sonido_seleccionar_cartas.mp3&quot;</span><span class="p">,</span>
-</span><span id="Carta.__init__-43"><a href="#Carta.__init__-43"><span class="linenos">43</span></a>        <span class="p">)</span>
-</span><span id="Carta.__init__-44"><a href="#Carta.__init__-44"><span class="linenos">44</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">_valor</span> <span class="o">=</span> <span class="n">valor</span>
-</span><span id="Carta.__init__-45"><a href="#Carta.__init__-45"><span class="linenos">45</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">_palo</span> <span class="o">=</span> <span class="n">palo</span>
-</span><span id="Carta.__init__-46"><a href="#Carta.__init__-46"><span class="linenos">46</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">x_final</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">x</span>
-</span><span id="Carta.__init__-47"><a href="#Carta.__init__-47"><span class="linenos">47</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">y_final</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">y</span>
-</span><span id="Carta.__init__-48"><a href="#Carta.__init__-48"><span class="linenos">48</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">velocidad</span> <span class="o">=</span> <span class="mf">0.2</span>
-</span><span id="Carta.__init__-49"><a href="#Carta.__init__-49"><span class="linenos">49</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">seleccionada</span> <span class="o">=</span> <span class="kc">False</span>
-</span><span id="Carta.__init__-50"><a href="#Carta.__init__-50"><span class="linenos">50</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">habilitada</span> <span class="o">=</span> <span class="kc">True</span>
+            <div class="pdoc-code codehilite"><pre><span></span><span id="Carta.__init__-36"><a href="#Carta.__init__-36"><span class="linenos">36</span></a>    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">valor</span><span class="p">,</span> <span class="n">palo</span><span class="p">):</span>
+</span><span id="Carta.__init__-37"><a href="#Carta.__init__-37"><span class="linenos">37</span></a>        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span>
+</span><span id="Carta.__init__-38"><a href="#Carta.__init__-38"><span class="linenos">38</span></a>            <span class="sa">f</span><span class="s2">&quot;Graficos/cartas/</span><span class="si">{</span><span class="n">valor</span><span class="si">}{</span><span class="n">palo</span><span class="si">}</span><span class="s2">.png&quot;</span><span class="p">,</span>
+</span><span id="Carta.__init__-39"><a href="#Carta.__init__-39"><span class="linenos">39</span></a>            <span class="mi">1200</span><span class="p">,</span>
+</span><span id="Carta.__init__-40"><a href="#Carta.__init__-40"><span class="linenos">40</span></a>            <span class="mi">600</span><span class="p">,</span>
+</span><span id="Carta.__init__-41"><a href="#Carta.__init__-41"><span class="linenos">41</span></a>            <span class="s2">&quot;Sonidos/sonido_seleccionar_cartas.mp3&quot;</span><span class="p">,</span>
+</span><span id="Carta.__init__-42"><a href="#Carta.__init__-42"><span class="linenos">42</span></a>        <span class="p">)</span>
+</span><span id="Carta.__init__-43"><a href="#Carta.__init__-43"><span class="linenos">43</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">_valor</span> <span class="o">=</span> <span class="n">valor</span>
+</span><span id="Carta.__init__-44"><a href="#Carta.__init__-44"><span class="linenos">44</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">_palo</span> <span class="o">=</span> <span class="n">palo</span>
+</span><span id="Carta.__init__-45"><a href="#Carta.__init__-45"><span class="linenos">45</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">x_final</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">x</span>
+</span><span id="Carta.__init__-46"><a href="#Carta.__init__-46"><span class="linenos">46</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">y_final</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">y</span>
+</span><span id="Carta.__init__-47"><a href="#Carta.__init__-47"><span class="linenos">47</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">velocidad</span> <span class="o">=</span> <span class="mf">0.2</span>
+</span><span id="Carta.__init__-48"><a href="#Carta.__init__-48"><span class="linenos">48</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">seleccionada</span> <span class="o">=</span> <span class="kc">False</span>
+</span><span id="Carta.__init__-49"><a href="#Carta.__init__-49"><span class="linenos">49</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">habilitada</span> <span class="o">=</span> <span class="kc">True</span>
 </span></pre></div>
 
 
@@ -419,16 +421,21 @@
 
     </div>
     <a class="headerlink" href="#Carta.valor"></a>
-            <div class="pdoc-code codehilite"><pre><span></span><span id="Carta.valor-52"><a href="#Carta.valor-52"><span class="linenos">52</span></a>    <span class="nd">@property</span>
-</span><span id="Carta.valor-53"><a href="#Carta.valor-53"><span class="linenos">53</span></a>    <span class="k">def</span><span class="w"> </span><span class="nf">valor</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-</span><span id="Carta.valor-54"><a href="#Carta.valor-54"><span class="linenos">54</span></a>        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">habilitada</span><span class="p">:</span>
-</span><span id="Carta.valor-55"><a href="#Carta.valor-55"><span class="linenos">55</span></a>            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_valor</span>
-</span><span id="Carta.valor-56"><a href="#Carta.valor-56"><span class="linenos">56</span></a>        <span class="k">else</span><span class="p">:</span>
-</span><span id="Carta.valor-57"><a href="#Carta.valor-57"><span class="linenos">57</span></a>            <span class="k">return</span> <span class="mi">0</span>
+            <div class="pdoc-code codehilite"><pre><span></span><span id="Carta.valor-51"><a href="#Carta.valor-51"><span class="linenos">51</span></a>    <span class="nd">@property</span>
+</span><span id="Carta.valor-52"><a href="#Carta.valor-52"><span class="linenos">52</span></a>    <span class="k">def</span><span class="w"> </span><span class="nf">valor</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+</span><span id="Carta.valor-53"><a href="#Carta.valor-53"><span class="linenos">53</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;Getter valor: Solo si esta habilitada devuelve el valor de la carta,</span>
+</span><span id="Carta.valor-54"><a href="#Carta.valor-54"><span class="linenos">54</span></a><span class="sd">        impidiendo que se cambie.&quot;&quot;&quot;</span>
+</span><span id="Carta.valor-55"><a href="#Carta.valor-55"><span class="linenos">55</span></a>        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">habilitada</span><span class="p">:</span>
+</span><span id="Carta.valor-56"><a href="#Carta.valor-56"><span class="linenos">56</span></a>            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_valor</span>
+</span><span id="Carta.valor-57"><a href="#Carta.valor-57"><span class="linenos">57</span></a>        <span class="k">else</span><span class="p">:</span>
+</span><span id="Carta.valor-58"><a href="#Carta.valor-58"><span class="linenos">58</span></a>            <span class="k">return</span> <span class="mi">0</span>
 </span></pre></div>
 
 
-    
+            <div class="docstring"><p>Getter valor: Solo si esta habilitada devuelve el valor de la carta,
+impidiendo que se cambie.</p>
+</div>
+
 
                             </div>
                             <div id="Carta.palo" class="classattr">
@@ -440,13 +447,16 @@
 
     </div>
     <a class="headerlink" href="#Carta.palo"></a>
-            <div class="pdoc-code codehilite"><pre><span></span><span id="Carta.palo-59"><a href="#Carta.palo-59"><span class="linenos">59</span></a>    <span class="nd">@property</span>
-</span><span id="Carta.palo-60"><a href="#Carta.palo-60"><span class="linenos">60</span></a>    <span class="k">def</span><span class="w"> </span><span class="nf">palo</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-</span><span id="Carta.palo-61"><a href="#Carta.palo-61"><span class="linenos">61</span></a>        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_palo</span>
+            <div class="pdoc-code codehilite"><pre><span></span><span id="Carta.palo-60"><a href="#Carta.palo-60"><span class="linenos">60</span></a>    <span class="nd">@property</span>
+</span><span id="Carta.palo-61"><a href="#Carta.palo-61"><span class="linenos">61</span></a>    <span class="k">def</span><span class="w"> </span><span class="nf">palo</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+</span><span id="Carta.palo-62"><a href="#Carta.palo-62"><span class="linenos">62</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;Getter palo: Devuelve la figura de la carta, impidiendo que se cambie.&quot;&quot;&quot;</span>
+</span><span id="Carta.palo-63"><a href="#Carta.palo-63"><span class="linenos">63</span></a>        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_palo</span>
 </span></pre></div>
 
 
-    
+            <div class="docstring"><p>Getter palo: Devuelve la figura de la carta, impidiendo que se cambie.</p>
+</div>
+
 
                             </div>
                             <div id="Carta.mover_hacia_destino" class="classattr">
@@ -460,19 +470,19 @@
 
     </div>
     <a class="headerlink" href="#Carta.mover_hacia_destino"></a>
-            <div class="pdoc-code codehilite"><pre><span></span><span id="Carta.mover_hacia_destino-63"><a href="#Carta.mover_hacia_destino-63"><span class="linenos">63</span></a>    <span class="k">def</span><span class="w"> </span><span class="nf">mover_hacia_destino</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-</span><span id="Carta.mover_hacia_destino-64"><a href="#Carta.mover_hacia_destino-64"><span class="linenos">64</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;Funcion mover_hacia_destino: cambia la posicion actual de la carta hasta</span>
-</span><span id="Carta.mover_hacia_destino-65"><a href="#Carta.mover_hacia_destino-65"><span class="linenos">65</span></a><span class="sd">        llegar a la posicion final, para la animacion.&quot;&quot;&quot;</span>
-</span><span id="Carta.mover_hacia_destino-66"><a href="#Carta.mover_hacia_destino-66"><span class="linenos">66</span></a>        <span class="n">x</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">x</span>
-</span><span id="Carta.mover_hacia_destino-67"><a href="#Carta.mover_hacia_destino-67"><span class="linenos">67</span></a>        <span class="n">y</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">y</span>
-</span><span id="Carta.mover_hacia_destino-68"><a href="#Carta.mover_hacia_destino-68"><span class="linenos">68</span></a>        <span class="n">x</span> <span class="o">+=</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">x_final</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">x</span><span class="p">)</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">velocidad</span>
-</span><span id="Carta.mover_hacia_destino-69"><a href="#Carta.mover_hacia_destino-69"><span class="linenos">69</span></a>        <span class="n">y</span> <span class="o">+=</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">y_final</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">y</span><span class="p">)</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">velocidad</span>
-</span><span id="Carta.mover_hacia_destino-70"><a href="#Carta.mover_hacia_destino-70"><span class="linenos">70</span></a>        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">asignar_posicion</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+            <div class="pdoc-code codehilite"><pre><span></span><span id="Carta.mover_hacia_destino-65"><a href="#Carta.mover_hacia_destino-65"><span class="linenos">65</span></a>    <span class="k">def</span><span class="w"> </span><span class="nf">mover_hacia_destino</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+</span><span id="Carta.mover_hacia_destino-66"><a href="#Carta.mover_hacia_destino-66"><span class="linenos">66</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;Funcion mover_hacia_destino: Cambia la posicion actual segun la velocidad de la</span>
+</span><span id="Carta.mover_hacia_destino-67"><a href="#Carta.mover_hacia_destino-67"><span class="linenos">67</span></a><span class="sd">        carta hasta llegar a la posicion final. Es la animacion de movimiento.&quot;&quot;&quot;</span>
+</span><span id="Carta.mover_hacia_destino-68"><a href="#Carta.mover_hacia_destino-68"><span class="linenos">68</span></a>        <span class="n">x</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">x</span>
+</span><span id="Carta.mover_hacia_destino-69"><a href="#Carta.mover_hacia_destino-69"><span class="linenos">69</span></a>        <span class="n">y</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">y</span>
+</span><span id="Carta.mover_hacia_destino-70"><a href="#Carta.mover_hacia_destino-70"><span class="linenos">70</span></a>        <span class="n">x</span> <span class="o">+=</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">x_final</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">x</span><span class="p">)</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">velocidad</span>
+</span><span id="Carta.mover_hacia_destino-71"><a href="#Carta.mover_hacia_destino-71"><span class="linenos">71</span></a>        <span class="n">y</span> <span class="o">+=</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">y_final</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">y</span><span class="p">)</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">velocidad</span>
+</span><span id="Carta.mover_hacia_destino-72"><a href="#Carta.mover_hacia_destino-72"><span class="linenos">72</span></a>        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">asignar_posicion</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
 </span></pre></div>
 
 
-            <div class="docstring"><p>Funcion mover_hacia_destino: cambia la posicion actual de la carta hasta
-llegar a la posicion final, para la animacion.</p>
+            <div class="docstring"><p>Funcion mover_hacia_destino: Cambia la posicion actual segun la velocidad de la
+carta hasta llegar a la posicion final. Es la animacion de movimiento.</p>
 </div>
 
 
@@ -488,17 +498,17 @@ llegar a la posicion final, para la animacion.</p>
 
     </div>
     <a class="headerlink" href="#Carta.dibujar"></a>
-            <div class="pdoc-code codehilite"><pre><span></span><span id="Carta.dibujar-72"><a href="#Carta.dibujar-72"><span class="linenos">72</span></a>    <span class="k">def</span><span class="w"> </span><span class="nf">dibujar</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">screen</span><span class="p">):</span>
-</span><span id="Carta.dibujar-73"><a href="#Carta.dibujar-73"><span class="linenos">73</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;Funcion dibujar: accede a la funcion mover_hacia_destino y muestra la carta.&quot;&quot;&quot;</span>
-</span><span id="Carta.dibujar-74"><a href="#Carta.dibujar-74"><span class="linenos">74</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">mover_hacia_destino</span><span class="p">()</span>
-</span><span id="Carta.dibujar-75"><a href="#Carta.dibujar-75"><span class="linenos">75</span></a>        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">dibujar</span><span class="p">(</span><span class="n">screen</span><span class="p">)</span>
-</span><span id="Carta.dibujar-76"><a href="#Carta.dibujar-76"><span class="linenos">76</span></a>        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">habilitada</span><span class="p">:</span>
-</span><span id="Carta.dibujar-77"><a href="#Carta.dibujar-77"><span class="linenos">77</span></a>            <span class="n">imagen</span> <span class="o">=</span> <span class="n">Carta</span><span class="o">.</span><span class="n">_get_cache_filtro</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_valor</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_palo</span><span class="p">)</span>
-</span><span id="Carta.dibujar-78"><a href="#Carta.dibujar-78"><span class="linenos">78</span></a>            <span class="n">screen</span><span class="o">.</span><span class="n">blit</span><span class="p">(</span><span class="n">imagen</span><span class="p">,</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">x</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">y</span><span class="p">))</span>
+            <div class="pdoc-code codehilite"><pre><span></span><span id="Carta.dibujar-74"><a href="#Carta.dibujar-74"><span class="linenos">74</span></a>    <span class="k">def</span><span class="w"> </span><span class="nf">dibujar</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">screen</span><span class="p">):</span>
+</span><span id="Carta.dibujar-75"><a href="#Carta.dibujar-75"><span class="linenos">75</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;Funcion dibujar: Actualiza la funcion mover_hacia_destino y muestra la carta.&quot;&quot;&quot;</span>
+</span><span id="Carta.dibujar-76"><a href="#Carta.dibujar-76"><span class="linenos">76</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">mover_hacia_destino</span><span class="p">()</span>
+</span><span id="Carta.dibujar-77"><a href="#Carta.dibujar-77"><span class="linenos">77</span></a>        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">dibujar</span><span class="p">(</span><span class="n">screen</span><span class="p">)</span>
+</span><span id="Carta.dibujar-78"><a href="#Carta.dibujar-78"><span class="linenos">78</span></a>        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">habilitada</span><span class="p">:</span>
+</span><span id="Carta.dibujar-79"><a href="#Carta.dibujar-79"><span class="linenos">79</span></a>            <span class="n">imagen</span> <span class="o">=</span> <span class="n">Carta</span><span class="o">.</span><span class="n">_get_cache_filtro</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_valor</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_palo</span><span class="p">)</span>
+</span><span id="Carta.dibujar-80"><a href="#Carta.dibujar-80"><span class="linenos">80</span></a>            <span class="n">screen</span><span class="o">.</span><span class="n">blit</span><span class="p">(</span><span class="n">imagen</span><span class="p">,</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">x</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">y</span><span class="p">))</span>
 </span></pre></div>
 
 
-            <div class="docstring"><p>Funcion dibujar: accede a la funcion mover_hacia_destino y muestra la carta.</p>
+            <div class="docstring"><p>Funcion dibujar: Actualiza la funcion mover_hacia_destino y muestra la carta.</p>
 </div>
 
 
@@ -514,20 +524,19 @@ llegar a la posicion final, para la animacion.</p>
 
     </div>
     <a class="headerlink" href="#Carta.detectar_seleccion"></a>
-            <div class="pdoc-code codehilite"><pre><span></span><span id="Carta.detectar_seleccion-80"><a href="#Carta.detectar_seleccion-80"><span class="linenos">80</span></a>    <span class="k">def</span><span class="w"> </span><span class="nf">detectar_seleccion</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">eventos</span><span class="p">):</span>
-</span><span id="Carta.detectar_seleccion-81"><a href="#Carta.detectar_seleccion-81"><span class="linenos">81</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;Funcion deterctar_seleccion: detecta si se le ha dado click a la carta y</span>
-</span><span id="Carta.detectar_seleccion-82"><a href="#Carta.detectar_seleccion-82"><span class="linenos">82</span></a><span class="sd">        devuelve true o false.&quot;&quot;&quot;</span>
-</span><span id="Carta.detectar_seleccion-83"><a href="#Carta.detectar_seleccion-83"><span class="linenos">83</span></a>
-</span><span id="Carta.detectar_seleccion-84"><a href="#Carta.detectar_seleccion-84"><span class="linenos">84</span></a>        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">detectar_click</span><span class="p">(</span><span class="n">eventos</span><span class="p">):</span>
-</span><span id="Carta.detectar_seleccion-85"><a href="#Carta.detectar_seleccion-85"><span class="linenos">85</span></a>            <span class="bp">self</span><span class="o">.</span><span class="n">seleccionada</span> <span class="o">=</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">seleccionada</span>
-</span><span id="Carta.detectar_seleccion-86"><a href="#Carta.detectar_seleccion-86"><span class="linenos">86</span></a>            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">seleccionada</span><span class="p">:</span>
-</span><span id="Carta.detectar_seleccion-87"><a href="#Carta.detectar_seleccion-87"><span class="linenos">87</span></a>                <span class="k">return</span> <span class="kc">True</span>
-</span><span id="Carta.detectar_seleccion-88"><a href="#Carta.detectar_seleccion-88"><span class="linenos">88</span></a>            <span class="k">else</span><span class="p">:</span>
-</span><span id="Carta.detectar_seleccion-89"><a href="#Carta.detectar_seleccion-89"><span class="linenos">89</span></a>                <span class="k">return</span> <span class="kc">False</span>
+            <div class="pdoc-code codehilite"><pre><span></span><span id="Carta.detectar_seleccion-82"><a href="#Carta.detectar_seleccion-82"><span class="linenos">82</span></a>    <span class="k">def</span><span class="w"> </span><span class="nf">detectar_seleccion</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">eventos</span><span class="p">):</span>
+</span><span id="Carta.detectar_seleccion-83"><a href="#Carta.detectar_seleccion-83"><span class="linenos">83</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;Funcion deterctar_seleccion: Detecta si se le ha dado click a la carta y</span>
+</span><span id="Carta.detectar_seleccion-84"><a href="#Carta.detectar_seleccion-84"><span class="linenos">84</span></a><span class="sd">        devuelve true o false.&quot;&quot;&quot;</span>
+</span><span id="Carta.detectar_seleccion-85"><a href="#Carta.detectar_seleccion-85"><span class="linenos">85</span></a>        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">detectar_click</span><span class="p">(</span><span class="n">eventos</span><span class="p">):</span>
+</span><span id="Carta.detectar_seleccion-86"><a href="#Carta.detectar_seleccion-86"><span class="linenos">86</span></a>            <span class="bp">self</span><span class="o">.</span><span class="n">seleccionada</span> <span class="o">=</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">seleccionada</span>
+</span><span id="Carta.detectar_seleccion-87"><a href="#Carta.detectar_seleccion-87"><span class="linenos">87</span></a>            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">seleccionada</span><span class="p">:</span>
+</span><span id="Carta.detectar_seleccion-88"><a href="#Carta.detectar_seleccion-88"><span class="linenos">88</span></a>                <span class="k">return</span> <span class="kc">True</span>
+</span><span id="Carta.detectar_seleccion-89"><a href="#Carta.detectar_seleccion-89"><span class="linenos">89</span></a>            <span class="k">else</span><span class="p">:</span>
+</span><span id="Carta.detectar_seleccion-90"><a href="#Carta.detectar_seleccion-90"><span class="linenos">90</span></a>                <span class="k">return</span> <span class="kc">False</span>
 </span></pre></div>
 
 
-            <div class="docstring"><p>Funcion deterctar_seleccion: detecta si se le ha dado click a la carta y
+            <div class="docstring"><p>Funcion deterctar_seleccion: Detecta si se le ha dado click a la carta y
 devuelve true o false.</p>
 </div>
 

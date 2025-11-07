@@ -4,8 +4,10 @@ from src.boton import Boton
 
 efectos_comodin = {}
 
+
 def registrar_efecto(nombre):
     """Decorador registrar efecto: Sirve para registrar el efecto que tiene cada comodin."""
+
     def decorator(func):
         efectos_comodin[nombre] = func
         return func
