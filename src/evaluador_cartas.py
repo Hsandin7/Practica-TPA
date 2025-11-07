@@ -10,6 +10,7 @@
 def jugada(condicion, base, multiplicador):
     """Decorador jugada: Lleva a cabo las asignaciones y condiciones correspondientes
     para registrar el resultado del efecto."""
+
     def decorador(func):
         def nueva_funcion(self):
             if not condicion(
@@ -24,7 +25,9 @@ def jugada(condicion, base, multiplicador):
                     "Multiplicador": multiplicador,
                 }
                 return self.resultado
+
         return nueva_funcion
+
     return decorador
 
 
@@ -42,7 +45,8 @@ class Evaluador_Cartas:
 
     def evaluar(self, cartas_seleccionadas):
         """Funcion evaluar: Comprueba todas las posibles jugadas en orden por prioridad comprobando
-        si las cartas corresponden a alguna jugada para devolver el resultado correspondiente."""
+        si las cartas corresponden a alguna jugada para devolver el resultado correspondiente.
+        """
         self.cartas = cartas_seleccionadas
         self.cartas.sort(key=lambda carta: carta.valor)
 
