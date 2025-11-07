@@ -16,21 +16,21 @@ def registrar_efecto(nombre):
 
 # Diccionarios
 rareza_map = {
-    "matematico": "Comun",
-    "stonks": "Comun",
-    "calculadora": "Comun",
-    "programador": "Comun",
-    "loco": "Raro",
-    "doblete": "Raro",
-    "esteroides": "Raro",
-    "gloton": "Epico",
-    "clon": "Epico",
+    "matematico": "comun",
+    "stonks": "comun",
+    "calculadora": "comun",
+    "programador": "comun",
+    "loco": "raro",
+    "doblete": "raro",
+    "esteroides": "raro",
+    "gloton": "epico",
+    "clon": "epico",
 }
 
 precio_map = {
-    "Comun": 3,
-    "Raro": 5,
-    "Epico": 8,
+    "comun": 3,
+    "raro": 5,
+    "epico": 8,
 }
 
 # Definicion de efectos para cada comodin
