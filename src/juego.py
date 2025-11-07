@@ -8,13 +8,13 @@ class Juego:
     """
     Clase Juego: La clase juego es la que se encarga de cargar todas las paginas y todo la interfaz del jugador.
 
-        Inicializa los atributos:
-            - la pagina actual que inicializa en 0
-            - la pagina, esta llama a la funcion cargar paginas y situa al jugador en la pagina que debe.
-            - el atributo botones llama a la funcion cargar botones y le muestra al jugador los botones adecuados a la situación de la partida.
-            - el atributo mostrar fondo esta inicializado a true para mostrar el fondo al jugador.
-            - el atributo jugador llama a la clase jugador.
-            - el atributo tienda llama a la clase tienda.
+    Inicializa los atributos:
+    - la pagina actual que inicializa en 0
+    - la pagina, esta llama a la funcion cargar paginas y situa al jugador en la pagina que debe.
+    - el atributo botones llama a la funcion cargar botones y le muestra al jugador los botones adecuados a la situación de la partida.
+    - el atributo mostrar fondo esta inicializado a true para mostrar el fondo al jugador.
+    - el atributo jugador llama a la clase jugador.
+    - el atributo tienda llama a la clase tienda.
 
     """
 

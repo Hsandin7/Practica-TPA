@@ -69,30 +69,33 @@
                         <div class="pdoc-code codehilite"><pre><span></span><span id="L-1"><a href="#L-1"><span class="linenos"> 1</span></a><span class="kn">import</span><span class="w"> </span><span class="nn">random</span>
 </span><span id="L-2"><a href="#L-2"><span class="linenos"> 2</span></a><span class="kn">from</span><span class="w"> </span><span class="nn">src.carta</span><span class="w"> </span><span class="kn">import</span> <span class="n">Carta</span>
 </span><span id="L-3"><a href="#L-3"><span class="linenos"> 3</span></a>
-</span><span id="L-4"><a href="#L-4"><span class="linenos"> 4</span></a><span class="k">class</span><span class="w"> </span><span class="nc">Mazo</span><span class="p">:</span>
-</span><span id="L-5"><a href="#L-5"><span class="linenos"> 5</span></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;Clase Mazo: Crea el mazo con todas las cartas y su funcionalidad</span>
-</span><span id="L-6"><a href="#L-6"><span class="linenos"> 6</span></a><span class="sd">       </span>
-</span><span id="L-7"><a href="#L-7"><span class="linenos"> 7</span></a><span class="sd">        Inicializa los atributos:</span>
-</span><span id="L-8"><a href="#L-8"><span class="linenos"> 8</span></a><span class="sd">        - cartas: lista de las cartas del mazo.</span>
-</span><span id="L-9"><a href="#L-9"><span class="linenos"> 9</span></a>
-</span><span id="L-10"><a href="#L-10"><span class="linenos">10</span></a><span class="sd">        &quot;&quot;&quot;</span>
-</span><span id="L-11"><a href="#L-11"><span class="linenos">11</span></a>    
-</span><span id="L-12"><a href="#L-12"><span class="linenos">12</span></a>    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-</span><span id="L-13"><a href="#L-13"><span class="linenos">13</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">cartas</span> <span class="o">=</span> <span class="p">[</span><span class="n">Carta</span><span class="p">(</span><span class="n">valor</span><span class="p">,</span> <span class="n">palo</span><span class="p">)</span> <span class="k">for</span> <span class="n">palo</span> <span class="ow">in</span> <span class="n">Carta</span><span class="o">.</span><span class="n">PALOS</span> <span class="k">for</span> <span class="n">valor</span> <span class="ow">in</span> <span class="n">Carta</span><span class="o">.</span><span class="n">VALORES</span><span class="p">]</span>
-</span><span id="L-14"><a href="#L-14"><span class="linenos">14</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">barajar</span><span class="p">()</span>
-</span><span id="L-15"><a href="#L-15"><span class="linenos">15</span></a>
-</span><span id="L-16"><a href="#L-16"><span class="linenos">16</span></a>    <span class="k">def</span><span class="w"> </span><span class="nf">barajar</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-</span><span id="L-17"><a href="#L-17"><span class="linenos">17</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;Funcion barajar: ordena las cartas de manera random.&quot;&quot;&quot;</span>
-</span><span id="L-18"><a href="#L-18"><span class="linenos">18</span></a>        <span class="n">random</span><span class="o">.</span><span class="n">shuffle</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">cartas</span><span class="p">)</span>
-</span><span id="L-19"><a href="#L-19"><span class="linenos">19</span></a>
-</span><span id="L-20"><a href="#L-20"><span class="linenos">20</span></a>    <span class="k">def</span><span class="w"> </span><span class="nf">robar</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-</span><span id="L-21"><a href="#L-21"><span class="linenos">21</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;Funcion robar: devuelve la ultima carta del mazo y la elimina de el </span>
-</span><span id="L-22"><a href="#L-22"><span class="linenos">22</span></a><span class="sd">            para que no vuelva a aparecer. &quot;&quot;&quot;</span>
-</span><span id="L-23"><a href="#L-23"><span class="linenos">23</span></a>        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">cartas</span><span class="p">:</span>
-</span><span id="L-24"><a href="#L-24"><span class="linenos">24</span></a>            <span class="n">carta</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">cartas</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>      <span class="c1"># obtiene la primera carta sin borrarla</span>
-</span><span id="L-25"><a href="#L-25"><span class="linenos">25</span></a>            <span class="bp">self</span><span class="o">.</span><span class="n">cartas</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>          <span class="c1"># la elimina del mazo</span>
-</span><span id="L-26"><a href="#L-26"><span class="linenos">26</span></a>            <span class="k">return</span> <span class="n">carta</span>                <span class="c1"># devuelve el valor (clase Carta)</span>
-</span><span id="L-27"><a href="#L-27"><span class="linenos">27</span></a>        <span class="k">return</span> <span class="kc">None</span>
+</span><span id="L-4"><a href="#L-4"><span class="linenos"> 4</span></a>
+</span><span id="L-5"><a href="#L-5"><span class="linenos"> 5</span></a><span class="k">class</span><span class="w"> </span><span class="nc">Mazo</span><span class="p">:</span>
+</span><span id="L-6"><a href="#L-6"><span class="linenos"> 6</span></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;Clase Mazo: Crea el mazo con todas las cartas y su funcionalidad.</span>
+</span><span id="L-7"><a href="#L-7"><span class="linenos"> 7</span></a>
+</span><span id="L-8"><a href="#L-8"><span class="linenos"> 8</span></a><span class="sd">    Inicializa los atributos:</span>
+</span><span id="L-9"><a href="#L-9"><span class="linenos"> 9</span></a><span class="sd">    - Cartas: lista de las cartas del mazo.</span>
+</span><span id="L-10"><a href="#L-10"><span class="linenos">10</span></a>
+</span><span id="L-11"><a href="#L-11"><span class="linenos">11</span></a><span class="sd">    &quot;&quot;&quot;</span>
+</span><span id="L-12"><a href="#L-12"><span class="linenos">12</span></a>
+</span><span id="L-13"><a href="#L-13"><span class="linenos">13</span></a>    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+</span><span id="L-14"><a href="#L-14"><span class="linenos">14</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">cartas</span> <span class="o">=</span> <span class="p">[</span>
+</span><span id="L-15"><a href="#L-15"><span class="linenos">15</span></a>            <span class="n">Carta</span><span class="p">(</span><span class="n">valor</span><span class="p">,</span> <span class="n">palo</span><span class="p">)</span> <span class="k">for</span> <span class="n">palo</span> <span class="ow">in</span> <span class="n">Carta</span><span class="o">.</span><span class="n">PALOS</span> <span class="k">for</span> <span class="n">valor</span> <span class="ow">in</span> <span class="n">Carta</span><span class="o">.</span><span class="n">VALORES</span>
+</span><span id="L-16"><a href="#L-16"><span class="linenos">16</span></a>        <span class="p">]</span>
+</span><span id="L-17"><a href="#L-17"><span class="linenos">17</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">barajar</span><span class="p">()</span>
+</span><span id="L-18"><a href="#L-18"><span class="linenos">18</span></a>
+</span><span id="L-19"><a href="#L-19"><span class="linenos">19</span></a>    <span class="k">def</span><span class="w"> </span><span class="nf">barajar</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+</span><span id="L-20"><a href="#L-20"><span class="linenos">20</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;Funcion barajar: ordena las cartas de manera random.&quot;&quot;&quot;</span>
+</span><span id="L-21"><a href="#L-21"><span class="linenos">21</span></a>        <span class="n">random</span><span class="o">.</span><span class="n">shuffle</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">cartas</span><span class="p">)</span>
+</span><span id="L-22"><a href="#L-22"><span class="linenos">22</span></a>
+</span><span id="L-23"><a href="#L-23"><span class="linenos">23</span></a>    <span class="k">def</span><span class="w"> </span><span class="nf">robar</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+</span><span id="L-24"><a href="#L-24"><span class="linenos">24</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;Funcion robar: devuelve la ultima carta del mazo y la elimina de el</span>
+</span><span id="L-25"><a href="#L-25"><span class="linenos">25</span></a><span class="sd">        para que no vuelva a aparecer.&quot;&quot;&quot;</span>
+</span><span id="L-26"><a href="#L-26"><span class="linenos">26</span></a>        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">cartas</span><span class="p">:</span>
+</span><span id="L-27"><a href="#L-27"><span class="linenos">27</span></a>            <span class="n">carta</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">cartas</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>  <span class="c1"># obtiene la primera carta sin borrarla</span>
+</span><span id="L-28"><a href="#L-28"><span class="linenos">28</span></a>            <span class="bp">self</span><span class="o">.</span><span class="n">cartas</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>  <span class="c1"># la elimina del mazo</span>
+</span><span id="L-29"><a href="#L-29"><span class="linenos">29</span></a>            <span class="k">return</span> <span class="n">carta</span>  <span class="c1"># devuelve el valor (clase Carta)</span>
+</span><span id="L-30"><a href="#L-30"><span class="linenos">30</span></a>        <span class="k">return</span> <span class="kc">None</span>
 </span></pre></div>
 
 
@@ -108,39 +111,41 @@
 
     </div>
     <a class="headerlink" href="#Mazo"></a>
-            <div class="pdoc-code codehilite"><pre><span></span><span id="Mazo-5"><a href="#Mazo-5"><span class="linenos"> 5</span></a><span class="k">class</span><span class="w"> </span><span class="nc">Mazo</span><span class="p">:</span>
-</span><span id="Mazo-6"><a href="#Mazo-6"><span class="linenos"> 6</span></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;Clase Mazo: Crea el mazo con todas las cartas y su funcionalidad</span>
-</span><span id="Mazo-7"><a href="#Mazo-7"><span class="linenos"> 7</span></a><span class="sd">       </span>
-</span><span id="Mazo-8"><a href="#Mazo-8"><span class="linenos"> 8</span></a><span class="sd">        Inicializa los atributos:</span>
-</span><span id="Mazo-9"><a href="#Mazo-9"><span class="linenos"> 9</span></a><span class="sd">        - cartas: lista de las cartas del mazo.</span>
-</span><span id="Mazo-10"><a href="#Mazo-10"><span class="linenos">10</span></a>
-</span><span id="Mazo-11"><a href="#Mazo-11"><span class="linenos">11</span></a><span class="sd">        &quot;&quot;&quot;</span>
-</span><span id="Mazo-12"><a href="#Mazo-12"><span class="linenos">12</span></a>    
-</span><span id="Mazo-13"><a href="#Mazo-13"><span class="linenos">13</span></a>    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-</span><span id="Mazo-14"><a href="#Mazo-14"><span class="linenos">14</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">cartas</span> <span class="o">=</span> <span class="p">[</span><span class="n">Carta</span><span class="p">(</span><span class="n">valor</span><span class="p">,</span> <span class="n">palo</span><span class="p">)</span> <span class="k">for</span> <span class="n">palo</span> <span class="ow">in</span> <span class="n">Carta</span><span class="o">.</span><span class="n">PALOS</span> <span class="k">for</span> <span class="n">valor</span> <span class="ow">in</span> <span class="n">Carta</span><span class="o">.</span><span class="n">VALORES</span><span class="p">]</span>
-</span><span id="Mazo-15"><a href="#Mazo-15"><span class="linenos">15</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">barajar</span><span class="p">()</span>
-</span><span id="Mazo-16"><a href="#Mazo-16"><span class="linenos">16</span></a>
-</span><span id="Mazo-17"><a href="#Mazo-17"><span class="linenos">17</span></a>    <span class="k">def</span><span class="w"> </span><span class="nf">barajar</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-</span><span id="Mazo-18"><a href="#Mazo-18"><span class="linenos">18</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;Funcion barajar: ordena las cartas de manera random.&quot;&quot;&quot;</span>
-</span><span id="Mazo-19"><a href="#Mazo-19"><span class="linenos">19</span></a>        <span class="n">random</span><span class="o">.</span><span class="n">shuffle</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">cartas</span><span class="p">)</span>
-</span><span id="Mazo-20"><a href="#Mazo-20"><span class="linenos">20</span></a>
-</span><span id="Mazo-21"><a href="#Mazo-21"><span class="linenos">21</span></a>    <span class="k">def</span><span class="w"> </span><span class="nf">robar</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-</span><span id="Mazo-22"><a href="#Mazo-22"><span class="linenos">22</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;Funcion robar: devuelve la ultima carta del mazo y la elimina de el </span>
-</span><span id="Mazo-23"><a href="#Mazo-23"><span class="linenos">23</span></a><span class="sd">            para que no vuelva a aparecer. &quot;&quot;&quot;</span>
-</span><span id="Mazo-24"><a href="#Mazo-24"><span class="linenos">24</span></a>        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">cartas</span><span class="p">:</span>
-</span><span id="Mazo-25"><a href="#Mazo-25"><span class="linenos">25</span></a>            <span class="n">carta</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">cartas</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>      <span class="c1"># obtiene la primera carta sin borrarla</span>
-</span><span id="Mazo-26"><a href="#Mazo-26"><span class="linenos">26</span></a>            <span class="bp">self</span><span class="o">.</span><span class="n">cartas</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>          <span class="c1"># la elimina del mazo</span>
-</span><span id="Mazo-27"><a href="#Mazo-27"><span class="linenos">27</span></a>            <span class="k">return</span> <span class="n">carta</span>                <span class="c1"># devuelve el valor (clase Carta)</span>
-</span><span id="Mazo-28"><a href="#Mazo-28"><span class="linenos">28</span></a>        <span class="k">return</span> <span class="kc">None</span>
+            <div class="pdoc-code codehilite"><pre><span></span><span id="Mazo-6"><a href="#Mazo-6"><span class="linenos"> 6</span></a><span class="k">class</span><span class="w"> </span><span class="nc">Mazo</span><span class="p">:</span>
+</span><span id="Mazo-7"><a href="#Mazo-7"><span class="linenos"> 7</span></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;Clase Mazo: Crea el mazo con todas las cartas y su funcionalidad.</span>
+</span><span id="Mazo-8"><a href="#Mazo-8"><span class="linenos"> 8</span></a>
+</span><span id="Mazo-9"><a href="#Mazo-9"><span class="linenos"> 9</span></a><span class="sd">    Inicializa los atributos:</span>
+</span><span id="Mazo-10"><a href="#Mazo-10"><span class="linenos">10</span></a><span class="sd">    - Cartas: lista de las cartas del mazo.</span>
+</span><span id="Mazo-11"><a href="#Mazo-11"><span class="linenos">11</span></a>
+</span><span id="Mazo-12"><a href="#Mazo-12"><span class="linenos">12</span></a><span class="sd">    &quot;&quot;&quot;</span>
+</span><span id="Mazo-13"><a href="#Mazo-13"><span class="linenos">13</span></a>
+</span><span id="Mazo-14"><a href="#Mazo-14"><span class="linenos">14</span></a>    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+</span><span id="Mazo-15"><a href="#Mazo-15"><span class="linenos">15</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">cartas</span> <span class="o">=</span> <span class="p">[</span>
+</span><span id="Mazo-16"><a href="#Mazo-16"><span class="linenos">16</span></a>            <span class="n">Carta</span><span class="p">(</span><span class="n">valor</span><span class="p">,</span> <span class="n">palo</span><span class="p">)</span> <span class="k">for</span> <span class="n">palo</span> <span class="ow">in</span> <span class="n">Carta</span><span class="o">.</span><span class="n">PALOS</span> <span class="k">for</span> <span class="n">valor</span> <span class="ow">in</span> <span class="n">Carta</span><span class="o">.</span><span class="n">VALORES</span>
+</span><span id="Mazo-17"><a href="#Mazo-17"><span class="linenos">17</span></a>        <span class="p">]</span>
+</span><span id="Mazo-18"><a href="#Mazo-18"><span class="linenos">18</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">barajar</span><span class="p">()</span>
+</span><span id="Mazo-19"><a href="#Mazo-19"><span class="linenos">19</span></a>
+</span><span id="Mazo-20"><a href="#Mazo-20"><span class="linenos">20</span></a>    <span class="k">def</span><span class="w"> </span><span class="nf">barajar</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+</span><span id="Mazo-21"><a href="#Mazo-21"><span class="linenos">21</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;Funcion barajar: ordena las cartas de manera random.&quot;&quot;&quot;</span>
+</span><span id="Mazo-22"><a href="#Mazo-22"><span class="linenos">22</span></a>        <span class="n">random</span><span class="o">.</span><span class="n">shuffle</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">cartas</span><span class="p">)</span>
+</span><span id="Mazo-23"><a href="#Mazo-23"><span class="linenos">23</span></a>
+</span><span id="Mazo-24"><a href="#Mazo-24"><span class="linenos">24</span></a>    <span class="k">def</span><span class="w"> </span><span class="nf">robar</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+</span><span id="Mazo-25"><a href="#Mazo-25"><span class="linenos">25</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;Funcion robar: devuelve la ultima carta del mazo y la elimina de el</span>
+</span><span id="Mazo-26"><a href="#Mazo-26"><span class="linenos">26</span></a><span class="sd">        para que no vuelva a aparecer.&quot;&quot;&quot;</span>
+</span><span id="Mazo-27"><a href="#Mazo-27"><span class="linenos">27</span></a>        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">cartas</span><span class="p">:</span>
+</span><span id="Mazo-28"><a href="#Mazo-28"><span class="linenos">28</span></a>            <span class="n">carta</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">cartas</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>  <span class="c1"># obtiene la primera carta sin borrarla</span>
+</span><span id="Mazo-29"><a href="#Mazo-29"><span class="linenos">29</span></a>            <span class="bp">self</span><span class="o">.</span><span class="n">cartas</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>  <span class="c1"># la elimina del mazo</span>
+</span><span id="Mazo-30"><a href="#Mazo-30"><span class="linenos">30</span></a>            <span class="k">return</span> <span class="n">carta</span>  <span class="c1"># devuelve el valor (clase Carta)</span>
+</span><span id="Mazo-31"><a href="#Mazo-31"><span class="linenos">31</span></a>        <span class="k">return</span> <span class="kc">None</span>
 </span></pre></div>
 
 
-            <div class="docstring"><p>Clase Mazo: Crea el mazo con todas las cartas y su funcionalidad</p>
+            <div class="docstring"><p>Clase Mazo: Crea el mazo con todas las cartas y su funcionalidad.</p>
 
 <p>Inicializa los atributos:</p>
 
 <ul>
-<li>cartas: lista de las cartas del mazo.</li>
+<li>Cartas: lista de las cartas del mazo.</li>
 </ul>
 </div>
 
@@ -167,9 +172,9 @@
 
     </div>
     <a class="headerlink" href="#Mazo.barajar"></a>
-            <div class="pdoc-code codehilite"><pre><span></span><span id="Mazo.barajar-17"><a href="#Mazo.barajar-17"><span class="linenos">17</span></a>    <span class="k">def</span><span class="w"> </span><span class="nf">barajar</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-</span><span id="Mazo.barajar-18"><a href="#Mazo.barajar-18"><span class="linenos">18</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;Funcion barajar: ordena las cartas de manera random.&quot;&quot;&quot;</span>
-</span><span id="Mazo.barajar-19"><a href="#Mazo.barajar-19"><span class="linenos">19</span></a>        <span class="n">random</span><span class="o">.</span><span class="n">shuffle</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">cartas</span><span class="p">)</span>
+            <div class="pdoc-code codehilite"><pre><span></span><span id="Mazo.barajar-20"><a href="#Mazo.barajar-20"><span class="linenos">20</span></a>    <span class="k">def</span><span class="w"> </span><span class="nf">barajar</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+</span><span id="Mazo.barajar-21"><a href="#Mazo.barajar-21"><span class="linenos">21</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;Funcion barajar: ordena las cartas de manera random.&quot;&quot;&quot;</span>
+</span><span id="Mazo.barajar-22"><a href="#Mazo.barajar-22"><span class="linenos">22</span></a>        <span class="n">random</span><span class="o">.</span><span class="n">shuffle</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">cartas</span><span class="p">)</span>
 </span></pre></div>
 
 
@@ -189,18 +194,18 @@
 
     </div>
     <a class="headerlink" href="#Mazo.robar"></a>
-            <div class="pdoc-code codehilite"><pre><span></span><span id="Mazo.robar-21"><a href="#Mazo.robar-21"><span class="linenos">21</span></a>    <span class="k">def</span><span class="w"> </span><span class="nf">robar</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-</span><span id="Mazo.robar-22"><a href="#Mazo.robar-22"><span class="linenos">22</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;Funcion robar: devuelve la ultima carta del mazo y la elimina de el </span>
-</span><span id="Mazo.robar-23"><a href="#Mazo.robar-23"><span class="linenos">23</span></a><span class="sd">            para que no vuelva a aparecer. &quot;&quot;&quot;</span>
-</span><span id="Mazo.robar-24"><a href="#Mazo.robar-24"><span class="linenos">24</span></a>        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">cartas</span><span class="p">:</span>
-</span><span id="Mazo.robar-25"><a href="#Mazo.robar-25"><span class="linenos">25</span></a>            <span class="n">carta</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">cartas</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>      <span class="c1"># obtiene la primera carta sin borrarla</span>
-</span><span id="Mazo.robar-26"><a href="#Mazo.robar-26"><span class="linenos">26</span></a>            <span class="bp">self</span><span class="o">.</span><span class="n">cartas</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>          <span class="c1"># la elimina del mazo</span>
-</span><span id="Mazo.robar-27"><a href="#Mazo.robar-27"><span class="linenos">27</span></a>            <span class="k">return</span> <span class="n">carta</span>                <span class="c1"># devuelve el valor (clase Carta)</span>
-</span><span id="Mazo.robar-28"><a href="#Mazo.robar-28"><span class="linenos">28</span></a>        <span class="k">return</span> <span class="kc">None</span>
+            <div class="pdoc-code codehilite"><pre><span></span><span id="Mazo.robar-24"><a href="#Mazo.robar-24"><span class="linenos">24</span></a>    <span class="k">def</span><span class="w"> </span><span class="nf">robar</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+</span><span id="Mazo.robar-25"><a href="#Mazo.robar-25"><span class="linenos">25</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;Funcion robar: devuelve la ultima carta del mazo y la elimina de el</span>
+</span><span id="Mazo.robar-26"><a href="#Mazo.robar-26"><span class="linenos">26</span></a><span class="sd">        para que no vuelva a aparecer.&quot;&quot;&quot;</span>
+</span><span id="Mazo.robar-27"><a href="#Mazo.robar-27"><span class="linenos">27</span></a>        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">cartas</span><span class="p">:</span>
+</span><span id="Mazo.robar-28"><a href="#Mazo.robar-28"><span class="linenos">28</span></a>            <span class="n">carta</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">cartas</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>  <span class="c1"># obtiene la primera carta sin borrarla</span>
+</span><span id="Mazo.robar-29"><a href="#Mazo.robar-29"><span class="linenos">29</span></a>            <span class="bp">self</span><span class="o">.</span><span class="n">cartas</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>  <span class="c1"># la elimina del mazo</span>
+</span><span id="Mazo.robar-30"><a href="#Mazo.robar-30"><span class="linenos">30</span></a>            <span class="k">return</span> <span class="n">carta</span>  <span class="c1"># devuelve el valor (clase Carta)</span>
+</span><span id="Mazo.robar-31"><a href="#Mazo.robar-31"><span class="linenos">31</span></a>        <span class="k">return</span> <span class="kc">None</span>
 </span></pre></div>
 
 
-            <div class="docstring"><p>Funcion robar: devuelve la ultima carta del mazo y la elimina de el 
+            <div class="docstring"><p>Funcion robar: devuelve la ultima carta del mazo y la elimina de el
 para que no vuelva a aparecer.</p>
 </div>
 

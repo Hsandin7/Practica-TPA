@@ -6,10 +6,10 @@ class Niveles:
     """Clase Niveles: Hace toda la funcionalidad de los niveles y los niveles que son un boss.
 
     Inicializa los atributos:
-        - nivel_actual a 1 ya que se empieza en el nivel 1
-        - puntos a 0 porque en cada nivel empieza con 0 puntos
-        - puntos_nivel que son los puntos objetivo a lo que hay que llegar
-        - multiplicador este multiplicador es lo que aumenta cada nivel.
+    - nivel_actual a 1 ya que se empieza en el nivel 1
+    - puntos a 0 porque en cada nivel empieza con 0 puntos
+    - puntos_nivel que son los puntos objetivo a lo que hay que llegar
+    - multiplicador este multiplicador es lo que aumenta cada nivel.
 
     """
 

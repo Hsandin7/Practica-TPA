@@ -8,11 +8,10 @@ class Guardado:
     """
     Clase Guardado: sirve para guardar los datos de partida.
 
-        Inicializacion de atributos:
-        - El atributo archivo guardado sirve para guardar la partida en curso.
-        - La funcion inicializar archivo guardado sirve para guardar la partida en la nube, hay tres espacios disponibles.
-        - Hay funciones donde, puedes borrar la partida guardada, que se muestre los datos de la partida guardada, y para cargar
-        la partida nuevamente.
+    Inicializacion de atributos:
+    - El atributo archivo guardado sirve para guardar la partida en curso.
+    - La funcion inicializar archivo guardado sirve para guardar la partida en la nube, hay tres espacios disponibles.
+    - Hay funciones donde, puedes borrar la partida guardada, que se muestre los datos de la partida guardada, y para cargar la partida nuevamente.
     """
 
     def __init__(self):

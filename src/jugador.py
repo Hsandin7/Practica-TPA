@@ -13,14 +13,13 @@ from src.comodines import Comodin
 
 class Jugador:
     """
-    Clase Jugador:
-        Se guardan los datos que se muestran en pantalla del jugador.
-
-        Inicializacion de variables:
-        - Puntos que tiene obtiene el juagdor.
-        - El dineroo que posee el juagdor.
-        - Se muestra tambien el nivel en el que está.
-        - Y el multiplicador se trata de las funciones que le da los comodines.
+    Clase Jugador: Se guardan los datos que se muestran en pantalla del jugador.
+ 
+    Inicializacion de variables:
+    - Puntos que tiene obtiene el juagdor.
+    - El dineroo que posee el juagdor.
+    - Se muestra tambien el nivel en el que está.
+    - Y el multiplicador se trata de las funciones que le da los comodines.
     """
 
     def __init__(self):

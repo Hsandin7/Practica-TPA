@@ -3,8 +3,7 @@ import random
 from src.boton import Boton
 
 """
-    Decorador efectos comodin:
-        Sirve para registrar la funcion que hace cada comodin.
+Decorador efectos comodin: Sirve para registrar la funcion que hace cada comodin.
     
 """
 efectos_comodin = {}
@@ -116,14 +115,13 @@ def efecto_programador(mano, fichas, multi, dinero, cartas_jugadas):
 
 class Comodin(Boton):
     """
-    Clase comodin:
-        Sirve para clasificar cada comodin.
+    Clase comodin: Sirve para clasificar cada comodin.
 
-        Inicializacion de atributos:
-        - Nombre: nombre del comodin.
-        - Descripcion: descripcion del comodin.
-        - Rareza: rareza del comodin.
-        - Precio: precio del comodin.
+    Inicializacion de atributos:
+    - Nombre: nombre del comodin.
+    - Descripcion: descripcion del comodin.
+    - Rareza: rareza del comodin.
+    - Precio: precio del comodin.
     """
 
     _descripciones = {
@@ -157,8 +155,7 @@ class Comodin(Boton):
     # Metodo aplicar
     def aplicar(self, mano, fichas, multi, dinero, cartas_jugadas, comodines):
         """
-        Funcion aplicar:
-            Sirve para aplicar los efectos del comodin a la partida.
+        Funcion aplicar: Sirve para aplicar los efectos del comodin a la partida.
         """
         if self.nombre == "clon":
             for d in reversed(comodines):
@@ -176,8 +173,7 @@ class Comodin(Boton):
 
     def _registrar_propiedades(self):
         """
-        Funcion registrar propiedades:
-            Se registra las propiedades de cada comodin.
+        Funcion registrar propiedades: Se registra las propiedades de cada comodin.
         """
         # Asignar rareza
         self.rareza = rareza_map.get(self.nombre, "desconocido")
@@ -187,15 +183,13 @@ class Comodin(Boton):
 
     def detectar_seleccion(self, eventos):
         """
-        Funcion detectar seleccion:
-            Detecta si esta seleccionado un comodin.
+        Funcion detectar seleccion: Detecta si esta seleccionado un comodin.
         """
         return self.detectar_click(eventos)
 
     def mover_comodines(self, eventos, lista_comodines, limite_rect=None):
         """
-        Funcion mover comodines:
-            Sirve para mover los comodines que tiene en mano el jugador.
+        Funcion mover comodines: Sirve para mover los comodines que tiene en mano el jugador.
         """
         for e in eventos:
             if (
