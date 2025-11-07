@@ -1,5 +1,5 @@
 import pygame
-from src._utilidades import mostrar_texto_transparente
+from src._utilidades import Texto
 import random
 
 
@@ -229,7 +229,7 @@ class Animador_Texto:
         """
         self.actualizar()
         if self.activo and self.opacidad > 0:
-            mostrar_texto_transparente(
+            Texto.mostrar_texto_transparente(
                 screen,
                 f"+{self.texto}",
                 self.x,

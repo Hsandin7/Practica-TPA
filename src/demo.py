@@ -1,7 +1,7 @@
 from src.juego import Juego
 from src.animaciones import Transicion
 from src.comodines import Comodin
-from src.guardado import *
+from src.guardado import Guardado
 from src._utilidades import *
 
 # Pos boton jugar = (730, 670)

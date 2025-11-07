@@ -2,12 +2,7 @@ import random
 import pygame
 from src.jugador import Jugador
 from src.comodines import Comodin
-from src._utilidades import (
-    mostrar_texto,
-    mostrar_texto_centrado,
-    mostrar_texto_multilinea,
-)
-
+from src._utilidades import Texto
 
 class Tienda:
     """Clase Tienda: Hace toda la funcionalidad de la tienda.
@@ -61,14 +56,14 @@ class Tienda:
         """
         La funcion mostrar, muestra la informacion del precio de los comodines y el dinero del juegador.
         """
-        mostrar_texto_centrado(
+        Texto.mostrar_texto_centrado(
             screen, f"{self.jugador.dinero}$", 900, 150, 40
         )  # Mostrar dinero actual del jugador
 
         color_coste = (
             (255, 255, 0) if self.jugador.dinero >= self.coste_cambiar else (255, 0, 0)
         )  # Amarillo si se puede pagar Rojo si no
-        mostrar_texto(screen, f"{self.coste_cambiar}$", 525, 400, 30, color_coste)
+        Texto.mostrar_texto(screen, f"{self.coste_cambiar}$", 525, 400, 30, color_coste)
         x = 690
         y = 250
         for comodin in self.tienda_comodines:
@@ -80,7 +75,7 @@ class Tienda:
                     if self.jugador.dinero >= comodin.precio
                     else (255, 0, 0)
                 )  # Amarillo si se puede pagar Rojo si no
-                mostrar_texto_centrado(
+                Texto.mostrar_texto_centrado(
                     screen,
                     f"{comodin.precio}$",
                     comodin.rect.midbottom[0],
@@ -94,7 +89,7 @@ class Tienda:
                     # Mostrar descripcion
                     screen.blit(self.imagen_descripcion, (0, 0))
                     gris = (220, 220, 220)
-                    mostrar_texto(
+                    Texto.mostrar_texto(
                         screen,
                         f"{self.comodin_seleccionado.nombre.capitalize()}",
                         670,
@@ -106,7 +101,7 @@ class Tienda:
                         "raro": (170, 235, 145),
                         "epico": (170, 50, 255),
                     }
-                    mostrar_texto_centrado(
+                    Texto.mostrar_texto_centrado(
                         screen,
                         f"{self.comodin_seleccionado.rareza.capitalize()}",
                         920,
@@ -114,7 +109,7 @@ class Tienda:
                         20,
                         color_rareza[self.comodin_seleccionado.rareza],
                     )
-                    mostrar_texto_multilinea(
+                    Texto.mostrar_texto_multilinea(
                         screen,
                         f"{self.comodin_seleccionado.descripcion}",
                         670,
