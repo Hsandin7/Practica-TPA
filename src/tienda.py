@@ -8,8 +8,11 @@ from src._utilidades import Texto
 class Tienda:
     """Clase Tienda: Hace toda la funcionalidad de la tienda.
     Inicializa los atributos:
-    - Los comodines disponibles en la tienda, ademas de que los muestra.
-    - Esta la funcion de cambiar de comodines y comprar.
+    - Los comodines disponibles en la tienda.
+    - El coste de cambiar los comodines de la tienda.
+    - Los comodines que hay en la tienda
+    - El comodin que esta seleccionado.
+    - la imagen de la descripcion.
     - Se resta del dinero el precio del comodin.
     """
 
@@ -36,7 +39,7 @@ class Tienda:
 
     def poblar(self):
         """
-        La funcion poblar tienda sirve para mostrar los comodines que puede comprar en la tienda,
+        Funcion poblar: sirve para mostrar los comodines que puede comprar en la tienda,
         y que con el random hace que no se puedan repetir un mismo comodin en la tienda.
         """
         n = min(2, len(self.comodines_disponibles))
@@ -55,7 +58,7 @@ class Tienda:
 
     def mostrar(self, screen):
         """
-        La funcion mostrar, muestra la informacion del precio de los comodines y el dinero del juegador.
+        Funcion mostrar: muestra la informacion del precio de los comodines, el dinero del juegador y las descripciones.
         """
         Texto.mostrar_texto_centrado(
             screen, f"{self.jugador.dinero}$", 900, 150, 40
@@ -123,7 +126,7 @@ class Tienda:
 
     def actualizar(self, eventos):
         """
-        Devuelve si un comodin esta seleccionado o no.
+        Funcion actualizar: Devuelve si un comodin esta seleccionado o no.
         """
         # Selección de comodines
         for comodin in self.tienda_comodines:
@@ -140,7 +143,7 @@ class Tienda:
 
     def cambiar(self):
         """
-        Funcion del boton cambiar.
+        Funcion cambiar: comprueba que se puede utilizar el boton cambiar, actuliza su coste y el dinero del jugador.
         """
         # Botón "Cambiar"
         if self.jugador.dinero >= self.coste_cambiar:
@@ -150,7 +153,7 @@ class Tienda:
 
     def comprar(self):
         """
-        Funcion del boton comprar.
+        Funcion comprar: Si hay un comodin seleccionado, comprueba que el jugador tenga dinero para comprarlo y lo quita de la tienda.
         """
         # Botón "Comprar"
         if (
