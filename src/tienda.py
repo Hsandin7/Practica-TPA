@@ -2,7 +2,7 @@ import random
 import pygame
 from src.jugador import Jugador
 from src.comodines import Comodin
-from src._utilidades import Texto
+from src.texto import Texto
 
 
 class Tienda:

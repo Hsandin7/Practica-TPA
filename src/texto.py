@@ -1,24 +1,11 @@
-# Las utilidades implementadas tienen un cache. Esto se lleva a cabo creando un
-# diccionario con la informacion que se vaya cargando, para asi no tener que cargar
-# los elementos una y otra vez, ahorrando tiempo de ejecucion y dandole limpieza al juego
-
-"""
-Como usar:
-    dentro de la clase que se quiera importar se hace:
-        from src._utilidades import Texto
-    o si se quiere importar solo reproducir_sonido:
-        from src._utilidades import reproducir_sonido
-"""
-
 import pygame
 
-
-# Se hace cache de cada uno de los tamanos de fuente y se cargan a traves de esta funcion
 class Texto:
     """Clase Texto: Contiene las funcionalidades de la fuente."""
 
     _fuentes = {}
 
+    # Se hace cache de cada uno de los tamanos de fuente y se cargan a traves de esta funcion
     @classmethod
     def cargar_fuente(cls, tamano):
         if tamano not in cls._fuentes:

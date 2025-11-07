@@ -1,5 +1,5 @@
 import pygame
-from src._utilidades import Texto
+from src.texto import Texto
 import random
 
 

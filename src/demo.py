@@ -2,7 +2,7 @@ from src.juego import Juego
 from src.animaciones import Transicion
 from src.comodines import Comodin
 from src.guardado import Guardado
-from src._utilidades import *
+from src.texto import *
 
 # Pos boton jugar = (730, 670)
 # Pos boton descartar = (925, 670)

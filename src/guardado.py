@@ -1,7 +1,7 @@
 import json
 import os
 from datetime import datetime
-from src._utilidades import Texto
+from src.texto import Texto
 
 
 class Guardado:

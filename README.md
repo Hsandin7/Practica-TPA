@@ -133,10 +133,6 @@ direction TB
 		+mover_comodines()
 		+dibujar()
     }
-
-    boton --|> Carta
-    boton--|> Comodin
-
     class evaluador_cartas{
 	    + list cartas
 	    + dict resultado
@@ -151,93 +147,97 @@ direction TB
 		+_doble_pareja()
 		+_pareja()
 		+_carta_mas_alta()
-	  }
-	  
-	  class Mazo{
-		  + list cartas
-		  + barajar()
-		  + robar()
-	  }
-	  
-	  class jugador{
-		  + int puntos
-		  + int puntos_cartas
-		  + int puntos_nivel
-		  + int multiplicador
-		  + bool nivel_completado
-		  + bool game_over
-		  + int numero_nivel
-		  + int dinero
-		  + list mano
-		  + lisr comodines_mano
-		  + cartas_jugadas
-		  + cartas_descartadas
-		  + cartas_seleccionadas
-		  + int limite_seleccion
-		  + int limite_descartes
-		  + limite_seleccion
-		  + mostrar_puntos()
-		  + mostrar_mano()
-		  + mostrar_cartas()
-		  + actualizar()
-		  + detectar_seleccion_carta()
-		  + jugar_cartas()
-		  + descartar_cartas()
-		  + guardar_partida()
-		  + cargar_partida()
-		  + borrar_partida()
-		  + siguiente_ronda()
-	  }
+	}
+	class Mazo{
+		+ list cartas
+		+ barajar()
+		+ robar()
+	}
+	class jugador{
+		+ int puntos
+		+ int puntos_cartas
+		+ int puntos_nivel
+		+ int multiplicador
+		+ bool nivel_completado
+		+ bool game_over
+		+ int numero_nivel
+		+ int dinero
+		+ list mano
+		+ lisr comodines_mano
+		+ cartas_jugadas
+		+ cartas_descartadas
+		+ cartas_seleccionadas
+		+ int limite_seleccion
+		+ int limite_descartes
+		+ limite_seleccion
+		+ mostrar_puntos()
+		+ mostrar_mano()
+		+ mostrar_cartas()
+		+ actualizar()
+		+ detectar_seleccion_carta()
+		+ jugar_cartas()
+		+ descartar_cartas()
+		+ guardar_partida()
+		+ cargar_partida()
+		+ borrar_partida()
+		+ siguiente_ronda()
+    }
+    class Guardado{
+		+ string archivo_guardado
+		+ inicializar_archivo_guardado()
+		+ guardar_partida()
+		+ cargar_partida()
+		+ borrar_partdia()
+		+ mostrar_info_slots()
+	}
+	class Niveles{
+		+ int nivel_actual
+		+ int puntos_nivel
+		+ int multiplicador
+		+ tuple color_pantalla
+	 	+ list colores_boss
+		+ bool es_boss
+		+ int carta_invalida
+		+ siguiente_nivel()
+		+ check_boss()
+		+ dibujar_filtro_pantalla()
+	}
+    class Tienda{
+        + jugador
+        + list comodines_disponibles
+        + int coste_cambiar
+        + list tienda_comodines
+        + comodin_seleccionado
+        + imagen_descripcion
+        + poblar()
+        + mostrar()
+        + actualizar()
+        + cambiar()
+        + comprar()
+    }
+    class Transicion{
+        + int valor
+        + string fase
+        + list paginas
+        + int num_pagina_destino
+        + int angulo
+        + int animacion
+        + iniciar()
+        + actualizar()
+        + animacion_inicio()
+        + animacion_tienda()
+        + animacion_gameover()
+    }
+    class Texto{
+        + cargar_fuente()
+        + mostrar_texto()
+        + mostrar_texto_centrado()
+        + mostrar_texto_transparente()
+        + mostrar_texto_multilinea()
+    }
 
-      class Guardado{
-		    + string archivo_guardado
-			+ inicializar_archivo_guardado()
-			+ guardar_partida()
-			+ cargar_partida()
-			+ borrar_partdia()
-			+ mostrar_info_slots()
-	  }
-	  class Niveles{
-			+ int nivel_actual
-			+ int puntos_nivel
-			+ int multiplicador
-			+ tuple color_pantalla
-		 	+ list colores_boss
-			+ bool es_boss
-			+ int carta_invalida
-			+ siguiente_nivel()
-			+ check_boss()
-			+ dibujar_filtro_pantalla()
-	   }
-
-		class Tienda{
-			+ jugador
-			+ list comodines_disponibles
-			+ int coste_cambiar
-			+ list tienda_comodines
-			+ comodin_seleccionado
-			+ imagen_descripcion
-			+ poblar()
-			+ mostrar()
-			+ actualizar()
-			+ cambiar()
-			+ comprar()
-
-		}
-
-		class Transicion{
-			+ int valor
-			+ string fase
-			+ list paginas
-			+ int num_pagina_destino
-			+ int angulo
-			+ int animacion
-			+ iniciar()
-			+ actualizar()
-			+ animacion_inicio()
-			+ animacion_tienda()
-			+ animacion_gameover()
-
-		}
-
+    %% Relaciones
+    boton --|> Carta
+    boton--|> Comodin
+    
 ```

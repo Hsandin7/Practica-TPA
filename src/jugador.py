@@ -4,7 +4,7 @@ import pygame
 from src.mazo import Mazo
 from src.carta import Carta
 from src.evaluador_cartas import Evaluador_Cartas
-from src._utilidades import Texto
+from src.texto import Texto
 from src.animaciones import Animador_Texto
 from src.guardado import Guardado
 from src.niveles import Niveles
