@@ -5,7 +5,7 @@ import random
 
 class Transicion:
     """
-    Clase Transion: Sirve para todas las animaciones del juego.
+    Clase Transicion: Contiene las transiciones de pantalla del juego.
     """
 
     def __init__(self):
@@ -20,7 +20,7 @@ class Transicion:
         self, pagina_actual, pagina_destino, num_pagina_destino, num_transicion
     ):
         """
-        Funcion Iniciar: Crea las transiciones que se van a usar.
+        Funcion Iniciar: Configura la animacion que se va a ejecutar.
         """
         self.paginas = [pagina_actual.copy(), pagina_destino.copy()]
         for pag in self.paginas:
@@ -53,7 +53,7 @@ class Transicion:
 
     def actualizar(self, screen):
         """
-        Funcion actualizar: Clasifica y actualiza las transiciones.
+        Funcion actualizar: Actualiza la transicion correspondiente.
         """
         match self.animacion:
             case 1:
@@ -97,7 +97,7 @@ class Transicion:
 
     def animacion_tienda(self, screen):  # Animacion bajada y subida de la Tienda
         """
-        Funcion animacion tienda: Anima la tienda al salir.
+        Funcion animacion tienda: Anima la tienda al abrir y cerrarla.
         """
         ancho_pantalla = screen.get_width()
         alto_pantalla = screen.get_height()
@@ -122,7 +122,7 @@ class Transicion:
 
     def animacion_gameover(self, screen):
         """
-        Funcion animacion gameover: La animacion de cuando pierdes el juego.
+        Funcion animacion gameover: Animacion para cuando pierdes el juego.
         """
         if self.fase == "aparecer":
             pantalla_go = self.paginas[1]
@@ -160,6 +160,7 @@ class Transicion:
 class Animador_Texto:
     """
     Clase animador texto: Anima los textos en pantalla.
+    Esta clase tiene posibilidad de expansion para crear nuevas animaciones.
 
     Inicializacion de atributos:
     - Texto: texto que se va a escribir.
@@ -185,7 +186,7 @@ class Animador_Texto:
         self, texto, x, y, x_final=None, y_final=None, color=(255, 255, 255), tamano=40
     ):
         """
-        Funcion iniciar: Funcion de la clase para inicializar el texto dentro de otras clases.
+        Funcion iniciar: Inicializa la animacion.
         """
         self.texto = texto
         self.x = x
@@ -199,7 +200,7 @@ class Animador_Texto:
 
     def actualizar(self):
         """
-        Funcion actualizar: Animacion que tienen os textos.
+        Funcion actualizar: Actualiza la animacion.
         """
         if not self.activo:
             return
@@ -215,7 +216,7 @@ class Animador_Texto:
 
     def dibujar(self, screen):
         """
-        Funcion dibujar: Sirve para mostrar en pantalla.
+        Funcion dibujar: Muestra por pantalla el estado actual del texto animado.
         """
         self.actualizar()
         if self.activo and self.opacidad > 0:

@@ -127,7 +127,7 @@ class Tienda:
         """
         # Selección de comodines
         for comodin in self.tienda_comodines:
-            if comodin and comodin.detectar_seleccion(eventos):
+            if comodin and comodin.detectar_click(eventos):
                 if comodin.seleccionada:
                     comodin.seleccionada = False
                     self.comodin_seleccionado = None

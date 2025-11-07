@@ -97,13 +97,3 @@ class Texto:
         for i, linea in enumerate(lineas):
             texto_renderizado = fuente.render(linea.strip(), True, color)
             screen.blit(texto_renderizado, (posx, posy + i * (tamano + 4)))
-
-
-# Cache de los diferentes sonidos del juego
-_sonidos = {}
-
-
-def reproducir_sonido(ruta: str):
-    if ruta not in _sonidos:
-        _sonidos[ruta] = pygame.mixer.Sound(ruta)
-    _sonidos[ruta].play()

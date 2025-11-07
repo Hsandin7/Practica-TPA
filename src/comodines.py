@@ -2,39 +2,15 @@ import pygame
 import random
 from src.boton import Boton
 
-"""
-Decorador efectos comodin: Sirve para registrar la funcion que hace cada comodin.
-    
-"""
 efectos_comodin = {}
 
-
 def registrar_efecto(nombre):
+    """Decorador registrar efecto: Sirve para registrar el efecto que tiene cada comodin."""
     def decorator(func):
         efectos_comodin[nombre] = func
         return func
 
     return decorator
-
-
-# Diccionarios
-rareza_map = {
-    "matematico": "comun",
-    "stonks": "comun",
-    "calculadora": "comun",
-    "programador": "comun",
-    "loco": "raro",
-    "doblete": "raro",
-    "esteroides": "raro",
-    "gloton": "epico",
-    "clon": "epico",
-}
-
-precio_map = {
-    "comun": 3,
-    "raro": 5,
-    "epico": 8,
-}
 
 
 # Definicion de efectos para cada comodin
@@ -114,14 +90,13 @@ def efecto_programador(mano, fichas, multi, dinero, cartas_jugadas):
 
 
 class Comodin(Boton):
-    """
-    Clase comodin: Sirve para clasificar cada comodin.
+    """Clase comodin: Guarda la informacion y funcionalidad de un comodin heredando de la clase Boton.
 
     Inicializacion de atributos:
-    - Nombre: nombre del comodin.
-    - Descripcion: descripcion del comodin.
-    - Rareza: rareza del comodin.
-    - Precio: precio del comodin.
+    - nombre: nombre del comodin.
+    - descripcion: descripcion del comodin.
+    - rareza: rareza del comodin.
+    - precio: precio del comodin.
     """
 
     _descripciones = {
@@ -134,6 +109,24 @@ class Comodin(Boton):
         "esteroides": "Todas las cartas suman 20 puntos",
         "gloton": "Por cada carta jugada se suman 50 puntos y 10 de multi",
         "clon": "Copia la accion del comodín que este colocado mas a la derecha",
+    }
+
+    _rarezas = {
+        "matematico": "comun",
+        "stonks": "comun",
+        "calculadora": "comun",
+        "programador": "comun",
+        "loco": "raro",
+        "doblete": "raro",
+        "esteroides": "raro",
+        "gloton": "epico",
+        "clon": "epico",
+    }
+
+    _precios = {
+        "comun": 3,
+        "raro": 5,
+        "epico": 8,
     }
 
     def __init__(self, nombre):
@@ -150,13 +143,11 @@ class Comodin(Boton):
         self.offset_y = 0
 
         # Configuracion de rareza y precio del comodín en tienda según su rareza
-        self._registrar_propiedades()
+        self._asignar_propiedades()
 
     # Metodo aplicar
     def aplicar(self, mano, fichas, multi, dinero, cartas_jugadas, comodines):
-        """
-        Funcion aplicar: Sirve para aplicar los efectos del comodin a la partida.
-        """
+        """Funcion aplicar: Aplica los efectos del comodin a la partida."""
         if self.nombre == "clon":
             for d in reversed(comodines):
                 if d is not self:
@@ -171,20 +162,16 @@ class Comodin(Boton):
 
         return efecto(mano, fichas, multi, dinero, cartas_jugadas or [])
 
-    def _registrar_propiedades(self):
-        """
-        Funcion registrar propiedades: Se registra las propiedades de cada comodin.
-        """
+    def _asignar_propiedades(self):
+        """Funcion asignar propiedades: Asigna la rareza y precio del comodin."""
         # Asignar rareza
-        self.rareza = rareza_map.get(self.nombre, "desconocido")
+        self.rareza = Comodin._rarezas.get(self.nombre, "desconocido")
 
         # Asignar precio basado en rareza
-        self.precio = precio_map.get(self.rareza, 1)
+        self.precio = Comodin._precios.get(self.rareza, 1)
 
     def mover_comodines(self, eventos, lista_comodines, limite_rect=None):
-        """
-        Funcion mover comodines: Sirve para mover los comodines que tiene en mano el jugador.
-        """
+        """Funcion mover comodines: Sirve para mover los comodines que tiene el jugador."""
         for e in eventos:
             if (
                 e.type == pygame.MOUSEBUTTONDOWN
@@ -217,5 +204,6 @@ class Comodin(Boton):
                     self.rect.clamp_ip(limite_rect)
 
     def dibujar(self, screen):
+        """Funcion dibujar: Asigna correctamente la posicion y dibuja el comodin."""
         self.x, self.y = self.rect.topleft
         super().dibujar(screen)

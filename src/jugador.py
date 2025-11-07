@@ -12,8 +12,7 @@ from src.comodines import Comodin
 
 
 class Jugador:
-    """
-    Clase Jugador: Se guardan los datos que se muestran en pantalla del jugador.
+    """Clase Jugador: Se guardan los datos que se muestran en pantalla del jugador.
 
     Inicializacion de variables:
     - Puntos que tiene obtiene el juagdor.

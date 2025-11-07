@@ -3,16 +3,15 @@ import pygame
 
 
 class Carta(Boton):
-    """Clase Carta: Guarda la informacion de cada carta y hereda de la clase Boton.
+    """Clase Carta: Guarda la informacion y funcionalidad de una carta heredando de la clase Boton.
 
     Inicializa los atributos:
-    - _valor el cual es el numero de la carta
-    - _palo es la figura de la carta
-    - x_final sirven para las animaciones
-    - y_final sirven para las animaciones
-    - velodidad sirve para la velocidad de las animaciones
-    - seleccionada devuelve si esta seleccionada la carta.
-
+    - _valor: numero de la carta.
+    - _palo: figura de la carta.
+    - x_final: para la animacion de movimiento.
+    - y_final: para la animacion de movimiento.
+    - velodidad: velocidad de la animacion de movimiento.
+    - seleccionada: booleano para determinar si esta seleccionada o no la carta.
     """
 
     PALOS = ["o", "c", "e", "b"]  # Oros(o), Copas(c), Espadas(e), Bastos(b)
@@ -50,6 +49,8 @@ class Carta(Boton):
 
     @property
     def valor(self):
+        """Getter valor: Solo si esta habilitada devuelve el valor de la carta,
+        impidiendo que se cambie."""
         if self.habilitada:
             return self._valor
         else:
@@ -57,11 +58,12 @@ class Carta(Boton):
 
     @property
     def palo(self):
+        """Getter palo: Devuelve la figura de la carta, impidiendo que se cambie."""
         return self._palo
 
     def mover_hacia_destino(self):
-        """Funcion mover_hacia_destino: cambia la posicion actual de la carta hasta
-        llegar a la posicion final, para la animacion."""
+        """Funcion mover_hacia_destino: Cambia la posicion actual segun la velocidad de la
+        carta hasta llegar a la posicion final. Es la animacion de movimiento."""
         x = self.x
         y = self.y
         x += (self.x_final - self.x) * self.velocidad
@@ -69,7 +71,7 @@ class Carta(Boton):
         super().asignar_posicion(x, y)
 
     def dibujar(self, screen):
-        """Funcion dibujar: accede a la funcion mover_hacia_destino y muestra la carta."""
+        """Funcion dibujar: Actualiza la funcion mover_hacia_destino y muestra la carta."""
         self.mover_hacia_destino()
         super().dibujar(screen)
         if not self.habilitada:
@@ -77,9 +79,8 @@ class Carta(Boton):
             screen.blit(imagen, (self.x, self.y))
 
     def detectar_seleccion(self, eventos):
-        """Funcion deterctar_seleccion: detecta si se le ha dado click a la carta y
+        """Funcion deterctar_seleccion: Detecta si se le ha dado click a la carta y
         devuelve true o false."""
-
         if self.detectar_click(eventos):
             self.seleccionada = not self.seleccionada
             if self.seleccionada:

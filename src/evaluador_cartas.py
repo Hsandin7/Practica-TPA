@@ -8,6 +8,8 @@
 
 # Decorador
 def jugada(condicion, base, multiplicador):
+    """Decorador jugada: Lleva a cabo las asignaciones y condiciones correspondientes
+    para registrar el resultado del efecto."""
     def decorador(func):
         def nueva_funcion(self):
             if not condicion(
@@ -22,19 +24,16 @@ def jugada(condicion, base, multiplicador):
                     "Multiplicador": multiplicador,
                 }
                 return self.resultado
-
         return nueva_funcion
-
     return decorador
 
 
 class Evaluador_Cartas:
-    """Clase Evaluador_Cartas: Comprueba si las cartas jugadas tienen alguna puntuación.
+    """Clase Evaluador_Cartas: Calcula el resultado de las cartas jugadas.
 
     Inicializa los atributos:
-    - cartas es la lista de las cartas jugadas.
-    - resultado lo que se devulve al acabar la evaluacion.
-
+    - cartas: es la lista de cartas jugadas.
+    - resultado: lo que se devulve al acabar la evaluacion.
     """
 
     def __init__(self):
@@ -42,10 +41,8 @@ class Evaluador_Cartas:
         self.resultado = {"Cartas": [], "Valor": 0, "Multiplicador": 0}
 
     def evaluar(self, cartas_seleccionadas):
-        """Funcion evaluar: Comprueba todas las posibles jugadas con un un orden de prioridad
-        comprobando si las cartas jugadas corresponden a alguna jugada para sumar la puntucaion
-        y devolver el resultado.
-        """
+        """Funcion evaluar: Comprueba todas las posibles jugadas en orden por prioridad comprobando
+        si las cartas corresponden a alguna jugada para devolver el resultado correspondiente."""
         self.cartas = cartas_seleccionadas
         self.cartas.sort(key=lambda carta: carta.valor)
 

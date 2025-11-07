@@ -5,17 +5,15 @@ import pygame
 
 
 class Juego:
-    """
-    Clase Juego: La clase juego es la que se encarga de cargar todas las paginas y todo la interfaz del jugador.
+    """Clase Juego: Se encarga de cargar todos los elementos de interfaz y lleva a cabo el manejo del juego.
 
     Inicializa los atributos:
-    - la pagina actual que inicializa en 0
-    - la pagina, esta llama a la funcion cargar paginas y situa al jugador en la pagina que debe.
-    - el atributo botones llama a la funcion cargar botones y le muestra al jugador los botones adecuados a la situación de la partida.
-    - el atributo mostrar fondo esta inicializado a true para mostrar el fondo al jugador.
-    - el atributo jugador llama a la clase jugador.
-    - el atributo tienda llama a la clase tienda.
-
+    - pagina actual: indica en que pagina se encuentra el juego.
+    - paginas: guarda las imagenes de las paginas.
+    - botones: guarda las instanciaciones Boton de los botones.
+    - mostrar fondo: indica si se deve mostrar el fondo al jugador.
+    - jugador: guarda la instancia de Jugador.
+    - tienda: guarda la instancia de Tienda.
     """
 
     # Atributos de clase
@@ -32,7 +30,7 @@ class Juego:
         self.tienda = Tienda(self.jugador)
 
     def cargar_paginas(self):
-        """Funcion cargar_paginas: Almacena todas las paginas del juego y muestra al jugador la pantalla que debe en cada situación."""
+        """Funcion cargar paginas: Almacena todas las paginas del juego."""
         # Imagenes de fondo
         return [
             pygame.image.load("Graficos/pagina_principal.png"),  # 0: P Principal
@@ -45,7 +43,7 @@ class Juego:
         ]
 
     def cargar_botones(self):
-        """Funcion cargar_botones: Carga todas las instancias de los botones para poder ser usadas por el jugador."""
+        """Funcion cargar_botones: Carga todas las instancias de los botones."""
         return {
             # P Principal
             "play": Boton("Graficos/Botones/boton_play.png", 560, 595),
@@ -79,13 +77,13 @@ class Juego:
         }
 
     def reiniciar(self):
-        """Funcion reiniciar: Reinicia la partida creando un nuevo jugador."""
+        """Funcion reiniciar: Reinicia la partida llamando a los constructores de jugador y tienda."""
         self.jugador = Jugador()
         self.tienda = Tienda(self.jugador)
 
     # Pagina principal
     def mostrar_pagina_principal(self, screen):
-        """Funcion mostrar_pagina_principal: La función muestra el fondo una unica vez y dibuja el boton de play para que el usuario pueda empezar a jugar."""
+        """Funcion mostrar_pagina_principal: Muestra la pagina principal para iniciar el juego."""
         if self.mostrar_fondo:  # Muestra el fondo una sola vez
             screen.blit(self.paginas[0], (0, 0))
             self.mostrar_fondo = False
@@ -93,7 +91,7 @@ class Juego:
         self.botones["play"].dibujar(screen)
 
     def actualizar_pagina_principal(self, eventos):
-        """Funcion mostrar_pagina_principal: La función muestra el fondo una unica vez y dibuja el boton de play para que el usuario pueda empezar a jugar."""
+        """Funcion mostrar_pagina_principal: Detecta si se le ha dado click a algun boton."""
         if self.botones["play"].detectar_click(eventos):
             self.mostrar_fondo = True
             Juego.num_transicion = 1  # Transicion 1
@@ -105,7 +103,7 @@ class Juego:
 
     # Pagina de juego
     def mostrar_pagina_juego(self, screen):
-        """Funcion mostrar_pagina_juego: Muestra por pantalla la pagina del juego como los botones, fondo o el filtro de color cuando se alcanza un jefe."""
+        """Funcion mostrar_pagina_juego: Muestra la pagina del juego correspondiente en funcion de si es un nivel boss."""
         if self.jugador.niveles.es_boss:
             self.jugador.niveles.dibujar_filtro_pantalla(screen)
         else:
@@ -119,8 +117,8 @@ class Juego:
         self.jugador.mostrar_puntos(screen)
 
     def actualizar_pagina_juego(self, eventos):
-        """Funcion mostrar_pagina_principal: Procesa eventos y los clicks que se hacen en los botones,
-        muestra cuando el jugador se pasa un nivel y accede a la tieda, o muestra el panel de informacion cuando se hace click en el boton de informacion.
+        """Funcion mostrar_pagina_principal: Procesa eventos y clicks de los botones.
+        Muestra cuando el jugador se pasa un nivel y accede a la tieda, o muestra el panel de informacion cuando se hace click en el boton de informacion.
         """
         self.jugador.actualizar(eventos)
 
@@ -157,7 +155,7 @@ class Juego:
 
     # Menu de salida
     def mostrar_menu_salida(self, screen):
-        """Funcion mostrar_menu_salida: Esta funcion muestra el fonddo y muestra los botones continuar, controles, salir y save."""
+        """Funcion mostrar_menu_salida: Muestra el menu de salida."""
         if (
             self.mostrar_fondo
         ):  # Muestra el fondo una sola vez (Para que funcione bien la transparencia)
@@ -171,7 +169,7 @@ class Juego:
         self.botones["save"].dibujar(screen)
 
     def actualizar_menu_salida(self, eventos):
-        """Funcion actualizar_menu_salida: Detecta los botones continuar, controles, salir y save, y realiza las respectivas funciones de cada boton."""
+        """Funcion actualizar_menu_salida: Procesa eventos y clicks de los botones y realiza las respectivas funciones."""
         if self.botones["continuar"].detectar_click(eventos):
             self.pagina_actual = 1
             self.mostrar_fondo = True
@@ -191,7 +189,7 @@ class Juego:
 
     # Tienda
     def mostrar_menu_tienda(self, screen):
-        """Funcion mostrar_menu_tienda: Aquí muestra los botonesde la tienda y el fondo de la misma."""
+        """Funcion mostrar_menu_tienda: Muestra el menu de la tienda."""
         screen.blit(self.paginas[3], (0, 0))
 
         self.botones["boton_SR"].dibujar(screen)
@@ -201,7 +199,7 @@ class Juego:
         self.tienda.mostrar(screen)
 
     def actualizar_menu_tienda(self, eventos):
-        """Funcion actualizar_menu_tienda: Aquí se detectan los clicks en los botones de la tienda y se realizan las respectivas funciones de cada uno."""
+        """Funcion actualizar_menu_tienda: Procesa eventos y clicks de los botones, realizando las respectivas funciones."""
         self.tienda.actualizar(eventos)
 
         if self.botones["boton_SR"].detectar_click(eventos):
@@ -217,9 +215,7 @@ class Juego:
 
     # Menu Guardado
     def mostrar_menu_guardado(self, screen):
-        """Funcion mostrar_menu_guardado: Esta funcion muestra todos los botones del menú de guardado,
-        muestra la información de cada eslot y muestra el overlay mas oscuro del
-        slot que se selecciona."""
+        """Funcion mostrar_menu_guardado: Muestra el menú de guardado y la información de cada slot."""
         if self.mostrar_fondo:  # Muestra el fondo una sola vez
             screen.blit(self.paginas[4], (0, 0))
             self.mostrar_fondo = False
@@ -243,7 +239,7 @@ class Juego:
             )
 
     def actualizar_menu_guardado(self, eventos):
-        """Funcion actualizar_menu_guardado: Aquí se realizan las funciones del los botones del menú de guardado y se selecciona el slot donde se va a guardar."""
+        """Funcion actualizar_menu_guardado: Procesa eventos y clicks de los botones y slots."""
         if self.botones["guardar"].detectar_click(eventos):
             self.jugador.guardar_partida()
         elif self.botones["cargar"].detectar_click(eventos):
@@ -269,7 +265,7 @@ class Juego:
 
     # Pagina GAME OVER                  # Implemetación de graficos por hacer
     def mostrar_pagina_game_over(self, screen):
-        """Funcion mostrar_pagina_game_over: Esta fucnion dibuja la pantalla de game over con su fondo y su botón."""
+        """Funcion mostrar_pagina_game_over: Muestra la pagina de game over."""
         if self.mostrar_fondo:  # Muestra el fondo una sola vez
             screen.blit(self.paginas[5], (0, 0))
             self.mostrar_fondo = False
@@ -277,7 +273,7 @@ class Juego:
         self.botones["game_over"].dibujar(screen)
 
     def actualizar_pagina_game_over(self, eventos):
-        """Funcion actualizar_pagina_game_over: Detecta el click al botón de game over y reinicia el juego volviendo al menú principal con su respectiva transicción."""
+        """Funcion actualizar_pagina_game_over: Procesa eventos y clicks del boton de game over, reiniciando el juego cuando se presione."""
         if self.botones["game_over"].detectar_click(eventos):
             self.mostrar_fondo = True
             Juego.num_transicion = (
@@ -292,7 +288,7 @@ class Juego:
 
     # Menu Info
     def mostrar_pantalla_info(self, screen):
-        """Funcion mostrar_pantalla_info: Muestra la pantalla de información con todas las jugadas y cuantos puntos suman cada una."""
+        """Funcion mostrar_pantalla_info: Muestra la pantalla de información con todas las jugadas posibles."""
         if self.mostrar_fondo:  # Muestra el fondo una sola vez
             screen.blit(self.paginas[6], (0, 0))
             self.mostrar_fondo = False

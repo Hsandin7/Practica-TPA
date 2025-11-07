@@ -1,21 +1,20 @@
-from src._utilidades import reproducir_sonido
 import pygame
 
 
 class Boton:
-    """Clase Boton: crea, asigna las posiciones del boton y detecta si estan conectados.
+    """Clase Boton: Crea cada boton, carta y comodin del juego.
 
     Inicializa los atributos:
     - x pone la posicion en x.
     - y pone la posicion en y.
-    - imagen_original asigna la ruta de la imagen al boton.
+    - imagen_original asigna la ruta de la imagen al boton haciendo uso del cache.
+    - imagen_hover crea una version oscurecida de la imagen haciendo uso del cache.
     - _sonido_click le asigna un sonido al boton.
-    - imagen_hover crea una version oscurecida de la imagen.
-
     """
 
     _cache_imagenes = {}
     _cache_hover = {}
+    _sonidos = {}
 
     @classmethod
     def _get_cache_botones(cls, ruta_imagen, hover):
@@ -34,6 +33,12 @@ class Boton:
                 cache[ruta_imagen] = imagen
         return cache[ruta_imagen]
 
+    @classmethod
+    def _get_cache_sonido(cls, ruta: str):
+        if ruta not in cls._sonidos:
+            cls._sonidos[ruta] = pygame.mixer.Sound(ruta)
+        return cls._sonidos[ruta]
+
     def __init__(self, ruta_imagen, posx, posy, sonido="Sonidos/sonido_boton.mp3"):
         self.x = posx
         self.y = posy
@@ -49,16 +54,14 @@ class Boton:
         self._sonido_click = sonido
 
     def asignar_posicion(self, posx, posy):  # Asigna la posicion de la imagen
-        """Funcion asignar_posicion: pone la posicion x, y en el boton."""
-
+        """Funcion asignar_posicion: Asigna la posicion posx y posy al boton."""
         self.x = posx
         self.y = posy
         self.rect.topleft = (self.x, self.y)
 
     def dibujar(self, screen):
-        """Funcion dibujar: muestra el boton y lo oscurece
-        en caso de que el raton este encima."""
-
+        """Funcion dibujar: Muestra el boton y en caso de que el raton este
+        encima, lo oscurece."""
         mouse_pos = pygame.mouse.get_pos()
 
         if self.rect.collidepoint(mouse_pos):  # Detectar si el raton esta encima
@@ -68,13 +71,14 @@ class Boton:
             screen.blit(self.imagen_original, (self.x, self.y))
 
     def detectar_click(self, eventos):
-        """Funcion detectar_click: comprueba si se ha dado click en el boton para
-        hacer la funcion correspondiente del boton."""
+        """Funcion detectar_click: Comprueba si el boton ha sido presionado para
+        llevar a cabo la funcion correspondiente y reproduce el sonido."""
         mouse_pos = pygame.mouse.get_pos()
 
         if self.rect.collidepoint(mouse_pos):
             for event in eventos:
                 if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
-                    reproducir_sonido(self._sonido_click)  # Reproducir sonido
+                    sonido = self._get_cache_sonido(self._sonido_click)  # Reproducir sonido
+                    sonido.play()
                     return True
         return False

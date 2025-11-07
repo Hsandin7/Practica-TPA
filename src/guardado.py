@@ -5,13 +5,10 @@ from src._utilidades import Texto
 
 
 class Guardado:
-    """
-    Clase Guardado: sirve para guardar los datos de partida.
+    """Clase Guardado: Maneja el guardado y la carga de partidas.
 
     Inicializacion de atributos:
-    - El atributo archivo guardado sirve para guardar la partida en curso.
-    - La funcion inicializar archivo guardado sirve para guardar la partida en la nube, hay tres espacios disponibles.
-    - Hay funciones donde, puedes borrar la partida guardada, que se muestre los datos de la partida guardada, y para cargar la partida nuevamente.
+    - archivo guardado: nombre del archivo que almacena las partidas guardadas.
     """
 
     def __init__(self):
@@ -19,12 +16,14 @@ class Guardado:
         self.inicializar_archivo_guardado()
 
     def inicializar_archivo_guardado(self):
+        """Funcion inicializar archivo guardado: Crea el archivo de guardado si no existia previamente."""
         if not os.path.exists(self.archivo_guardado):
             data = {"slot_1": None, "slot_2": None, "slot_3": None}
             with open(self.archivo_guardado, "w", encoding="utf-8") as archivo:
                 json.dump(data, archivo, indent=4)
 
     def guardar_partida(self, slot: int, data):
+        """Funcion guardar partida: Guarda la informacion(data) en el slot correspondiente."""
         clave_slot = self._validar_slot(slot)
         if data:
             with open(self.archivo_guardado, "r", encoding="utf-8") as archivo:
@@ -37,6 +36,7 @@ class Guardado:
                 json.dump(partidas_guardadas, archivo, indent=4)
 
     def cargar_partida(self, slot: int):
+        """Funcion cargar partida: Carga la partida correspondiente."""
         clave_slot = self._validar_slot(slot)
         with open(self.archivo_guardado, "r", encoding="utf-8") as archivo:
             partidas_jugadas = json.load(archivo)
@@ -46,6 +46,7 @@ class Guardado:
         return data
 
     def borrar_partida(self, slot: int):
+        """Funcion borrar partida: Borra la partida correspondiente."""
         clave_slot = self._validar_slot(slot)
         with open(self.archivo_guardado, "r", encoding="utf-8") as archivo:
             partidas_guardadas = json.load(archivo)
@@ -56,11 +57,13 @@ class Guardado:
             json.dump(partidas_guardadas, archivo, indent=4)
 
     def _validar_slot(self, slot):
+        """Funcion validar slor: Comprueba que se este usando el slot correcto."""
         if slot not in (1, 2, 3):
             raise ValueError("El número de slot debe ser 1, 2 o 3.")
         return f"slot_{slot}"
 
     def mostrar_info_slots(self, screen):
+        """Funcion mostrar info slots: Muestra, en el menu de guardado, la informacion guardada de cada slot"""
         x = 305
         gris = (220, 220, 220)
         for slot in range(1, 4):
